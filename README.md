@@ -1,2 +1,2 @@
 # Transmission-Systems
-This GitHub repositry is designed to keep my Electrical transmission systems project organised and portable.
+This GitHub repository is designed to keep my Electrical transmission systems project organised and portable.
