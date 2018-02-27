@@ -1,0 +1,85 @@
+\documentclass{article}
+
+% This Document is designed to house the writing for the 
+% concepts learnt for my MPhil.
+% Created by F.R. Willsmore
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
+\usepackage{graphicx} 
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{bm}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{parskip}
+\usepackage[toc,page]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+
+% Commands
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\ie}{\textit{i.e. }}
+\newcommand{\eg}{\textit{e.g. }}
+\setlength\parindent{24pt}
+
+% struts for table environments
+\newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' strut
+\newcommand{\exedout}{%
+  \rule{0.8\textwidth}{0.5\textwidth}%
+}
+
+\hypersetup{
+    colorlinks,
+%    linkcolor={red!50!black},
+%    citecolor={blue!50!black},
+%    urlcolor={blue!80!black}
+    linkcolor={black},
+    citecolor={red},
+    urlcolor={blue}
+}
+\renewcommand*{\sectionautorefname}{Section} % capitalises Section in \autoref
+
+% Headers
+\pagestyle{fancy}
+\lhead{MPhil}
+\chead{}
+\rhead{Modelling Cascade Failure}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+% Title
+\title{Concepts Learnt for MPhil}
+\author{Fergus Willsmore}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Power Grid}
+
+A power grid can be represented as a connected graph $G$, where the $n$ nodes represent the \textit{buses} and the $m$ edges represent the \textit{transimission lines}. The power injected at a single bus is transported via the transmission lines to neighbouring buses. Each transmission line has a {\it line threshold} which is the maximal voltage capacity of that line. A line failure corresponds to the event that a transmission line is no longer operational. A joint failure is a special case when more than one line failures at once. When this occurs, power is redistributed throughout the operating network, placing more pressure on neighbouring lines and thus increasing the probability of another line failure. Successive dependent line failures is called a \textit{cascade}. The North American Electric Reliability Corporation (NERC) defines cascade failure as ``the uncontrolled successive loss of system elements triggered by an incident at any location." The first line failure in a cascade is called the {\it initial point} of cascade and the number of generations of failures is the {\it size} of a cascade.
+
+\section{Theory of Large Deviations}
+
+
+
+
+\end{document}
+
+\bibliographystyle{acm}
+\bibliography{../mphil_lib.bib}
