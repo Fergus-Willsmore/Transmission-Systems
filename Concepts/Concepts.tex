@@ -70,13 +70,42 @@
 
 \newpage
 
+\section{Glossary}
+
+\begin{itemize}
+\item[] {\it interconnection system} conveys power from generators to demand locations (loads). 
+\item[] {\it transmission system} carries power at high voltages, typically over long distances. 
+\item[] {\it distribution system} distributes power within a local geographical area at low voltage. 
+\item[] {\it buses} represent the nodes of the network and may house generators and others represent where a distribution system (a load) is attached.
+\item[] {\it lines} represent the power lines used to transmit power between buses.
+\item[] {\it transformers} are used to convert between different voltages.
+\item[] {\it real} power $P$ is the power actually supplied to the load.
+\item[] {\it reactive} power $Q$ is the power that bounces back and fourth between the load and generator (energy lost due to electric and magnetic fields).
+\item[] {\it complex} power $S$ is the effective power produced by alternating current, $S=P+iQ$.
+\item[] {\it resistance} $r$ is the force against the flow of current offered by the material of the conductor.
+\item[] {\it reactance} $x$ is the resistance offered by inductors with respect to time.
+\item[] {\it impedance} $z$ is the effective resistance to alternating current, $z=r+ix$. 
+\item[] {\it conductance} $g$
+\item[] {\it susceptance} $b$
+\item[] {\it admittance} $y=g+ib$
+
+\end{itemize}
+
+
+
+
+
+
+
+
+
 \section{Power Grid}
 
 A power grid can be represented as a connected graph $G$, where the $n$ nodes represent the \textit{buses} and the $m$ edges represent the \textit{transimission lines}. The power injected at a single bus is transported via the transmission lines to neighbouring buses. Each transmission line has a {\it line threshold} which is the maximal voltage capacity of that line. A line failure corresponds to the event that a transmission line is no longer operational. A joint failure is a special case when more than one line failures at once. When this occurs, power is redistributed throughout the operating network, placing more pressure on neighbouring lines and thus increasing the probability of another line failure. Successive dependent line failures is called a \textit{cascade}. The North American Electric Reliability Corporation (NERC) defines cascade failure as ``the uncontrolled successive loss of system elements triggered by an incident at any location." The first line failure in a cascade is called the {\it initial point} of cascade and the number of generations of failures is the {\it size} of a cascade.
 
 \subsection{AC vs DC}
 
-Electrical {\it current} is the flow of electrons through a surface measured as a rate. There are two different types; alternating current and direct current. The main distinction between the two is that the flow of electrons for DC is linear, \ie, the electrons (- charge) will move directly to the positive charge, whereas the direction of flow alternates periodically with frequency 50-60Hz hence AC. The benefits of DC is that it is more efficient at electrical transmission over short distances due to the linear flow. However, the benefit of AC is that the voltage can be easily changed by a transformer thus allowing high voltage transmission for larger distances. Therefore the majority power is sourced from AC generators.
+Electrical {\it current} is the flow of electrons through a surface measured as a rate. There are two different types; alternating current and direct current. The main distinction between the two is that the flow of electrons for DC is linear, \ie, the electrons (- charge) will move directly to the positive charge, whereas in AC the direction of flow alternates direction periodically with fixed frequency. The benefits of DC is that it is more efficient at electrical transmission over short distances due to the linear flow and limited power loss. However, the benefit of AC is that the voltage can be easily changed by a transformer thus allowing high voltage transmission for larger distances. Therefore the majority power is sourced from AC generators. 
 
 
 
