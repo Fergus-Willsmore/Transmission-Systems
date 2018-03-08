@@ -53,6 +53,8 @@ for w in line:
     temp = temp.strip()
     temp = temp.replace('-',' ')
     temp = temp.replace('/','')
+    temp = temp.replace('.','')
+    temp = ' '.join(temp.split())
     x.append(temp)
 
 # create a bus database (not neccessarily complete)
@@ -64,11 +66,36 @@ bus = bus.str.lower()
 # Remove voltage,units, special characters whilst retaining spaces from station name
 
 y = []
-i = 1
 for w in bus:
     temp = re.sub(r'\w*\d\w*', '', w).strip()
     temp = re.sub('[^A-z0-9 -]', '', temp).lower().replace(" ", " ")
     temp = temp.strip()
     y.append(temp)
 stations = set(y)
+
+# Attempt to join words with underscores
+
+x_1 = []
+
+for s in x:
+    ind = re.search(' ',s)
+    ind = ind.start()
+    if ind < 4:
+        x_1.append(s[:ind]+'_'+s[(ind+1):])
+    else:
+        x_1.append(s)
+
+test = []
+       
+i = 0
+for s in x_1:
+    if s.count(' ') == 1:
+        x_1[i] = x_1[i].replace(' ','-')
+        test.append(x_1[i])
+    i=i+1
+
+f = open('top_test.txt','w')
+f.write("\n".join(test))
+
+
 

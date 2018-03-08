@@ -25,5 +25,11 @@ bus <- outage.df$Station.Name
 bus <- as.character(bus[-which(duplicated(bus))])
 bus <- unlist(list(lapply(bus,function(x) gsub("[0-9]{3}kV","",x))))
 
-sample <- sample(bus,30)
-el <- 
+lines <- scan('~/Documents/GitHub/Transmission-Systems/topology/top_test.txt', character(), quote = "")
+name.ls <- strsplit(lines,'-')
+el <- matrix(unlist(name.ls), ncol = 2, byrow = TRUE)
+net <- graph_from_edgelist(el,directed = F)
+adj <- get.adjacency(net)
+
+plot(net,layout=layout_with_fr, vertex.size=4,
+     vertex.label.dist=0.5, vertex.color="red", vertex.label=NA)
