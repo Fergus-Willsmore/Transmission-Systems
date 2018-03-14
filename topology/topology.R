@@ -12,11 +12,21 @@ library(stringr)
 outage.df <- read.csv('~/Documents/GitHub/Transmission-Systems/topology/PUBLIC_NOSDAILY_2018030515000037 copy.csv', 
                       header = TRUE, sep = ",", skip = 1) 
 
+# Get Distribution Companies
+
+levels(outage.df$TNSP.Submitted.the.Outage)
+
+
+
 # We are only interested in the line outages, but might use the bus information for validation.
 # In Equipment.Type there is a tline, which seems to extend between 3 buses. (???)
 
 ls <- c(which(outage.df$Equipment.Type == "line"))
 line.df <- outage.df$Equipment.Name[ls]
+
+# Check if equipment name depends on distribution company
+
+check <- data.frame(outage.df$Equipment.Name[ls],outage.df$TNSP.Submitted.the.Outage[ls])
 
 # Obtain minimal dataframe by removing duplicates in Equipment.Type
 

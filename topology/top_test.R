@@ -33,3 +33,4 @@ adj <- get.adjacency(net)
 
 plot(net,layout=layout_with_fr, vertex.size=4,
      vertex.label.dist=0.5, vertex.color="red", vertex.label=NA)
+components(net)
