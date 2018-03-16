@@ -92,28 +92,23 @@
 \end{itemize}
 
 
-
-
-
-
-
-
-
 \section{Power Grid}
 
-A power grid can be represented as a connected graph $G$, where the $n$ nodes represent the \textit{buses} and the $m$ edges represent the \textit{transimission lines}. The power injected at a single bus is transported via the transmission lines to neighbouring buses. Each transmission line has a {\it line threshold} which is the maximal voltage capacity of that line. A line failure corresponds to the event that a transmission line is no longer operational. A joint failure is a special case when more than one line failures at once. When this occurs, power is redistributed throughout the operating network, placing more pressure on neighbouring lines and thus increasing the probability of another line failure. Successive dependent line failures is called a \textit{cascade}. The North American Electric Reliability Corporation (NERC) defines cascade failure as ``the uncontrolled successive loss of system elements triggered by an incident at any location." The first line failure in a cascade is called the {\it initial point} of cascade and the number of generations of failures is the {\it size} of a cascade.
+Electrical flow can be thought of as the movement of electrons through a surface, referred to as the {\it current} ($I$). The movement of charge is provoked by the {\it voltage} ($V$) of an electrical circuit. The potential difference creates an electric field that acts on the electrons within the circuit. This is best thought of as electrical potential energy, such that as voltage is increased more force is required to hold the electrons in a fixed position. Once released the electron will accelerate toward the positive pole resulting in the conversion of electrical potential energy into heat and kinetic energy. The idea of {\it electric power}, combines the elements {\it current} and {\it voltage} such that 
+\begin{equation}
+P=V\times I
+\end{equation}
+expressed in watts. There are two distinct types of power flows, namely {\it direct current} (DC) and {\it alternating current} (AC). The simpler of the two is DC power, where the electrons always flow in the same direction (such as battery operated circuits). In a battery operated circuit the electrons always move from the negative pole to the positive pole. However in an AC circuit, the direction of current periodically changes, which gives rise to complex behaviour. 
+
 
 \subsection{AC vs DC}
 
 Electrical {\it current} is the flow of electrons through a surface measured as a rate. There are two different types; alternating current and direct current. The main distinction between the two is that the flow of electrons for DC is linear, \ie, the electrons (- charge) will move directly to the positive charge, whereas in AC the direction of flow alternates direction periodically with fixed frequency. The benefits of DC is that it is more efficient at electrical transmission over short distances due to the linear flow and limited power loss. However, the benefit of AC is that the voltage can be easily changed by a transformer thus allowing high voltage transmission for larger distances. Therefore the majority power is sourced from AC generators. 
 
-\section{Power Flows}
+\section{Bienstock 2016}
+\subsection{Chapter 4}
 
-\subsection{DC approximation}
-
-
-
-\section{Theory of Large Deviations}
+There is some disagreement in the initial point of cascade. The initial line failure should not trigger a cascade as the system should be N-1 safe, therefore still in a controlled position. However if co susceptible lines also fail then the cumulative outages begin to grow slowly. At some point, the cumulative loss of power lines is so rapid that no control is possible. The initial point of cascade for our purposes is from the initial line failure as this leads to the uncontrollable state.
 
 
 

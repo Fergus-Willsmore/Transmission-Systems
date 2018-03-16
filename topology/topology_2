@@ -97,15 +97,25 @@ for w in line_tmp_1:
 # Two word string goes to line_final with '-' otherwise 
         
 line_tmp_3 = []
+# Delete a 3 link transmission line
+del line_tmp_2[line_tmp_2.index('south_east-mayura-snuggery')]
 
 for w in line_tmp_2:
     w = w.replace('-','_')
+    ind = re.search(' ',w)
+    ind = ind.start()
+    if ind < 4:
+        w = w[:ind]+'_'+w[(ind+1):]
     if w.count(' ') == 1:
         w = w.replace(' ','-')
         w = w.replace(' ','_')
         line_final.append(w)
     else:
         line_tmp_3.append(w)
+#%% Do a pattern match search to identify buses from the database
+
+
+
         
         
 #%% Write line_final to .txt file

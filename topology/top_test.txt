@@ -82,11 +82,17 @@ dapto-marulan
 gadara-tumut
 griffith-yanco
 lismore-koolkhan
+lwr_tumut-murray
+lwr_tumut-yass
+lwr_tumut-canberra
 mitchell-singleton
 muswlbk-singleton
 muswlbk-tamworth
 newcastle-tomago
+prt_macqur-taree
 tumut-burrinjuck
+upr_tumut-canberra
+upr_tumut-yass
 wagga-yass
 yanco-uranquinty
 yass-marulan
@@ -97,7 +103,11 @@ bouldercmb-rockhamptn
 callemondh-gladston_s
 callide-gladston_s
 chalumbin-turkinje
+dan_gleesn-ross
 kilkivan-woolooga
+mt_england-tarong
+mt_england-greenbank
+mt_england-blackwall
 murarrie-doboy
 murarrie-lytton
 tarong-chinchilla
@@ -196,5 +206,6 @@ moorabool-sydenham
 murrylnk_v-murrylnk_s
 ringwood-thomastown
 rowvill-richmond
+s_morang-thomastown
 templestow-thomastown
 wodonga-jinderra

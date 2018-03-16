@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Mar 15 15:05:37 2018
+
+@author: ferguswillsmore
+"""
+
+# Import packages
+
+import pandas as pd
+import numpy as np
+import re
+
+# Define remove duplicates function
+
+def remove_duplicates(values):
+    output = []
+    seen = set()
+    for value in values:
+        # If value has not been encountered yet,
+        # ... add it to both list and set.
+        if value not in seen:
+            output.append(value)
+            seen.add(value)
+    return output
+
+# Preallocate the final line list
+    
+line_final = []
+
+# Read and prepare data for string manipulation
+
+df = pd.read_csv('~/Documents/GitHub/Transmission-Systems/topology/PUBLIC_NOSDAILY_2018030515000037 copy.csv', skiprows = 1)
+
+# Retrive only equipment of type line
+
+line_df = df.loc[df['Equipment Type'] == 'line']
+line_df = line_df['Equipment Name'].astype('str')
+line_df = line_df.str.lower() 
