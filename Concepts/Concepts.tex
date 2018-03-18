@@ -41,7 +41,7 @@
 %    linkcolor={red!50!black},
 %    citecolor={blue!50!black},
 %    urlcolor={blue!80!black}
-    linkcolor={black},
+    linkcolor={blue},
     citecolor={red},
     urlcolor={blue}
 }
@@ -108,7 +108,23 @@ Electrical {\it current} is the flow of electrons through a surface measured as 
 \section{Bienstock 2016}
 \subsection{Chapter 4}
 
-There is some disagreement in the initial point of cascade. The initial line failure should not trigger a cascade as the system should be N-1 safe, therefore still in a controlled position. However if co susceptible lines also fail then the cumulative outages begin to grow slowly. At some point, the cumulative loss of power lines is so rapid that no control is possible. The initial point of cascade for our purposes is from the initial line failure as this leads to the uncontrollable state.
+There is some disagreement in the initial point of cascade. The initial line failure should not trigger a cascade as the system should be N-1 safe, therefore still in a controlled position. However if co susceptible lines also fail then the cumulative outages begin to grow slowly. At some point, the cumulative loss of power lines is so rapid that no control is possible. The initial point of cascade for our purposes is from the initial line failure as this leads to the uncontrollable state.\\
+
+A common theme in the survey of large-scale blackouts, seemed to be that the initial line failure had a large capacity (such as 345kV). The redistribution of power flows seemed to put stress on other high capacity lines causing sag and heat leading to them also tripping. The Italian blackout was a bit different, in that Italy is a big importer of power. This means that the generation of power within Italy is very limited (similar to SA situation). A loss of an importing line caused a cascade which quickly lead to ``syncronism loss" (frequency instability) causing the island to blackout.\\
+
+Prior modelling techniques have outlined a few features of cascade failure such as line tripping due to overloads is primarily used, focus on slow cascade processes (ideally start slow then fast), DC approximation to power flows and ignore short-term dynamics (such as islanding). \\
+
+Cascade model 1, aims to capture the idea of upgrading equipment after failure. In the case of lines, this would be increasing their rating (capacity). This models this long term cascade behaviour, but the short term cascade model is based on non-decreasing probability function. In the first instance that a line becomes overloaded
+\begin{equation}
+P(\text{line } j \ \text{becomes outaged}) = h^0(|f_{j,t}|/U_{j,t}^{\text{max}})=c
+\end{equation}
+for all lines $j$. Then after redistribution overloaded lines outage with probability $h^1>c$. Another quantity pointed out is average relative line load on a given day $t$,
+\begin{equation}
+\bar{M}_t \dot{=}\frac{\sum_j M_{jt}}{m}
+\end{equation}
+where $m$ indicates the number of lines. It was found that for a given $\mu$ the systems seems to tend toward a long term ``dynamic equilibrium". This suggests that for a constant rate of demand growth line upgrades is not sufficient to avert blackouts.\\
+
+Pfitzner (2011) recognises that redispatch optimisation problems in islanding is not fast enough. Alternatively, new outputs for generators in the island are set due to the ratio of demand to generation. In the event that demand is too high causing overload in generators,load is shed by intentionally tripping lines. The aim of which is to reduce the overall size of the cascade. The tripping rule (A1) trips the overloaded line with minimum flow achieved the best results.  
 
 
 
