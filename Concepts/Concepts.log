@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.14)  18 MAR 2018 19:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.2.27)  19 MAR 2018 09:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -825,7 +825,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 132.
  ) 
 Here is how much of TeX's memory you used:
  8920 strings out of 492995
- 128570 string characters out of 6132703
+ 128570 string characters out of 6132704
  333770 words of memory out of 5000000
  12322 multiletter control sequences out of 15000+600000
  16760 words of font info for 62 fonts, out of 8000000 for 9000
@@ -842,7 +842,7 @@ cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loca
 l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/t
 exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
 xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Concepts.pdf (4 pages, 132008 bytes).
+Output written on Concepts.pdf (4 pages, 132194 bytes).
 PDF statistics:
  102 PDF objects out of 1000 (max. 8388607)
  84 compressed objects within 1 object stream
