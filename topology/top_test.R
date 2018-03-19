@@ -35,8 +35,17 @@ net <- graph_from_edgelist(el,directed = F)
 
 # Plot the initial network
 
-plot(net,layout=layout_with_fr, vertex.size=4,
-     vertex.label.dist=0.5, vertex.color="red",vertex.label=NA)
+net.graph <- ggraph(net) + 
+  geom_edge_link() + 
+  geom_node_point(col = "indianred1", size = 1) +
+  theme_graph()
+
+ggsave('net.pdf', plot = net.graph, 
+       path = '~/Documents/GitHub/Transmission-Systems/figures', 
+       width = 8, height = 8 )
+
+# plot(net,layout=layout_with_fr, vertex.size=4,
+#      vertex.label.dist=0.5, vertex.color="red",vertex.label=NA)
 
 ####### Connectivity ##########
 
@@ -44,13 +53,17 @@ set.seed(560)
 
 con.net <- rand.net.top(net)
 
-ggraph(con.net) + 
-  geom_edge_link() + 
-  geom_node_point(col = "indianred1", size = 1) +
-  theme_graph()
+con.net.graph <- ggraph(con.net) + 
+                    geom_edge_link() + 
+                    geom_node_point(col = "indianred1", size = 1) +
+                    theme_graph()
 
-plot(con.net,layout=layout_with_fr, vertex.size=3,
-     vertex.label.dist=0.5, vertex.color="indianred1",vertex.label=NA)
+ggsave('con_net.pdf', plot = con.net.graph, 
+       path = '~/Documents/GitHub/Transmission-Systems/figures', 
+       width = 8, height = 8 )
+
+# plot(con.net,layout=layout_with_fr, vertex.size=3,
+#      vertex.label.dist=0.5, vertex.color="indianred1",vertex.label=NA)
 
 
 
