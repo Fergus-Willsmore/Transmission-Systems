@@ -36,5 +36,29 @@ df = pd.read_csv('~/Documents/GitHub/Transmission-Systems/topology/PUBLIC_NOSDAI
 # Retrive only equipment of type line
 
 line_df = df.loc[df['Equipment Type'] == 'line']
-line_df = line_df['Equipment Name'].astype('str')
-line_df = line_df.str.lower() 
+line_df = line_df[['Region','Station Name','Equipment Name','KV']]
+line_df = line_df.drop_duplicates()
+#line_df = line_df.str.lower() 
+
+for i in line_df.index:
+    temp = line_df.at[i,'Station Name']
+    temp = re.sub(r'\w*\d\w*', '', temp).strip()
+    temp = re.sub('[^A-z0-9 -]', '', temp).replace(" ", " ")
+    temp = temp.strip()
+    line_df.at[i,'Station Name'] = temp
+
+
+for i in line_df.index:
+    temp = line_df.at[i,'Equipment Name']
+    temp = re.sub(r'\d\w*', '', temp).strip()
+    # search for the word line
+    ind = re.search('LINE',temp)
+    # remove the word line
+    temp = temp[0:ind.start()]
+    # remove extra whitespace and special characters
+    temp = temp.strip()
+    # remove special characters
+    temp = temp.replace('/','')
+    temp = temp.replace('.','')
+    temp = ' '.join(temp.split())
+    line_df.at[i,'Equipment Name'] = temp
