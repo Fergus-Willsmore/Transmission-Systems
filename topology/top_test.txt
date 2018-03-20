@@ -1,211 +1,265 @@
-avon-macarthur
-bannaby-gullen_rng
-bannaby-marulan
-bannaby-sydney_w
-bannaby-marulan
-capitalwf-canberra
-dapto-tallawrr
-deniliquin-finley
-eraring-vals_pt_ps
-kempsey-macksville
-mt_pipr-bannaby
-mt_pipr-bannaby
-mussleroe-derby
-stlenard-mowbray
-sydney_n-tuggerah
-uranquinty-finley
-waggan-murrumbrrh
-wollar-wellington
-abermain-lockrose
-aligatr_ck-louisacr
-aligatr_ck-mackaypts
-biloela_biloela-t
-blackstone-ssrvw
-blackstone-redbk_plns
-blackstone-ssrvw
-boat_ck-yarwun
-boat_ck-yarwun
-callide_biloela-t
-colnvilnth-proserpine
-columboola-chinchilla
-columboola-chinchilla
-dingo_dingo-t
-gin_gin-callioperv
-gladstn-callioperv
-gladstn_ps-callioperv
-image_flat-cooroy
-inghamsth-cardwell
-moura_biloela-t
-nebo_-wandoo
-nebo-bollingbrk
-pioner_vly-mackay
-qal-qld_almn_w
-rocklnds-bouldercmb
-rocklea-archerfld_f
-rocklea-archerfld_f
-strathmore-clare_sth
-strathmore-bowenn
-wandoans-wolebecr
-wandoans-wolebecr
-angas_ck-mannum
-belalie-mokota
-belalie-davenport
-davenport-cultana
-mayura-lkbonneywf
-mayura-lkbonneywf
-mayura-lkbonneywf
-mokota-robertstwn
-mt_lock-canowie
-munno-blythw
-para-munno
-templersw-brinkworth
-trrns_b_ps-citywest
-torrens_n-quarntn_ps_gt
-whyall_cet-whyall_trm
-creekrd-risdon
-farrell-bastyan
-farrell-rosebery
-georgetown-tamarvlyps
-georgetown-tamarvlyps
-liapootah-chapelst
-norwood-scottsdale
-trevallyn-mowbray
-dpts-gts
-deerpark-geelong
-armidale-koolkhan
-armidale-kempsey
-avon-marulan
-burrinjuck-yass
-canberra-yass
-coffsh-lismore
-dapto-marulan
-gadara-tumut
-griffith-yanco
-lismore-koolkhan
-lwr_tumut-murray
-lwr_tumut-yass
-lwr_tumut-canberra
-mitchell-singleton
-muswlbk-singleton
-muswlbk-tamworth
-newcastle-tomago
-prt_macqur-taree
-tumut-burrinjuck
-upr_tumut-canberra
-upr_tumut-yass
-wagga-yass
-yanco-uranquinty
-yass-marulan
-belmont-murarrie
-belmont-beenleigh
-biloela-callide
-bouldercmb-rockhamptn
-callemondh-gladston_s
-callide-gladston_s
-chalumbin-turkinje
-dan_gleesn-ross
-kilkivan-woolooga
-mt_england-tarong
-mt_england-greenbank
-mt_england-blackwall
-murarrie-doboy
-murarrie-lytton
-tarong-chinchilla
-tarong-chinchilla
-woree-cairns
-baroota-bungama
-brinkworth-davenport
-cherry_gdn-tailem_bnd
-dalrymple-wattleptwf
-e_terrace-magill
-keith-kincraig
-kilburn-northfield
-lefevre-new_osborn
-lefevre-new_osborn
-monash-berri
-monash-n_w_bend
-monash-berri
-monash-n_w_bend
-mrpht_vl_e-happy_vly
-mrpht_vl_e-cherry_gdn
-mt_gambier-south_east
-new_osborn-osborn_cgn
-para-angas_ck
-penola_w-kincraig
-penola_w-ladbrk_grv
-penola_w-south_east
-pt_linc_tm-sleaford
-roseworthy-templers
-snuggery-blanch
-snuggery-mayura
-south_east-heywood
-south_east-heywood
-tailem_bnd-mobilong
-tailem_bnd-south_east
-tailem_bnd-south_east
-templers-dorrien
-trrns_a_ps-new_osborn
-trrns_a_ps-northfield
-trrns_a_ps-torrens_n
-tungkillo-tailem_bnd
-waterloo-templers
-yadnarie-mtmillar
-farrell-tribute
-farrell-reece
-farrell-johnbuttrs
-farrell-reece
-georgetown-temco
-georgetown-temco
-georgetown-comalco
-georgetown-comalco
-gordon-chapelst
-gordon-chapelst
-hadspen-norwood
-hadspen-georgetown
-hadspen-georgetown
-hadspen-trevallyn
-hadspen-trevallyn
-hadspen-norwood
-liapootah-chapelst
-liapootah-wayatinah
-newnorfolk-chapelst
-newnorfolk-creekrd
-palmerston-hadspen
-palmerston-hadspen
-palmerston-hadspen
-palmerston-hadspen
-palmerston-sheffield
-poatina-palmerston
-poatina-palmerston
-poatina-palmerston
-poatina-palmerston
-sheffield-wilmot
-sheffield-cethana
-sheffield-burnie
-sheffield-devilsgate
-sheffield-lemonthyme
-sheffield-farrell
-sheffield-farrell
-sheffield-georgetown
-sheffield-georgetown
-sheffield-fisher
-tarraleah-tungatinah
-tarraleah-tungatinah
-waddamana-bridgewatr
-wayatinah-catagunya
-alcprtlnd-heywood
-alcprtlnd-heywood
-ballart-terang
-dederang-murray
-dederang-wodonga
-geelong-keilor
-geelong-keilor
-hazelwood-rowvill
-keilor-sydenham
-moorabool-sydenham
-murrylnk_v-murrylnk_s
-ringwood-thomastown
-rowvill-richmond
-s_morang-thomastown
-templestow-thomastown
-wodonga-jinderra
+# Region	Station	Equipment	KV
+NSW1	Armidale	Armidale-Koolkhan	132
+NSW1	Armidale	Armidale-Kempsey	132
+NSW1	Avon	Avon-Macarthur	330
+NSW1	Avon	Avon-Marulan	330
+NSW1	Bannaby	Bannaby-Gullen Rng	330
+NSW1	Bannaby	Bannaby-Marulan	330
+NSW1	Bannaby	Bannaby-Sydney W	330
+NSW1	Bannaby	Bannaby-Marulan	330
+NSW1	Burrinjuck	Burrinjuck-Yass	132
+NSW1	Canberra	Canberra-Yass	330
+NSW1	Capital Wind Farm	CapitalWF-Canberra	330
+NSW1	Coffs Harbour	CoffsH-Lismore	330
+NSW1	Dapto	Dapto-Marulan	330
+NSW1	Dapto	Dapto-Tallawrr	132
+NSW1	Deniliquin	Deniliquin-Finley	132
+NSW1	Directlink-NSW	Directlk-N-Directlk-Q DC	80
+NSW1	Directlink-NSW	Directlk-N-Directlk-Q DC	80
+NSW1	Directlink-NSW	Directlk-N-Directlk-Q DC	80
+NSW1	Eraring	Eraring-Kemps Ck	500
+NSW1	Eraring	Eraring-Vals Pt PS	330
+NSW1	Eraring	Eraring-Kemps Ck	500
+NSW1	Gadara	Gadara-Tumut	132
+NSW1	Griffith	Griffith-Yanco	132
+NSW1	Ingleburn	Ingleburn-Sydney S	330
+NSW1	Kemps Creek	Kemps Ck-Sydney S	330
+NSW1	Kempsey  Sub	Kempsey-Macksville	132
+NSW1	Liddell Ps	Liddell PS-Newcastle	330
+NSW1	Liddell Ps	Liddell PS-Muswlbk	330
+NSW1	Liddell Ps	Liddell PS-Tomago	330
+NSW1	Lismore	Lismore-Koolkhan	132
+NSW1	Liverpool	Liverpool-Sydney S	330
+NSW1	Lower Tumut	Lwr Tumut-Murray	330
+NSW1	Lower Tumut	Lwr Tumut-Yass	330
+NSW1	Lower Tumut	Lwr Tumut-LTumut PS L	330
+NSW1	Lower Tumut	Lwr Tumut-LTumut PS L	330
+NSW1	Lower Tumut	Lwr Tumut-LTumut PS L	330
+NSW1	Lower Tumut	Lwr Tumut-Canberra	330
+NSW1	Mitchell	Mitchell-Singleton	132
+NSW1	Mount Piper	Mt Pipr-Bannaby	500
+NSW1	Mount Piper	Mt Pipr-Bannaby	500
+NSW1	Munmorah	Munmorh-Sydney W	330
+NSW1	Murray	Murray-Upr Tumut	330
+NSW1	Mussleroe	Mussleroe-Derby	110
+NSW1	Muswellbrook	Muswlbk-Singleton	132
+NSW1	Muswellbrook	Muswlbk-Tamworth	330
+NSW1	Newcastle	Newcastle-Tomago	330
+NSW1	Port Macquarie	Prt Macqur-Taree	132
+NSW1	ST Leonards	StLenard-Mowbray	110
+NSW1	Sydney North	Sydney N-Sydney W	330
+NSW1	Sydney North	Sydney N-Tuggerah	330
+NSW1	Sydney North	Sydney N-Kemps Ck	330
+NSW1	Sydney South	Sydney-S Dapto	330
+NSW1	Tomago	Tomago-Waratah W	330
+NSW1	Tumut	Tumut-Burrinjuck	132
+NSW1	Upper Tumut	Upr Tumut-UTumut PS U	330
+NSW1	Upper Tumut	Upr Tumut-UTumut PS U	330
+NSW1	Upper Tumut	Upr Tumut-Canberra	330
+NSW1	Upper Tumut	Upr Tumut-Yass	330
+NSW1	Upper Tumut	Upr Tumut-UTumut PS U	330
+NSW1	Upper Tumut	Upr Tumut-UTumut PS U	330
+NSW1	Uranquinty	Uranquinty-Finley	132
+NSW1	Vales Point	Vals Pt-Munmorh	330
+NSW1	Vineyard	Vineyard-Sydney W	330
+NSW1	Wagga	Wagga-Yass	132
+NSW1	Wagga North	WaggaN-Murrumbrrh	132
+NSW1	Wollar	Wollar-Wellington	330
+NSW1	Yanco	Yanco-Uranquinty	132
+NSW1	Yass	Yass-Marulan	330
+QLD1	Abermain	Abermain-Lockrose	110
+QLD1	Alligator Creek	Aligatr Ck-Nebo	132
+QLD1	Alligator Creek	Aligatr Ck-Oonooie	132
+QLD1	Alligator Creek	Aligatr Ck-LouisaCr	132
+QLD1	Alligator Creek	Aligatr Ck-MackayPts	132
+QLD1	Belmont	Belmont-Murarrie	275
+QLD1	Belmont	Belmont-Beenleigh	110
+QLD1	Biloela	Biloela Biloela-T	132
+QLD1	Biloela	Biloela-Callide	132
+QLD1	Blackstone	Blackstone-Ssrvw	110
+QLD1	Blackstone	Blackstone-RedBk Plns	110
+QLD1	Blackstone	Blackstone-Ssrvw	110
+QLD1	Boat Creek	Boat Ck-Yarwun	132
+QLD1	Boat Creek	Boat Ck-Yarwun	132
+QLD1	Bouldercombe	Bouldercmb-Egans Hill	132
+QLD1	Bouldercombe	Bouldercmb-Rockhamptn	132
+QLD1	Callemondah	Callemondh-Gladston S	132
+QLD1	Callide	Callide Biloela-T	132
+QLD1	Callide	Callide-Gladston S	132
+QLD1	Chalumbin	Chalumbin-Turkinje	132
+QLD1	Collinsville North	ColnvilNth-Proserpine	132
+QLD1	Columboola	Columboola-Chinchilla	132
+QLD1	Columboola	Columboola-Chinchilla	132
+QLD1	Dan Gleeson	Dan Gleesn-Ross	132
+QLD1	Dingo	Dingo Dingo-T	132
+QLD1	Gin Gin	Gin Gin-CalliopeRv	275
+QLD1	Gladstone	Gladstn-CalliopeRv	275
+QLD1	Gladstone Ps	Gladstn PS-CalliopeRv	275
+QLD1	Image Flat	Image Flat-Cooroy	132
+QLD1	Ingham South	InghamSth-Cardwell	132
+QLD1	Kilkivan	Kilkivan-Woolooga	132
+QLD1	Loganlea	Loganlea-Brwns Plns F	110
+QLD1	Mackay	Mackay-Pioner Vly	132
+QLD1	Middle Ridge	Middle Rdg-Yarranlea	110
+QLD1	Moranbah	Moranbah-Mt Mclaren	132
+QLD1	Moura	Moura Biloela-T	132
+QLD1	Mt England	Mt England-Tarong	275
+QLD1	Mt England	Mt England-Greenbank	275
+QLD1	Mt England	Mt England-Blackwall	275
+QLD1	Murarrie	Murarrie-Doboy	110
+QLD1	Murarrie	Murarrie-Lytton	110
+QLD1	Nebo	Nebo -Wandoo	132
+QLD1	Nebo	Nebo-Bollingbrk	132
+QLD1	Pioneer Valley	Pioner Vly-Mackay	132
+QLD1	Qal  qld Aluminium	Qal-Qld Almn W	132
+QLD1	Qal  qld Aluminium	Qal Qld Almn-W	132
+QLD1	Redbank Plains	RedBk Plns-Goodna	110
+QLD1	Rocklands	Rocklnds-Bouldercmb	132
+QLD1	Rocklea	Rocklea-Archerfld F	110
+QLD1	Rocklea	Rocklea-Archerfld F	110
+QLD1	Rocklea	Rocklea-W End F	110
+QLD1	Strathmore	Strathmore-Clare Sth	132
+QLD1	Strathmore	Strathmore-BowenN	132
+QLD1	Tarong	Tarong-Tarong Ps	66
+QLD1	Tarong	Tarong-Mt England	275
+QLD1	Tarong	Tarong-Chinchilla	132
+QLD1	Tarong	Tarong-Chinchilla	132
+QLD1	Wandoan South	WandoanS-WolebeCr	132
+QLD1	Wandoan South	WandoanS-WolebeCr	132
+QLD1	Woree	Woree-Cairns	132
+SA1	Angas Creek	Angas Ck-Mannum	132
+SA1	Baroota	Baroota-Bungama	132
+SA1	Belalie	Belalie-Mokota	275
+SA1	Belalie	Belalie-Davenport	275
+SA1	Brinkworth	Brinkworth-Davenport	275
+SA1	Cherry Gardens	Cherry Gdn-Tailem Bnd	275
+SA1	Dalrymple	Dalrymple-WattlePtWF	132
+SA1	Davenport	Davenport-Cultana	275
+SA1	East Terrace	E Terrace-Magill	275
+SA1	Keith	Keith-Kincraig	132
+SA1	Kilburn	Kilburn-Northfield	275
+SA1	Lefevre	Lefevre-New Osborn	66
+SA1	Lefevre	Lefevre-New Osborn	66
+SA1	Mayura	Mayura-LkBonneyWF	33
+SA1	Mayura	Mayura-LkBonneyWF	33
+SA1	Mayura	Mayura-LkBonneyWF	33
+SA1	Mokota	Mokota-Hallt H WF	275
+SA1	Mokota	Mokota-Robertstwn	275
+SA1	Monash	Monash-Berri	132
+SA1	Monash	Monash-N W Bend	132
+SA1	Monash	Monash-Berri	132
+SA1	Monash	Monash-N W Bend	132
+SA1	Morphett Vale East	Mrpht Vl E-Happy Vly	275
+SA1	Morphett Vale East	Mrpht Vl E-Cherry Gdn	275
+SA1	Mount Lock	Mt Lock-Canowie	275
+SA1	Mt Gambier	Mt Gambier-South East	132
+SA1	Munno Para	Munno-BlythW	275
+SA1	New Osborne	New Osborn-Osborn Cgn	66
+SA1	Para	Para-Angas Ck	132
+SA1	Para	Para-Munno	275
+SA1	Pelican Point Switching station	Peln  Pt Peln Pt PS-GT	275
+SA1	Pelican Point Switching station	Peln  Pt Peln Pt PS-ST	275
+SA1	Pelican Point Switching station	Peln  Pt Peln Pt PS-GT	275
+SA1	Pelican Point Switching station	Peln -Pt Lefevre	275
+SA1	Penola West	Penola W-Kincraig	132
+SA1	Penola West	Penola W-Ladbrk Grv	132
+SA1	Penola West	Penola W-South East	132
+SA1	Port Lincoln	Pt Linc Tm-Sleaford	132
+SA1	Roseworthy	Roseworthy-Templers	132
+SA1	Snuggery	Snuggery-Blanch	132
+SA1	Snuggery	Snuggery-Mayura	132
+SA1	South East	South East-Mayura-Snuggery	132
+SA1	South East	South East-Heywood	275
+SA1	South East	South East-Heywood	275
+SA1	Tailem Bend	Tailem Bnd-Mobilong	132
+SA1	Tailem Bend	Tailem Bnd-South East	275
+SA1	Tailem Bend	Tailem Bnd-South East	275
+SA1	Templers	Templers-Dorrien	132
+SA1	Templers West	TemplersW-Brinkworth	275
+SA1	Torrens A Ps	Trrns A PS-New Osborn	66
+SA1	Torrens A Ps	Trrns A PS-Northfield	275
+SA1	Torrens A Ps	Trrns A PS-Torrens N	66
+SA1	Torrens B Ps	Trrns B PS-CityWest	275
+SA1	Torrens North	Torrens N-Quarntn PS GT	66
+SA1	Tungkillo	Tungkillo-Tailem Bnd	275
+SA1	Waterloo	Waterloo-Templers	132
+SA1	Whyalla Central	Whyall Cet-Whyall Trm	132
+SA1	Yadnarie	Yadnarie-MtMillar	132
+TAS1	Creek Road	CreekRd-Risdon	110
+TAS1	Farrell	Farrell-Tribute	220
+TAS1	Farrell	Farrell-Bastyan	220
+TAS1	Farrell	Farrell-Reece	220
+TAS1	Farrell	Farrell-Rosebery	110
+TAS1	Farrell	Farrell-JohnButtrs	220
+TAS1	Farrell	Farrell-Reece	220
+TAS1	George Town	GeorgeTown-TamarVlyPS	110
+TAS1	George Town	GeorgeTown-TamarVlyPS	110
+TAS1	George Town	GeorgeTown-Temco	110
+TAS1	George Town	GeorgeTown-Temco	110
+TAS1	George Town	GeorgeTown-Comalco	220
+TAS1	George Town	GeorgeTown-Comalco	220
+TAS1	Gordon	Gordon-ChapelSt	220
+TAS1	Gordon	Gordon-ChapelSt	220
+TAS1	Hadspen	Hadspen-Norwood	110
+TAS1	Hadspen	Hadspen-GeorgeTown	220
+TAS1	Hadspen	Hadspen-GeorgeTown	220
+TAS1	Hadspen	Hadspen-Trevallyn	110
+TAS1	Hadspen	Hadspen-Trevallyn	110
+TAS1	Hadspen	Hadspen-Norwood	110
+TAS1	Liapootah	Liapootah-ChapelSt	220
+TAS1	Liapootah	Liapootah-ChapelSt	220
+TAS1	Liapootah	Liapootah-Wayatinah	220
+TAS1	New Norfolk	NewNorfolk-ChapelSt	110
+TAS1	New Norfolk	NewNorfolk-CreekRd	110
+TAS1	Norwood	Norwood-Scottsdale	110
+TAS1	Palmerston	Palmerston-Hadspen	110
+TAS1	Palmerston	Palmerston-Hadspen	110
+TAS1	Palmerston	Palmerston-Hadspen	220
+TAS1	Palmerston	Palmerston-Hadspen	220
+TAS1	Palmerston	Palmerston-Sheffield	220
+TAS1	Poatina	Poatina-Palmerston	220
+TAS1	Poatina	Poatina-Palmerston	220
+TAS1	Poatina	Poatina-Palmerston	220
+TAS1	Poatina	Poatina-Palmerston	220
+TAS1	Sheffield	Sheffield-Wilmot	220
+TAS1	Sheffield	Sheffield-Cethana	220
+TAS1	Sheffield	Sheffield-Burnie	220
+TAS1	Sheffield	Sheffield-DevilsGate	110
+TAS1	Sheffield	Sheffield-Lemonthyme	220
+TAS1	Sheffield	Sheffield-Farrell	220
+TAS1	Sheffield	Sheffield-Farrell	220
+TAS1	Sheffield	Sheffield-GeorgeTown	220
+TAS1	Sheffield	Sheffield-GeorgeTown	220
+TAS1	Sheffield	Sheffield-Fisher	220
+TAS1	Tarraleah	Tarraleah-Tungatinah	110
+TAS1	Tarraleah	Tarraleah-Tungatinah	110
+TAS1	Trevallyn	Trevallyn-Mowbray	110
+TAS1	Waddamana	Waddamana-Bridgewatr	110
+TAS1	Wayatinah Tee	Wayatinah-Catagunya	220
+VIC1	Alcoaportland	Alcprtlnd-Heywood	500
+VIC1	Alcoaportland	Alcprtlnd-Heywood	500
+VIC1	Ballarat	Ballart-Terang	220
+VIC1	Brooklyn	Brooklyn-Fshmns Bnd	220
+VIC1	Brooklyn	Brooklyn-NwPrt D PS	220
+VIC1	Cranbourne	Cranbourne-E Rowville	220
+VIC1	DEERPARK	DPTS-GTS	220
+VIC1	Dederang	Dederang-Murray	330
+VIC1	Dederang	Dederang-Wodonga	330
+VIC1	Deer Park Ausnet	DeerPark-Geelong	220
+VIC1	Fishermans Bend	Fshmns Bnd-NwPrt D PS	220
+VIC1	Fishermans Bend	Fshmns Bnd-W Melbourn	220
+VIC1	Geelong	Geelong-Keilor	220
+VIC1	Geelong	Geelong-Keilor	220
+VIC1	Hazelwood	Hazelwood-Rowvill	500
+VIC1	Hazelwood Ps	Hazelwd PS-Rowvill	220
+VIC1	Hazelwood Ps	Hazelwd PS-Rowvill	220
+VIC1	Keilor	Keilor-Sydenham	500
+VIC1	Keilor	Keilor-W Melbourn	220
+VIC1	Loy Yang Ps	Loy Yng PS-BasslinkLY	500
+VIC1	Moorabool	Moorabool-Sydenham	500
+VIC1	Murraylink VIC	Murrylnk-V-Murrylnk-S	165
+VIC1	Ringwood	Ringwood-Thomastown	220
+VIC1	Rowville	Rowvill-Richmond	220
+VIC1	South Morang	S Morang-Thomastown	220
+VIC1	Templestowe	Templestow-Thomastown	220
+VIC1	Wodonga	Wodonga-Jinderra	330

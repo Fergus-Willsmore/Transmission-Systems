@@ -22,11 +22,14 @@ outage.df <- read.csv('~/Documents/GitHub/Transmission-Systems/topology/PUBLIC_N
 
 # Read .txt file containing the line names processed by topology.py
 
-lines <- scan('~/Documents/GitHub/Transmission-Systems/topology/top_test.txt', character(), quote = "")
+line.df <- read.delim('~/Documents/GitHub/Transmission-Systems/topology/top_test.txt', header = TRUE, sep = '\t', character(), quote = "")
 
 # Create edge-list for network
 
-name.ls <- strsplit(lines,'-')
+name.ls <- strsplit(as.character(line.df$Equipment),'-')
+name.length <- lapply(name.ls, function(x) length(x)) %>% as.matrix()
+name.ls <- name.ls[-which(name.length>2)]
+
 el <- matrix(unlist(name.ls), ncol = 2, byrow = TRUE)
 
 # Create network from edglist
@@ -40,6 +43,8 @@ net.graph <- ggraph(net) +
   geom_node_point(col = "indianred1", size = 1) +
   theme_graph()
 
+plot(net.graph)
+
 ggsave('net.pdf', plot = net.graph, 
        path = '~/Documents/GitHub/Transmission-Systems/figures', 
        width = 8, height = 8 )
@@ -47,9 +52,11 @@ ggsave('net.pdf', plot = net.graph,
 # plot(net,layout=layout_with_fr, vertex.size=4,
 #      vertex.label.dist=0.5, vertex.color="red",vertex.label=NA)
 
-####### Connectivity ##########
+#### Connect the network: Random algorithm ####
 
 set.seed(560)
+
+source('~/Documents/GitHub/Transmission-Systems/topology/rand.net.top.R')
 
 con.net <- rand.net.top(net)
 
@@ -57,6 +64,8 @@ con.net.graph <- ggraph(con.net) +
                     geom_edge_link() + 
                     geom_node_point(col = "indianred1", size = 1) +
                     theme_graph()
+
+plot(con.net.graph)
 
 ggsave('con_net.pdf', plot = con.net.graph, 
        path = '~/Documents/GitHub/Transmission-Systems/figures', 
