@@ -9,8 +9,8 @@
 library(tidyverse)
 library(stringr)
 library(igraph)
-library(ggraph)
 library(ggplot2)
+library(ggraph)
 library(statnet)
 
 components <- igraph::components
@@ -49,8 +49,14 @@ ggsave('net.pdf', plot = net.graph,
        path = '~/Documents/GitHub/Transmission-Systems/figures', 
        width = 8, height = 8 )
 
-# plot(net,layout=layout_with_fr, vertex.size=4,
-#      vertex.label.dist=0.5, vertex.color="red",vertex.label=NA)
+#### Connect the network: By Region and Capacity ####
+
+set_vertex_attr(net, 'Region', index = V(net), value = rep(NA, 272))
+
+ls <- sapply(V(net)$name, function(x) as.character(line.df[line.df$Station == x,1])[1]) %>% as.matrix()
+
+el[which(el == 'Avon'),2] 
+V(net)$Region[V(net)$name == 'Marulan'] = 
 
 #### Connect the network: Random algorithm ####
 
