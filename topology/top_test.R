@@ -51,12 +51,41 @@ ggsave('net.pdf', plot = net.graph,
 
 #### Connect the network: By Region and Capacity ####
 
-set_vertex_attr(net, 'Region', index = V(net), value = rep(NA, 272))
+set_vertex_attr(net, 'Region', index = V(net), value = 272)
+set_edge_attr(net, 'kv', index = E(net), value = rep(NA, nrow(line.df)))
+
+E(net)$kv = line.df[,4]
 
 ls <- sapply(V(net)$name, function(x) as.character(line.df[line.df$Station == x,1])[1]) %>% as.matrix()
 
-el[which(el == 'Avon'),2] 
-V(net)$Region[V(net)$name == 'Marulan'] = 
+V(net)$Region = ls
+
+net.comps <- decompose(net, min.vertices=2)
+
+for (comp in net.comps){
+  tmp = V(comp)$Region
+  reg = names(which.max(table(tmp)))
+  if (is.null(reg)){
+    reg = 'NSW1'
+  }
+  tmp[is.na(tmp)] = reg 
+  V(comp)$Region = tmp
+  print(V(comp)$Region)
+}
+
+
+
+
+# for (s in rownames(ls)){
+#   if (is.null(V(net)$Region[V(net)$name == s])){
+#     b <- el[which(el == s) %% nrow(el),2]
+#     print(c(s,b))
+#   }
+#   # V(net)$Region[V(net)$name == b] = V(net)$Region[V(net)$name == s]
+# }
+# 
+# el[which(el == 'Avon'),2] 
+# V(net)$Region[V(net)$name == 'Marulan']
 
 #### Connect the network: Random algorithm ####
 
