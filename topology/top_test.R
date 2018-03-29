@@ -49,12 +49,9 @@ ggsave('net.pdf', plot = net.graph,
        path = '~/Documents/GitHub/Transmission-Systems/figures', 
        width = 8, height = 8 )
 
-#### Connect the network: By Region and Capacity ####
+#### Connect the network: By Region ####
 
 set_vertex_attr(net, 'Region', index = V(net), value = 272)
-set_edge_attr(net, 'kv', index = E(net), value = rep(NA, nrow(line.df)))
-
-E(net)$kv = line.df[,4]
 
 ls <- sapply(V(net)$name, function(x) as.character(line.df[line.df$Station == x,1])[1]) %>% as.matrix()
 
@@ -62,31 +59,54 @@ V(net)$Region = ls
 
 net.comps <- decompose(net, min.vertices=2)
 
+i<-1
 for (comp in net.comps){
   tmp = V(comp)$Region
-  reg = names(which.max(table(tmp)))
-  if (is.null(reg)){
-    reg = 'NSW1'
+  region = names(which.max(table(tmp)))
+  if (is.null(region)){
+    region = 'NSW1'
   }
-  tmp[is.na(tmp)] = reg 
-  V(comp)$Region = tmp
-  print(V(comp)$Region)
+  tmp[is.na(tmp)] = region 
+  V(net.comps[[i]])$Region = tmp
+  print(V(net.comps[[i]])$Region)
+  i<-i+1
 }
 
+# Get the index of components from each region
 
+s <- sapply(net.comps, function(x) names(which.max(table(V(x)$Region))))
+regions <- levels(factor(s))
+r.ind<-list()
+i<-1
+for (r in regions){
+  r.ind[[i]]<-sapply(s, function(x) which(x==paste(r))) %>% as.logical %>% which()
+  i<-i+1
+}
+names(r.ind)<-regions
 
+r.ind <- sapply(r.ind, function(x) matrix(sample(x),ncol = 2))
 
-# for (s in rownames(ls)){
-#   if (is.null(V(net)$Region[V(net)$name == s])){
-#     b <- el[which(el == s) %% nrow(el),2]
-#     print(c(s,b))
-#   }
-#   # V(net)$Region[V(net)$name == b] = V(net)$Region[V(net)$name == s]
-# }
-# 
-# el[which(el == 'Avon'),2] 
-# V(net)$Region[V(net)$name == 'Marulan']
+# Size of each component
 
+len <- sapply(net.comps, function(x) length(vertex_attr(x)$name))
+
+# choose a random bus in each component
+
+rbus <- sapply(len, function(x) sample(1:x,1))
+
+rnum <- cbind(1:length(net.comps), rbus)
+rls<-split(rnum, row(rnum))
+
+# obtain the random bus name for each component
+
+busnames <- sapply(rls, function(x) vertex_attr(net.comps[[x[1]]])$name[x[2]]) %>% matrix(ncol=2)
+
+# create an edgelist of paths between components
+
+paths <- graph_from_edgelist(busnames,directed = F)
+
+net <- net %u% paths
+ 
 #### Connect the network: Random algorithm ####
 
 set.seed(560)
