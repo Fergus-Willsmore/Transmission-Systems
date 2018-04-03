@@ -26,9 +26,10 @@ line.df <- read.delim('~/Documents/GitHub/Transmission-Systems/topology/top_test
 
 # Create edge-list for network
 
-name.ls <- strsplit(as.character(line.df$Equipment),'-')
-name.length <- lapply(name.ls, function(x) length(x)) %>% as.matrix()
-name.ls <- name.ls[-which(name.length>2)]
+name.ls <- strsplit(as.character(line.df$Equipment),'-') # separate by the hyphen
+name.length <- lapply(name.ls, function(x) length(x)) %>% as.matrix() # find length of each entry
+line.df <- line.df[-which(name.length>2),]
+name.ls <- name.ls[-which(name.length>2)] # discards entries with more than two entries
 
 el <- matrix(unlist(name.ls), ncol = 2, byrow = TRUE)
 
@@ -51,61 +52,21 @@ ggsave('net.pdf', plot = net.graph,
 
 #### Connect the network: By Region ####
 
-set_vertex_attr(net, 'Region', index = V(net), value = 272)
+source('~/Documents/GitHub/Transmission-Systems/topology/reg.net.top.R')
 
-ls <- sapply(V(net)$name, function(x) as.character(line.df[line.df$Station == x,1])[1]) %>% as.matrix()
+E(net)$Region = line.df$X..Region
 
-V(net)$Region = ls
+net <- reg.net.top(net)
 
-net.comps <- decompose(net, min.vertices=2)
+net.graph <- ggraph(net) + 
+  geom_edge_link(aes(color = factor(E(net)$Region))) + 
+  theme_graph()
 
-i<-1
-for (comp in net.comps){
-  tmp = V(comp)$Region
-  region = names(which.max(table(tmp)))
-  if (is.null(region)){
-    region = 'NSW1'
-  }
-  tmp[is.na(tmp)] = region 
-  V(net.comps[[i]])$Region = tmp
-  print(V(net.comps[[i]])$Region)
-  i<-i+1
-}
+plot(net.graph)
 
-# Get the index of components from each region
-
-s <- sapply(net.comps, function(x) names(which.max(table(V(x)$Region))))
-regions <- levels(factor(s))
-r.ind<-list()
-i<-1
-for (r in regions){
-  r.ind[[i]]<-sapply(s, function(x) which(x==paste(r))) %>% as.logical %>% which()
-  i<-i+1
-}
-names(r.ind)<-regions
-
-r.ind <- sapply(r.ind, function(x) matrix(sample(x),ncol = 2))
-
-# Size of each component
-
-len <- sapply(net.comps, function(x) length(vertex_attr(x)$name))
-
-# choose a random bus in each component
-
-rbus <- sapply(len, function(x) sample(1:x,1))
-
-rnum <- cbind(1:length(net.comps), rbus)
-rls<-split(rnum, row(rnum))
-
-# obtain the random bus name for each component
-
-busnames <- sapply(rls, function(x) vertex_attr(net.comps[[x[1]]])$name[x[2]]) %>% matrix(ncol=2)
-
-# create an edgelist of paths between components
-
-paths <- graph_from_edgelist(busnames,directed = F)
-
-net <- net %u% paths
+ggsave('net.pdf', plot = net.graph, 
+       path = '~/Documents/GitHub/Transmission-Systems/figures', 
+       width = 8, height = 8 )
  
 #### Connect the network: Random algorithm ####
 

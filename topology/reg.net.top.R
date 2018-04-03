@@ -11,31 +11,6 @@ reg.net.top <- function(net){
   
   if (components(net)$no==1) stop('The network is already connected.')
   
-  # Decompose network into a list of network components
-  
-  net.comps <- decompose(net, min.vertices=2)
-  
-  # Fill in missing region data with the region of a connected bus
-  
-  i <- 1
-  
-  for (comp in net.comps){
-
-    tmp = V(comp)$Region # vector of regions for the buses in the component
-
-    region = names(which.max(table(tmp))) # the most common region
-    
-    if (is.null(region)){
-      region = names(which.max(table(V(net)$Region))) # update region for component if no region present on any bus
-    }
-    
-    tmp[is.na(tmp)] = region # update missing data with most common region in component
-    
-    V(net.comps[[i]])$Region = tmp
-    
-    i<-i+1
-  }
-  
   # Precautionary measure for while loop
   
   count = 0
@@ -44,15 +19,13 @@ reg.net.top <- function(net){
     
     # Decompose network into a list of network components
     
-    if (count!=0){
-      net.components <- decompose(net, min.vertices=2)
-    }
+    net.comps <- decompose(net, min.vertices=2)
     
     # Get the index of components from each region
     
-    creg <- sapply(net.comps, function(x) names(which.max(table(V(x)$Region))))
+    creg <- sapply(net.comps, function(x) names(which.max(table(E(x)$Region))))
     
-    regions <- levels(factor(s))
+    regions <- 1:5
     
     r.ind<-list()
     
@@ -62,19 +35,18 @@ reg.net.top <- function(net){
       i<-i+1
     }
     
-    names(r.ind)<-regions
-    
     r.ind <- sapply(r.ind, function(x) matrix(sample(x),ncol = 2))
+    r.ind <- rbind.fill.matrix(ldply(r.ind))
     
     # Size of each component
     
-    len <- sapply(net.comps, function(x) length(vertex_attr(x)$name))
+    len <- sapply(r.ind, function(x) length(vertex_attr(net.comps[[x]])$name))
     
     # choose a random bus in each component
     
     rbus <- sapply(len, function(x) sample(1:x,1))
     
-    rnum <- cbind(1:length(net.comps), rbus)
+    rnum <- cbind(r.ind, rbus)
     rls<-split(rnum, row(rnum))
     
     # obtain the random bus name for each component
