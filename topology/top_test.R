@@ -39,7 +39,7 @@ net <- graph_from_edgelist(el,directed = F)
 
 # Plot the initial network
 
-net.graph <- ggraph(net) + 
+net.graph <- ggraph(net,layout = 'kk') + 
   geom_edge_link() + 
   geom_node_point(col = "indianred1", size = 1) +
   theme_graph()
@@ -54,17 +54,17 @@ ggsave('net.pdf', plot = net.graph,
 
 source('~/Documents/GitHub/Transmission-Systems/topology/reg.net.top.R')
 
-E(net)$Region = line.df$X..Region
+E(net)$Region = as.character(line.df$X..Region)
 
-net <- reg.net.top(net)
+reg.net <- reg.net.top(net,levels(line.df$X..Region))
 
-net.graph <- ggraph(net) + 
-  geom_edge_link(aes(color = factor(E(net)$Region))) + 
+reg.net.graph <- ggraph(reg.net,layout = 'kk') + 
+  geom_edge_link(aes(color = factor(E(reg.net)$Region))) + 
   theme_graph()
 
-plot(net.graph)
+plot(reg.net.graph)
 
-ggsave('net.pdf', plot = net.graph, 
+ggsave('reg_net.jpeg', plot = reg.net.graph, 
        path = '~/Documents/GitHub/Transmission-Systems/figures', 
        width = 8, height = 8 )
  
@@ -74,21 +74,20 @@ set.seed(560)
 
 source('~/Documents/GitHub/Transmission-Systems/topology/rand.net.top.R')
 
-con.net <- rand.net.top(net)
+rand.net <- rand.net.top(net)
 
-con.net.graph <- ggraph(con.net) + 
+rand.net.graph <- ggraph(rand.net, layout = 'kk') + 
                     geom_edge_link() + 
                     geom_node_point(col = "indianred1", size = 1) +
                     theme_graph()
 
-plot(con.net.graph)
+plot(rand.net.graph)
 
-ggsave('con_net.pdf', plot = con.net.graph, 
+ggsave('rand_net.pdf', plot = rand.net.graph, 
        path = '~/Documents/GitHub/Transmission-Systems/figures', 
        width = 8, height = 8 )
 
-# plot(con.net,layout=layout_with_fr, vertex.size=3,
-#      vertex.label.dist=0.5, vertex.color="indianred1",vertex.label=NA)
+
 
 
 

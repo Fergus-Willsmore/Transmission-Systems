@@ -5,7 +5,7 @@
 # Output: An igraph network object that is connected.
 # Created by F.R. Willsmore 29/3/2018
 
-reg.net.top <- function(net){
+reg.net.top <- function(net, regions){
   
   # Check for a connected network
   
@@ -24,8 +24,6 @@ reg.net.top <- function(net){
     # Get the index of components from each region
     
     creg <- sapply(net.comps, function(x) names(which.max(table(E(x)$Region))))
-    
-    regions <- 1:5
     
     r.ind<-list()
     
