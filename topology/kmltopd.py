@@ -6,6 +6,9 @@ Created on Tue Apr 10 12:07:20 2018
 @author: ferguswillsmore
 """
 
+import numpy as np
+import re
+
 Variables = ['OBJECTID','FEATURETYPE','CLASS','FID','NAME','OPERATIONALSTATUS','CAPACITYKV','STATE','SPATIALCONFIDENCE','REVISED','SHAPE_Length']
 
 lines = []                  
@@ -23,6 +26,15 @@ for s in lines:
         if val == '':
             val = ' '
         sp.append(val)
+    if s[s.find("<")+1:s.find(">")] == 'coordinates':
+        coord = s[s.find(">")+1:s.find("<",2)]
+        coord = re.sub('0.0 ', '', coord)
+        coord = np.array([x.strip() for x in coord.split(',')])
+        sp.append(coord[0])
+        sp.append(coord[1])
+        sp.append(coord[len(coord)-3])
+        sp.append(coord[len(coord)-2])
+
     i = i+1
 
 sp = list(filter(None, sp))       

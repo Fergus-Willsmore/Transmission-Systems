@@ -61,7 +61,7 @@ reg.net.top <- function(net, regions){
     
     # Stop if network is connected or too many iterations
     
-    if (components(net)$no==1|count==length(components)/2){
+    if (components(net)$no==1|count==200){
       break
     }
     
