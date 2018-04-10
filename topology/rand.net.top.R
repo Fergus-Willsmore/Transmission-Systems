@@ -52,7 +52,7 @@ rand.net.top <- function(net){
     
     # Stop if network is connected or too many iterations
     
-    if (components(net)$no==1|count==length(components)/2){
+    if (components(net)$no==1|count==2000){
       break
     }
     

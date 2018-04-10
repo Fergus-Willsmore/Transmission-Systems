@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<kml xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+<name>doc</name>
+<visibility>1</visibility>
+<Style id="KMLStyler">
+<IconStyle>
+<scale>.5</scale>
+<Icon>
+<href>images/E1.png</href>
+</Icon>
+</IconStyle>
+<LabelStyle>
+<scale>1.0</scale>
+</LabelStyle>
+<LineStyle>
+<color>ff0000ff</color>
+<width>1.0</width>
+<gx:labelVisibility>1</gx:labelVisibility>
+</LineStyle>
+<PolyStyle>
+<color>660000ff</color>
+</PolyStyle>
+</Style>
+<Schema name="ElectricityTransmissionLines_v2" id="kml_schema_ft_ElectricityTransmissionLines_v2">
+<SimpleField type="xsd:int" name="OBJECTID">
+<displayName>OBJECTID</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="FEATURETYPE">
+<displayName>FEATURETYPE</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="DESCRIPTON">
+<displayName>DESCRIPTON</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="CLASS">
+<displayName>CLASS</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="FID">
+<displayName>FID</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="NAME">
+<displayName>NAME</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="OPERATIONALSTATUS">
+<displayName>OPERATIONALSTATUS</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="CAPACITYKV">
+<displayName>CAPACITYKV</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="STATE">
+<displayName>STATE</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="SPATIALCONFIDENCE">
+<displayName>SPATIALCONFIDENCE</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="REVISED">
+<displayName>REVISED</displayName>
+</SimpleField>
+<SimpleField type="xsd:string" name="COMMENT">
+<displayName>COMMENT</displayName>
+</SimpleField>
+<SimpleField type="xsd:double" name="SHAPE_Length">
+<displayName>SHAPE_Length</displayName>
+</SimpleField>
+</Schema>
+<Folder id="kml_ft_ElectricityTransmissionLines_v2">
+<name>ElectricityTransmissionLines_v2</name>
+<Placemark id="kml_1">
+<name>Callide B Power Station to Calvale</name>
+<visibility>1</visibility>
+<description><![CDATA[<center><table><tr><th colspan='2' align='center'><em>Attributes</em></th></tr><tr bgcolor="#E3E3F3">
+<th>OBJECTID</th>
+<td>1</td>
+</tr><tr bgcolor="">
+<th>FEATURETYPE</th>
+<td>Transmission Line</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>DESCRIPTON</th>
+<td>A network of wires and insulators used to connect and transport high voltage electricity from generators to large demand customers and the lower voltage electricity distribution network</td>
+</tr><tr bgcolor="">
+<th>CLASS</th>
+<td>Overhead</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>FID</th>
+<td>1</td>
+</tr><tr bgcolor="">
+<th>NAME</th>
+<td>Callide B Power Station to Calvale</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>OPERATIONALSTATUS</th>
+<td>Operational</td>
+</tr><tr bgcolor="">
+<th>CAPACITYKV</th>
+<td>275</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>STATE</th>
+<td>Queensland</td>
+</tr><tr bgcolor="">
+<th>SPATIALCONFIDENCE</th>
+<td>5</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>REVISED</th>
+<td>20120710</td>
+</tr><tr bgcolor="">
+<th>COMMENT</th>
+<td></td>
+</tr><tr bgcolor="#E3E3F3">
+<th>SHAPE_Length</th>
+<td>0.0101670994252775</td>
+</tr></table></center>]]></description>
+<styleUrl>#KMLStyler</styleUrl>
+<ExtendedData>
+<SchemaData schemaUrl="#kml_schema_ft_ElectricityTransmissionLines_v2">
+<SimpleData name="OBJECTID">1</SimpleData>
+<SimpleData name="FEATURETYPE">Transmission Line</SimpleData>
+<SimpleData name="DESCRIPTON">A network of wires and insulators used to connect and transport high voltage electricity from generators to large demand customers and the lower voltage electricity distribution network</SimpleData>
+<SimpleData name="CLASS">Overhead</SimpleData>
+<SimpleData name="FID">1</SimpleData>
+<SimpleData name="NAME">Callide B Power Station to Calvale</SimpleData>
+<SimpleData name="OPERATIONALSTATUS">Operational</SimpleData>
+<SimpleData name="CAPACITYKV">275</SimpleData>
+<SimpleData name="STATE">Queensland</SimpleData>
+<SimpleData name="SPATIALCONFIDENCE">5</SimpleData>
+<SimpleData name="REVISED">20120710</SimpleData>
+<SimpleData name="SHAPE_Length">0.0101670994252775</SimpleData>
+</SchemaData>
+</ExtendedData>
+<LineString>
+<extrude>0</extrude>
+<tessellate>1</tessellate>
+<coordinates>150.619749,-24.3448799999999,0.0 150.620232897,-24.3463191989999,0.0 150.622327771,-24.346357686,0.0 150.624661,-24.3447624999999,0.0 150.625812378,-24.343125922,0.0 150.6274575,-24.3426034999999,0.0</coordinates>
+</LineString>
+</Placemark>
+<Placemark id="kml_2">
+<name>Callide B Power Station to Calvale</name>
+<visibility>1</visibility>
+<description><![CDATA[<center><table><tr><th colspan='2' align='center'><em>Attributes</em></th></tr><tr bgcolor="#E3E3F3">
+<th>OBJECTID</th>
+<td>2</td>
+</tr><tr bgcolor="">
+<th>FEATURETYPE</th>
+<td>Transmission Line</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>DESCRIPTON</th>
+<td>A network of wires and insulators used to connect and transport high voltage electricity from generators to large demand customers and the lower voltage electricity distribution network</td>
+</tr><tr bgcolor="">
+<th>CLASS</th>
+<td>Overhead</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>FID</th>
+<td>2</td>
+</tr><tr bgcolor="">
+<th>NAME</th>
+<td>Callide B Power Station to Calvale</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>OPERATIONALSTATUS</th>
+<td>Operational</td>
+</tr><tr bgcolor="">
+<th>CAPACITYKV</th>
+<td>275</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>STATE</th>
+<td>Queensland</td>
+</tr><tr bgcolor="">
+<th>SPATIALCONFIDENCE</th>
+<td>5</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>REVISED</th>
+<td>20120710</td>
+</tr><tr bgcolor="">
+<th>COMMENT</th>
+<td></td>
+</tr><tr bgcolor="#E3E3F3">
+<th>SHAPE_Length</th>
+<td>0.0112400629710936</td>
+</tr></table></center>]]></description>
+<styleUrl>#KMLStyler</styleUrl>
+<ExtendedData>
+<SchemaData schemaUrl="#kml_schema_ft_ElectricityTransmissionLines_v2">
+<SimpleData name="OBJECTID">2</SimpleData>
+<SimpleData name="FEATURETYPE">Transmission Line</SimpleData>
+<SimpleData name="DESCRIPTON">A network of wires and insulators used to connect and transport high voltage electricity from generators to large demand customers and the lower voltage electricity distribution network</SimpleData>
+<SimpleData name="CLASS">Overhead</SimpleData>
+<SimpleData name="FID">2</SimpleData>
+<SimpleData name="NAME">Callide B Power Station to Calvale</SimpleData>
+<SimpleData name="OPERATIONALSTATUS">Operational</SimpleData>
+<SimpleData name="CAPACITYKV">275</SimpleData>
+<SimpleData name="STATE">Queensland</SimpleData>
+<SimpleData name="SPATIALCONFIDENCE">5</SimpleData>
+<SimpleData name="REVISED">20120710</SimpleData>
+<SimpleData name="SHAPE_Length">0.0112400629710936</SimpleData>
+</SchemaData>
+</ExtendedData>
+<LineString>
+<extrude>0</extrude>
+<tessellate>1</tessellate>
+<coordinates>150.6274575,-24.3426034999999,0.0 150.6261685,-24.343451,0.0 150.6250005,-24.3450305,0.0 150.622433425,-24.3465981429999,0.0 150.620232897,-24.3463191989999,0.0 150.619224285,-24.3462827449999,0.0 150.619749,-24.3448799999999,0.0</coordinates>
+</LineString>
+</Placemark>
+<Placemark id="kml_3">
+<name>Calvale to Callide A Power Station</name>
+<visibility>1</visibility>
+<description><![CDATA[<center><table><tr><th colspan='2' align='center'><em>Attributes</em></th></tr><tr bgcolor="#E3E3F3">
+<th>OBJECTID</th>
+<td>3</td>
+</tr><tr bgcolor="">
+<th>FEATURETYPE</th>
+<td>Transmission Line</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>DESCRIPTON</th>
+<td>A network of wires and insulators used to connect and transport high voltage electricity from generators to large demand customers and the lower voltage electricity distribution network</td>
+</tr><tr bgcolor="">
+<th>CLASS</th>
+<td>Overhead</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>FID</th>
+<td>3</td>
+</tr><tr bgcolor="">
+<th>NAME</th>
+<td>Calvale to Callide A Power Station</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>OPERATIONALSTATUS</th>
+<td>Operational</td>
+</tr><tr bgcolor="">
+<th>CAPACITYKV</th>
+<td>132</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>STATE</th>
+<td>Queensland</td>
+</tr><tr bgcolor="">
+<th>SPATIALCONFIDENCE</th>
+<td>5</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>REVISED</th>
+<td>20120710</td>
+</tr><tr bgcolor="">
+<th>COMMENT</th>
+<td></td>
+</tr><tr bgcolor="#E3E3F3">
+<th>SHAPE_Length</th>
+<td>0.00930362099296361</td>
+</tr></table></center>]]></description>
+<styleUrl>#KMLStyler</styleUrl>
+<ExtendedData>
+<SchemaData schemaUrl="#kml_schema_ft_ElectricityTransmissionLines_v2">
+<SimpleData name="OBJECTID">3</SimpleData>
+<SimpleData name="FEATURETYPE">Transmission Line</SimpleData>
+<SimpleData name="DESCRIPTON">A network of wires and insulators used to connect and transport high voltage electricity from generators to large demand customers and the lower voltage electricity distribution network</SimpleData>
+<SimpleData name="CLASS">Overhead</SimpleData>
+<SimpleData name="FID">3</SimpleData>
+<SimpleData name="NAME">Calvale to Callide A Power Station</SimpleData>
+<SimpleData name="OPERATIONALSTATUS">Operational</SimpleData>
+<SimpleData name="CAPACITYKV">132</SimpleData>
+<SimpleData name="STATE">Queensland</SimpleData>
+<SimpleData name="SPATIALCONFIDENCE">5</SimpleData>
+<SimpleData name="REVISED">20120710</SimpleData>
+<SimpleData name="SHAPE_Length">0.00930362099296361</SimpleData>
+</SchemaData>
+</ExtendedData>
+<LineString>
+<extrude>0</extrude>
+<tessellate>1</tessellate>
+<coordinates>150.628405,-24.3343189999999,0.0 150.628724015,-24.335029812,0.0 150.62924,-24.3357,0.0 150.629959,-24.33679275,0.0 150.629913,-24.3371334999999,0.0 150.62983795,-24.337690804,0.0 150.628005781,-24.3416923899999,0.0 150.6274575,-24.3426034999999,0.0</coordinates>
+</LineString>
+</Placemark>
+<Placemark id="kml_4">
+<name>Braemar to Bulli Creek</name>
+<visibility>1</visibility>
+<description><![CDATA[<center><table><tr><th colspan='2' align='center'><em>Attributes</em></th></tr><tr bgcolor="#E3E3F3">
+<th>OBJECTID</th>
+<td>4</td>
+</tr><tr bgcolor="">
+<th>FEATURETYPE</th>
+<td>Transmission Line</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>DESCRIPTON</th>
+<td>A network of wires and insulators used to connect and transport high voltage electricity from generators to large demand customers and the lower voltage electricity distribution network</td>
+</tr><tr bgcolor="">
+<th>CLASS</th>
+<td>Overhead</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>FID</th>
+<td>4</td>
+</tr><tr bgcolor="">
+<th>NAME</th>
+<td>Braemar to Bulli Creek</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>OPERATIONALSTATUS</th>
+<td>Operational</td>
+</tr><tr bgcolor="">
+<th>CAPACITYKV</th>
+<td>330</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>STATE</th>
+<td>Queensland</td>
+</tr><tr bgcolor="">
+<th>SPATIALCONFIDENCE</th>
+<td>5</td>
+</tr><tr bgcolor="#E3E3F3">
+<th>REVISED</th>
+<td>20120710</td>
+</tr><tr bgcolor="">
+<th>COMMENT</th>
+<td></td>
+</tr><tr bgcolor="#E3E3F3">
+<th>SHAPE_Length</th>
+<td>0.83019401119138</td>
+</tr></table></center>]]></description>
+<styleUrl>#KMLStyler</styleUrl>
+<ExtendedData>
+<SchemaData schemaUrl="#kml_schema_ft_ElectricityTransmissionLines_v2">
+<SimpleData name="OBJECTID">4</SimpleData>
+<SimpleData name="FEATURETYPE">Transmission Line</SimpleData>
+<SimpleData name="DESCRIPTON">A network of wires and insulators used to connect and transport high voltage electricity from generators to large demand customers and the lower voltage electricity distribution network</SimpleData>
+<SimpleData name="CLASS">Overhead</SimpleData>
+<SimpleData name="FID">4</SimpleData>
+<SimpleData name="NAME">Braemar to Bulli Creek</SimpleData>
+<SimpleData name="OPERATIONALSTATUS">Operational</SimpleData>
+<SimpleData name="CAPACITYKV">330</SimpleData>
+<SimpleData name="STATE">Queensland</SimpleData>
+<SimpleData name="SPATIALCONFIDENCE">5</SimpleData>
+<SimpleData name="REVISED">20120710</SimpleData>
+<SimpleData name="SHAPE_Length">0.83019401119138</SimpleData>
+</SchemaData>
+</ExtendedData>
+<LineString>
+<extrude>0</extrude>
+<tessellate>1</tessellate>
+<coordinates>150.843106929,-27.9211175899999,0.0 150.842613383,-27.9186125909999,0.0 150.842205159,-27.914794469,0.0 150.841772172,-27.910774556,0.0 150.841326587,-27.9066376929999,0.0 150.840908365,-27.902754865,0.0 150.840499264,-27.898956714,0.0 150.840064425,-27.894919619,0.0 150.839560465,-27.8902407859999,0.0 150.840133785,-27.8869339939999,0.0 150.840797794,-27.883104132,0.0 150.841461754,-27.8792745489999,0.0 150.842118137,-27.87548867,0.0 150.842810982,-27.871492486,0.0 150.843471337,-27.8676836939999,0.0 150.844185073,-27.863567017,0.0 150.844845428,-27.859758224,0.0 150.845449681,-27.8562730199999,0.0 150.846102639,-27.852506895,0.0 150.846089375,-27.8485641189999,0.0 150.846062119,-27.840462051,0.0 150.846048815,-27.836507431,0.0 150.846023335,-27.8289335489999,0.0 150.846010439,-27.82510028,0.0 150.845997591,-27.8212811929999,0.0 150.845984479,-27.817383632,0.0 150.845957487,-27.8093601319999,0.0 150.845943967,-27.8053411719999,0.0 150.845930423,-27.80131517,0.0 150.845916974,-27.797317528,0.0 150.845903478,-27.793305851,0.0 150.845890179,-27.7893526029999,0.0 150.845405798,-27.78591305,0.0 150.8448531,-27.7819883729999,0.0 150.844296458,-27.7780356979999,0.0 150.843740254,-27.774086078,0.0 150.8431794,-27.770103433,0.0 150.842650643,-27.766348716,0.0 150.842123302,-27.7626040559999,0.0 150.841661058,-27.759321643,0.0 150.84239466,-27.755840024,0.0 150.843299651,-27.75154501,0.0 150.844080704,-27.74783819,0.0 150.845759652,-27.73986895,0.0 150.845755966,-27.7365627029999,0.0 150.845751771,-27.7328007799999,0.0 150.845746892,-27.72842494,0.0 150.845735455,-27.7181670809999,0.0 150.84572978,-27.7130774199999,0.0 150.845726,-27.709686693,0.0 150.845721678,-27.70581054,0.0 150.845717157,-27.701755943,0.0 150.845712652,-27.697715624,0.0 150.845707948,-27.693518261,0.0 150.845703085,-27.689178129,0.0 150.845699525,-27.686001521,0.0 150.845694749,-27.681739928,0.0 150.845690389,-27.6778495139999,0.0 150.845681717,-27.670111501,0.0 150.845677398,-27.666256763,0.0 150.845672982,-27.6623163959999,0.0 150.845668342,-27.658176123,0.0 150.845664006,-27.6543071089999,0.0 150.84565963,-27.6504024339999,0.0 150.845655534,-27.646747561,0.0 150.84565018,-27.642593054,0.0 150.845645102,-27.6386526539999,0.0 150.845634797,-27.6305862579999,0.0 150.845629635,-27.626545958,0.0 150.845624337,-27.622398528,0.0 150.845619348,-27.6184938389999,0.0 150.845614196,-27.614460648,0.0 150.845610188,-27.610456009,0.0 150.84560613,-27.6064014259999,0.0 150.845602408,-27.602682332,0.0 150.845598708,-27.59898464,0.0 150.845595193,-27.595472544,0.0 150.845590035,-27.590318651,0.0 150.845586063,-27.5863497,0.0 150.845581976,-27.582266535,0.0 150.845577983,-27.5782761689999,0.0 150.845573954,-27.5742501679999,0.0 150.845569967,-27.5702669249999,0.0 150.845565981,-27.566283697,0.0 150.84555848,-27.558788716,0.0 150.844953326,-27.5557948969999,0.0 150.844090094,-27.55145742,0.0 150.843304485,-27.547509971,0.0 150.841698294,-27.539439348,0.0 150.840965422,-27.535756889,0.0 150.840251402,-27.53216916,0.0 150.839440651,-27.5280953819999,0.0 150.838666555,-27.52420559,0.0 150.837860765,-27.5201565369999,0.0 150.837079837,-27.516232413,0.0 150.836274869,-27.512187495,0.0 150.835497872,-27.5082831249999,0.0 150.836434878,-27.5044217509999,0.0 150.837172254,-27.5013830469999,0.0 150.838121981,-27.497469252,0.0 150.838922914,-27.493611272,0.0 150.839748714,-27.4896335139999,0.0 150.840524788,-27.4858952769999,0.0 150.841414045,-27.481611851,0.0 150.84211628,-27.4777724809999,0.0 150.842952105,-27.473202726,0.0 150.843627385,-27.469510729,0.0 150.844194553,-27.466409665,0.0 150.844954756,-27.462253162,0.0 150.845647249,-27.4584668759999,0.0 150.844838003,-27.455607776,0.0 150.843867049,-27.452177349,0.0 150.841683973,-27.4444644389999,0.0 150.840757496,-27.441191148,0.0 150.839495393,-27.43673167,0.0 150.838371533,-27.4327606529999,0.0 150.83733048,-27.429082224,0.0 150.837564033,-27.4255027089999,0.0 150.837823916,-27.421519681,0.0 150.838083052,-27.417548086,0.0 150.838349428,-27.413465544,0.0 150.838608262,-27.409498587,0.0 150.838859796,-27.405643504,0.0 150.839114577,-27.401738665,0.0 150.839375387,-27.397741421,0.0 150.839624078,-27.3939299149999,0.0 150.839893357,-27.3898028689999,0.0 150.840156022,-27.385777192,0.0 150.840410339,-27.381879461,0.0 150.840669234,-27.377911576,0.0 150.840925466,-27.3739844849999,0.0 150.841190975,-27.369915232,0.0 150.841423897,-27.366345402,0.0 150.841678093,-27.362449526,0.0 150.841931468,-27.3585662319999,0.0 150.841611005,-27.354502532,0.0 150.841274893,-27.3502404029999,0.0 150.840973821,-27.3464225929999,0.0 150.840662885,-27.342479705,0.0 150.840340893,-27.3383966179999,0.0 150.840031515,-27.334471814,0.0 150.839693869,-27.330188391,0.0 150.839350543,-27.325832906,0.0 150.839003397,-27.321430006,0.0 150.838750316,-27.318220137,0.0 150.838573862,-27.314858853,0.0 150.838358019,-27.310747233,0.0 150.838154174,-27.306864161,0.0 150.837945136,-27.3028821739999,0.0 150.837773264,-27.2996081539999,0.0 150.837530678,-27.2949856449999,0.0 150.837320919,-27.2909886689999,0.0 150.83711938,-27.2871483069999,0.0 150.836916346,-27.283279469,0.0 150.836711818,-27.2793821559999,0.0 150.836521486,-27.275755357,0.0 150.836299694,-27.2715290859999,0.0 150.836101183,-27.267746421,0.0 150.835904126,-27.263991483,0.0 150.835704828,-27.260193833,0.0 150.835474405,-27.2558030829999,0.0 150.835051326,-27.247741241,0.0 150.837895918,-27.243993882,0.0 150.840551081,-27.240494562,0.0 150.843424928,-27.236707031,0.0 150.84544245,-27.234048077,0.0 150.848016041,-27.230656263,0.0 150.848836372,-27.229575124,0.0 150.850447856,-27.2274512999999,0.0 150.853022984,-27.22405746,0.0 150.855525687,-27.220759071,0.0 150.858119781,-27.2173402349999,0.0 150.860663853,-27.2139873249999,0.0 150.863095788,-27.2107822039999,0.0 150.865657168,-27.2074064839999,0.0 150.868304722,-27.203917191,0.0 150.870619304,-27.200866732,0.0 150.873246235,-27.197404621,0.0 150.8756643,-27.1942177789999,0.0 150.87826539,-27.190789723,0.0 150.880785279,-27.187468684,0.0 150.883105596,-27.1844106679999,0.0 150.88409796,-27.180419163,0.0 150.885087961,-27.1764371639999,0.0 150.886039528,-27.172609754,0.0 150.886959347,-27.16891004,0.0 150.887908411,-27.1650926949999,0.0 150.888884209,-27.161167823,0.0 150.889849139,-27.1572866669999,0.0 150.890799044,-27.153465942,0.0 150.891728891,-27.1497258909999,0.0 150.892705521,-27.145797675,0.0 150.893657928,-27.1419668849999,0.0 150.894606152,-27.13815292,0.0 150.895617872,-27.1340835619999,0.0 150.896554406,-27.13031662,0.0 150.897578325,-27.1261981929999,0.0 150.898765055,-27.121424905,0.0 150.899799637,-27.117263591,0.0 150.900136625,-27.115440232,0.0 150.9002875,-27.114229,0.0</coordinates>
