@@ -1,17 +1,15 @@
 # Network Topology by Region (reg.net.top)
 # A function that will connect components based on the region of each bus. 
 # This function works with the igraph library to manipulate the network structure.
-# Input: An igraph network object (presumably not connected) with state vertex attributes (i.e. SA, NSW, VIC).
+# Input: An igraph network object (presumably not connected) with state edge attributes (i.e. SA, NSW, VIC).
 # Output: An igraph network object that is connected.
 # Created by F.R. Willsmore 29/3/2018
 
-reg.net.top <- function(net, states){
+reg.net.top.E <- function(net, states){
   
   # Check for a connected network
   
   if (components(net)$no==1) stop('The network is already connected.')
-  
-  # Precautionary measure for while loop
   
   count = 0
   
@@ -23,7 +21,7 @@ reg.net.top <- function(net, states){
     
     # Get the index of components from each state
     
-    creg <- sapply(net.comps, function(x) names(which.max(table(V(x)$State))))
+    creg <- sapply(net.comps, function(x) names(which.max(table(E(x)$State))))
     
     r.ind<-list()
     
@@ -33,7 +31,7 @@ reg.net.top <- function(net, states){
       i<-i+1
     }
     
-    r.ind <- sapply(r.ind, function(x) matrix(sample(x),ncol = 2))
+    r.ind <- sapply(r.ind, function(x) matrix(sample(x),ncol = 1))
     r.ind <- rbind.fill.matrix(ldply(r.ind))
     
     # Size of each component
@@ -49,7 +47,7 @@ reg.net.top <- function(net, states){
     
     # obtain the random bus name for each component
     
-    busnames <- sapply(rls, function(x) vertex_attr(net.comps[[x[1]]])$name[x[2]]) %>% matrix(ncol=2)
+    busnames <- sapply(rls, function(x) vertex_attr(net.comps[[x[1]]])$name[x[2]]) %>% matrix(ncol=2, byrow = TRUE)
     
     # create an edgelist of paths between components
     

@@ -92,18 +92,106 @@
 \end{itemize}
 
 
-\section{Power Grid}
+\section{Electric Current}
 
-Electrical flow can be thought of as the movement of electrons through a surface, referred to as the {\it current} ($I$). The movement of charge is provoked by the {\it voltage} ($V$) of an electrical circuit. The potential difference creates an electric field that acts on the electrons within the circuit. This is best thought of as electrical potential energy, such that as voltage is increased more force is required to hold the electrons in a fixed position. Once released the electron will accelerate toward the positive pole resulting in the conversion of electrical potential energy into heat and kinetic energy. The idea of {\it electric power}, combines the elements {\it current} and {\it voltage} such that 
+Electrical flow can be thought of as the movement of electrons through a surface, referred to as the {\it current} ($I$). The movement of charge is provoked by the {\it voltage} ($V$) of an electrical circuit. The voltage creates a potential electrical difference such that the negatively charged electrons flow within the circuit. This is best thought of as electrical potential energy, such that as voltage is increased more force is required to hold the electrons in a fixed position. Once released the electron will accelerate toward the positive pole resulting in the conversion of electrical potential energy into heat and kinetic energy. The idea of {\it electric power}, combines the elements {\it current} and {\it voltage} such that 
 \begin{equation}
 P=V\times I
 \end{equation}
 expressed in watts. There are two distinct types of power flows, namely {\it direct current} (DC) and {\it alternating current} (AC). The simpler of the two is DC power, where the electrons always flow in the same direction (such as battery operated circuits). In a battery operated circuit the electrons always move from the negative pole to the positive pole. However in an AC circuit, the direction of current periodically changes, which gives rise to complex behaviour. 
 
 
-\subsection{AC vs DC}
+\section{AC vs DC}
 
 Electrical {\it current} is the flow of electrons through a surface measured as a rate. There are two different types; alternating current and direct current. The main distinction between the two is that the flow of electrons for DC is linear, \ie, the electrons (- charge) will move directly to the positive charge, whereas in AC the direction of flow alternates direction periodically with fixed frequency. The benefits of DC is that it is more efficient at electrical transmission over short distances due to the linear flow and limited power loss. However, the benefit of AC is that the voltage can be easily changed by a transformer thus allowing high voltage transmission for larger distances. Therefore the majority power is sourced from AC generators. 
+
+\section{DC power flows}
+
+The AC power flows along line ${k,m}$ are described by the complex quantity $p_{km}+iq_{km}$ such that
+\begin{eqnarray}
+p_{km} &=& |V_k|^2g_{km}-|V_k||V_m|g_{km}\cos \theta_{km}-|V_k||V_m|b_{km}\sin \theta_{km}\\
+q_{km} &=& -|V_k|^2\big(b_{km}+\frac{1}{2}b_{km}^{sh} \big)+|V_k||V_m|b_{km}\cos \theta_{km}-|V_k||V_m|g_{km}\sin \theta_{km}.
+\end{eqnarray}
+These are complex equations that lead to quadratic power flows which can lead solutions that do not converge. Hence it is typical to approximate these AC flows with DC flows that lead to a system of linear equations which can easily be solved. 
+\begin{itemize}
+\item Under normal conditions $|V_k|\approx 1$ for each bus $k$
+\item Under normal conditions $|\theta_{km}|$ is small for each line $(k,m)$
+\item For any line $(k,m)$, its resistance is much smaller than its reactance \ie $r_{km}<<x_{km}$.
+\end{itemize}
+Using these approximations in the (active) power flow, we obtain
+\begin{equation}
+p_{km}=\frac{\theta_k-\theta_m}{x_{km}}.
+\end{equation}
+It is convenient to write the system in matrix form
+\begin{equation}
+P=\mathcal{B}\theta,
+\end{equation}
+where $P$ is the vector of power injections and  $\mathcal{B}$ is called the bus susceptance matrix defined by
+\begin{equation}
+\mathcal{B}_{km} = \begin{cases}
+\sum_{km} x_{km}^{-1} & m=k\\
+-x_{km}^{-1} & \text{for any line } km\\
+0 & \text{otherwise}.
+\end{cases}
+\end{equation}
+A direct calculations shows that 
+\begin{equation}
+\mathcal{B} = NYN^T
+\end{equation}
+where the diagonal entries of $Y$ represent the susceptance of each line and $N$ is the node-arc incidence matrix defined by
+\begin{equation}
+N_{i(k,m)} = \begin{cases}
+1 & i=k\\
+-1 & i=m\\
+0 & \text{otherwise}.
+\end{cases}
+\end{equation}
+Two conditions arise from Kirchoff's laws, namely the sum of power injections over all buses must be zero \ie $\sum_{k}P_k=0$ and that the line flows out of bus $k$ must equal the power injected at bus $k$ \ie $Np=P$ where $p=YN^T\theta$ is the active power flow. We wish to obtain a unique power flow solution $p$ for the given power injections $P$. However in the construction of $N$ it can be seen that the columns will sum to zero. This means that $N$ does not have full rank, in fact is has rank exactly $(n-1)$. Therefore without loss of generality remove the last column of $N$ to obtain $\tilde N$ which has full rank. In this setting $\tilde{\mathcal{B}}=\tilde N Y \tilde N^T$ is invertible and defines the equivalent system $\tilde N p = \tilde P$.Under the assumption that $\sum_{k}P_k=0$, the unique vector of feasible flows $p$ is given by
+\begin{equation}
+p = Y\tilde N^T(\tilde N Y \tilde N^T)^{-1}\tilde P.
+\end{equation}
+
+\section{Loading-dependent system}
+
+Consider a system where each line $j$ has an initial load $L_j$ chosen uniformly from $[L^{min}, L^{max}]$. Additionally there exists a threshold $L^{fail}$ such that if at any stage during the cascade $L_j\ge L^{fail}$ the line $j$ is outaged. The cascade is initiated by some initial disturbance which adds the load $D$ onto every line. The initial disturbance is chosen such that there is at least one initial outage that satisfies
+\[ L_j + D \ge L^{fail},\]
+that will start the cascade event. Power that is redistributed, due to each line failure event, places more stress on the (unfailed) lines. This effect is approximated such that each line failure results in an increase of $P$ to every (unfailed) line. Define $M_i$ to be the number of line failures in stage $i$ and then the number of component failures prior to stage $t$ is given by
+\[S_{t-1} = \sum_{i=0}^{t-1} M_i.\]
+Using this notation the lines that fail at stage $t$ (given they haven't failed in a previous stage) of the cascade satisfy
+\[ L_j+D+S_{t-1}P \ge L^{fail}.\]
+However it has proved constructive to investigate the system of normalised load flows. Under normalisation the initial load of each line $j$ is 
+\[\ell_j = \frac{L_j-L^{min}}{L^{max}-L^{min}},\]
+such that $\ell_j \in [0,1]$. Also define the normalised power increment and normalised initial disturbance to be
+\[p = \frac{P}{L^{max}-L^{min}} \ \text{and} \  d = \frac{D+L^{max}-L^{fail}}{L^{max}-L^{min}},\]
+where the quantity $L^{max}-L^{fail}$ present in the numerator of $d$ translates the initial disturbance based on the relationship between $L^{max}$ and $L^{fail}$. Note that in this setting if at any stage $\ell_j \ge 1$ line $j$ fails. Now that the cascade model has been constructed we wish to observe the distribution of the size $S$ of a cascade event. It is convenient to relate the distribution of number of failures with the normalised parameters by writing
+\[P(S=r) = f(r,d,p,n).\]
+ First consider the distribution of $M_0$. In the initial stage the independent probability of failure is $d$ for each line. Therefore the probability that $k$ lines initially fail is given by
+\[P(M_0=k) = {n\choose k} d^k(1-d)^k.\]
+Therefore given $k$ initial failures, in the second stage we have $\ell_j\in [0,1-d]$ and from the formulas, $d = \frac{kp}{1-d}$ and $p = \frac{p}{1-d}$. Conditioning on the intial number of failures and using the law of total probability we arrive at the recursive relation 
+\begin{eqnarray*}
+f(r,d,p,n) &=& P(S=r)\\
+&=& \sum_{k=1}^{r} P(S=r|M_0 = k)P(M_0=k)\\
+&=&\sum_{k=1}^{r} {n\choose k} d^k(1-d)^k f(r-k,\frac{kp}{1-d},\frac{p}{1-d}, n-k).
+\end{eqnarray*}
+Notice the sum omits $k=0$ as if there are no initial events then there is no cascade and is therefore just zero. Performing induction on $r$ demonstrates that the number of component failures has a quasi-binomial distribution.The base case $r=0$ 
+\[f(0,d,p,n) = (1-d)^n \ \forall d,n,p \text{ s.t. } d+np<1,\] 
+satisfies the form of the quasi-binomial. Assume that the condition holds for all cascade sizes $m<r$ such that
+\[ f(m,d,p,n) = {n\choose m} d(d+mp)^{m-1} (1-d-mp)^{n-m} \ \forall d,n,p \text{ s.t. } d+np<1.\]
+The substitution into the recursive formula can be made
+\begin{eqnarray*}
+f(r,d,p,n)&=&\sum_{k=1}^{r} {n\choose k} d^k(1-d)^k {n-k \choose r-k} \frac{kp}{1-d} \left(\frac{rp}{1-d}\right)^{r-k-1} \left(1-\frac{rp}{1-d}\right)^{n-r}\\
+&=&{n \choose r} \left(1-d-rp\right)^{n-r} \sum_{k=1}^{r} {r\choose k} \frac{k}{r} d^k \left(rp\right)^{r-k}\\
+&=& {n \choose r} d (d+rp)^{r-k-1} \left(1-d-rp\right)^{n-r}.
+\end{eqnarray*}
+This verifies that the distribution of the number of component failures is quasi-binomial. Note that this is under the assumption that $D$ and $P$ are small enough such that the cascade stops before all lines fail. Under this same constraint, assume there exists constants $\theta$ and $\lambda$ such that as $n\to \infty$ the relations $nd = \theta$ and $np = \lambda$ hold. This distribution can be approximated in the following way,
+\begin{eqnarray*}
+\lim_{n\to \infty} P(S=r) &=& \lim_{n\to \infty} \frac{n!}{r!(n-r)!} d (d+rp)^{r-k-1} \left(1-d-rp\right)^{n-r}\\
+&=& \lim_{n\to \infty} \frac{n!}{r!(n-r)!} \frac{1}{n^r} \theta(\theta + r\lambda)^{r-1} \left(1-\frac{d-rp}{n}\right)^{n-r}\\
+&=& \theta(\theta + r\lambda)^{r-1} \lim_{n\to \infty} \frac{n!}{r!(n-r)!} \frac{1}{n^r} \lim_{n\to \infty} \left(1-\frac{d-rp}{n}\right)^{n} \lim_{n\to \infty} \left(1-\frac{d-rp}{n}\right)^{-r}\\
+&\approx& \theta(\theta + r\lambda)^{r-1} \frac{e^{-(\theta+r\lambda)}}{r!}, \quad 0\le r\le n-1,
+\end{eqnarray*}
+to be a generalised Poisson distribution. This expression is the distribution of the number of individuals produced in a branching process, where initial generation of individuals is Poisson with parameter $\theta$ and the following generations are Poisson with parameter $\lambda$. This provides a suitable method to obtain estimates of the parameters $\theta$ and $\lambda$ from forced outage data.
+
 
 \section{Bienstock 2016}
 \subsection{Chapter 4}
