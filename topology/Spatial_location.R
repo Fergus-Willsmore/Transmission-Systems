@@ -81,6 +81,72 @@ sp <- sp[-index,]
 
 el <- matrix(unlist(name.ls), ncol = 2, byrow = TRUE)
 
+### Check interstate connections ###
+# This highlights Bus names that are in different states that are being treated as one
+
+pairs <- combn(levels(sp$STATE),2,simplify = FALSE)
+for (i in pairs){
+  i_el = el[which(sp$STATE == i[1]),]
+  j_el = el[which(sp$STATE == i[2]),]
+  I <- intersect(i_el,j_el)
+  if (length(I)>0){
+    print(i)
+    print(I)
+  }
+}
+
+# Need to remove Tee as this is a connection type and not a bus
+
+index <- which(el == 'Tee') %% nrow(el)
+el <- el[-index,] 
+sp <- sp[-index,]
+
+names_to_change <- c('Guildford','Meadowbank','Palmerston', 'Belmont', 'Mount Barker', 'Victoria Park')
+
+# NSW - WA  update bus names guildford
+
+el[which(el == 'Guildford') %% nrow(el),]
+tmp = sp$NAME[sp$STATE=="Western Australia"]
+tmp[grepl('Guildford',tmp)]
+el[(el == 'Guildford')][7] = "Guildford_wa"
+el[(el == 'Guildford')][1:14] = "Guildford_nsw"
+
+# NSW - TAS update bus name to meadowbank_nsw and meadowbank_tas
+
+el[which(el == 'Meadowbank') %% nrow(el),]
+el[(el == 'Meadowbank')][c(1,3,6)] = "Meadowbank_nsw"
+el[(el == 'Meadowbank')][1:4] = "Meadowbank_tas"
+  
+# NT - Tas update bus names to palmerston_nt and palmerston_tas
+
+el[which(el == 'Palmerston') %% nrow(el),]
+el[(el == 'Palmerston')][c(7,18)] = "Palmerston_nt"
+el[(el == 'Palmerston')][1:16] = "Palmerston_tas"
+
+# QLD - WA update to belmont_qld and belmont_wa
+
+el[which(el == 'Belmont') %% nrow(el),]
+tmp = sp$NAME[sp$STATE=="Western Australia"]
+tmp[grepl('Belmont',tmp)]
+el[(el == 'Belmont')][c(5,6,9,10)] = "Belmont_wa"
+el[(el == 'Belmont')][1:6] = "Belmont_qld"
+
+# SA - WA update Mount Barker
+
+el[which(el == 'Mount Barker') %% nrow(el),]
+tmp = sp$NAME[sp$STATE=="Western Australia"]
+tmp[grepl('Mount Barker',tmp)]
+el[(el == 'Mount Barker')][7:8] = "Mount Barker_wa"
+el[(el == 'Mount Barker')][1:6] = "Mount Barker_sa"
+
+# QLD - WA update Victoria Park
+
+el[which(el == 'Victoria Park') %% nrow(el),]
+tmp = sp$NAME[sp$STATE=="Western Australia"]
+tmp[grepl('Victoria Park',tmp)]
+el[(el == 'Victoria Park')][6:7] = "Mount Barker_qld"
+el[(el == 'Victoria Park')][1:5] = "Mount Barker_wa"
+
 # Create network from edglist
 
 net <- graph_from_edgelist(el,directed = FALSE)
@@ -97,25 +163,25 @@ E(net)$State = as.character(sp$STATE)
 
 ## Map coordinates to the buses
 
-# coord <- as.matrix(cbind(el, sp[c('x1','y1','x2','y2')]))
-# colnames(coord) <- NULL
-# coord <- rbind(coord[,c(1,3,4)], coord[,c(2,5,6)])
-# coord <- data.frame(Name = coord[,1], x = as.numeric(coord[,2]), y = as.numeric(coord[,3]))
-# 
-# V(net)$Long <- rep(0,length(V(net)))
-# V(net)$Lat <- rep(0,length(V(net)))
-# 
-# i <- 1
-# for (bus in coord$Name){
-#   index <- which(sapply(V(net)$name, function(x) x==bus))
-#   V(net)$Long[index] <- coord[i,2]
-#   V(net)$Lat[index] <- coord[i,3]
-#   i <- i+1
-# }
-# 
-# lo <- layout.norm(as.matrix(cbind(V(net)$Long,V(net)$Lat)),-1, 1, -1, 1)
-# 
-# plot.igraph(net,layout = lo,vertex.size = 0.5, label.cex = 0.)
+coord <- as.matrix(cbind(el, sp[c('x1','y1','x2','y2')]))
+colnames(coord) <- NULL
+coord <- rbind(coord[,c(1,3,4)], coord[,c(2,5,6)])
+coord <- data.frame(Name = coord[,1], x = as.numeric(coord[,2]), y = as.numeric(coord[,3]))
+
+V(net)$Long <- rep(0,length(V(net)))
+V(net)$Lat <- rep(0,length(V(net)))
+
+i <- 1
+for (bus in coord$Name){
+  index <- which(sapply(V(net)$name, function(x) x==bus))
+  V(net)$Long[index] <- coord[i,2]
+  V(net)$Lat[index] <- coord[i,3]
+  i <- i+1
+}
+
+lo <- layout.norm(as.matrix(cbind(V(net)$Long,V(net)$Lat)),-1, 1, -1, 1)
+
+plot.igraph(net,layout = lo,vertex.size = 0.5, label.cex = 0.)
 
 # Plot the initial network
 
