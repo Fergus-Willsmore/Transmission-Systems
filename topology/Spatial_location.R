@@ -21,6 +21,7 @@ test <- readLines('~/Documents/GitHub/Transmission-Systems/topology/kml.txt')
 tmp <- matrix(test[12:length(test)],ncol = 15, byrow = TRUE)
 sp <- data.frame(tmp)
 colnames(sp) <- c('OBJECTID','FEATURETYPE','CLASS','FID','NAME','OPERATIONALSTATUS','CAPACITYKV','STATE','SPATIALCONFIDENCE','REVISED','SHAPE_Length','x1','y1','x2','y2')
+sp$NAME <- as.character(sp$NAME)
 
 # Construct temporary variable of line names
 
@@ -81,7 +82,8 @@ sp <- sp[-index,]
 
 el <- matrix(unlist(name.ls), ncol = 2, byrow = TRUE)
 
-### Check interstate connections ###
+#### Edit line connections ####
+
 # This highlights Bus names that are in different states that are being treated as one
 
 pairs <- combn(levels(sp$STATE),2,simplify = FALSE)
@@ -95,57 +97,99 @@ for (i in pairs){
   }
 }
 
+### Do stuff with Tee ###
+library(geosphere)
+
+index <- which(el == 'Tee') %% nrow(el)
+tmp <- sp[index,]
+tmp[tmp$SPATIALCONFIDENCE=="5",]
+
+# set epsilon such that the coordinates are within 110 m of each other
+eps <- 0.001
+
 # Need to remove Tee as this is a connection type and not a bus
 
 index <- which(el == 'Tee') %% nrow(el)
 el <- el[-index,] 
 sp <- sp[-index,]
 
-names_to_change <- c('Guildford','Meadowbank','Palmerston', 'Belmont', 'Mount Barker', 'Victoria Park')
+# Some bus names occur in different states we fix by adding a unique state indicator
+# T - Tasmania, Q - Queensland, etc.
 
-# NSW - WA  update bus names guildford
+names <- c('Guildford','Meadowbank','Palmerston', 'Belmont', 'Mount Barker', 'Victoria Park')
 
-el[which(el == 'Guildford') %% nrow(el),]
-tmp = sp$NAME[sp$STATE=="Western Australia"]
-tmp[grepl('Guildford',tmp)]
-el[(el == 'Guildford')][7] = "Guildford_wa"
-el[(el == 'Guildford')][1:14] = "Guildford_nsw"
+for (name in names){
+  tmp <- sp[grepl(name,sp$NAME),]
+  tmp$NAME <- sapply(1:nrow(tmp), function(x) sub(name, paste(name,gsub("[^::A-Z::]","", tmp$STATE[x])), tmp$NAME[x]))
+  sp[row.names(tmp),] <- tmp
+}
 
-# NSW - TAS update bus name to meadowbank_nsw and meadowbank_tas
+## Other line connection issues ##
 
-el[which(el == 'Meadowbank') %% nrow(el),]
-el[(el == 'Meadowbank')][c(1,3,6)] = "Meadowbank_nsw"
-el[(el == 'Meadowbank')][1:4] = "Meadowbank_tas"
-  
-# NT - Tas update bus names to palmerston_nt and palmerston_tas
+# The Basslink connection between Tasmania and Victoria was not connected
+sp[grepl('Basslink',sp$NAME),]
+sp$NAME[grepl('Loy Yang Power Station to Basslink',sp$NAME)] = 'Loy Yang Power Station to Basslink-Loy Yang'
+sp$NAME[grepl('Basslink George Town to George Town',sp$NAME)] = 'Basslink-George Town to George Town'
 
-el[which(el == 'Palmerston') %% nrow(el),]
-el[(el == 'Palmerston')][c(7,18)] = "Palmerston_nt"
-el[(el == 'Palmerston')][1:16] = "Palmerston_tas"
+# It should be consistently Le Fevre
+tmp <- sp[grepl('LeFevre',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('LeFevre','Le Fevre',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
 
-# QLD - WA update to belmont_qld and belmont_wa
+# loops in the network
+index <- which(el[,1]==el[,2])
+el <- el[-index,]
+sp <- sp[-index,]
 
-el[which(el == 'Belmont') %% nrow(el),]
-tmp = sp$NAME[sp$STATE=="Western Australia"]
-tmp[grepl('Belmont',tmp)]
-el[(el == 'Belmont')][c(5,6,9,10)] = "Belmont_wa"
-el[(el == 'Belmont')][1:6] = "Belmont_qld"
+# Torrens island changes into Torrens island A and Torrens island B. We need to include this in the graph
 
-# SA - WA update Mount Barker
+#### Line editing for connectedness ####
 
-el[which(el == 'Mount Barker') %% nrow(el),]
-tmp = sp$NAME[sp$STATE=="Western Australia"]
-tmp[grepl('Mount Barker',tmp)]
-el[(el == 'Mount Barker')][7:8] = "Mount Barker_wa"
-el[(el == 'Mount Barker')][1:6] = "Mount Barker_sa"
+# The use of the capacity in the name is not consistent
 
-# QLD - WA update Victoria Park
+# Update names of middle ridge to have capacity
+name = 'Middle Ridge'
+tmp <- sp[grepl(name,sp$NAME),]
+index <- which(grepl('\\d',tmp$NAME))
+tmp = tmp[-index,]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) sub(name, paste(name,tmp$CAPACITYKV[x]), tmp$NAME[x]))
+sp[row.names(tmp),] = tmp
 
-el[which(el == 'Victoria Park') %% nrow(el),]
-tmp = sp$NAME[sp$STATE=="Western Australia"]
-tmp[grepl('Victoria Park',tmp)]
-el[(el == 'Victoria Park')][6:7] = "Mount Barker_qld"
-el[(el == 'Victoria Park')][1:5] = "Mount Barker_wa"
+# Update names of bannaby to have capacity
+name = 'Bannaby'
+tmp <- sp[grepl(name,sp$NAME),]
+index <- which(grepl('\\d',tmp$NAME))
+tmp = tmp[-index,]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) sub(name, paste(name,tmp$CAPACITYKV[x]), tmp$NAME[x]))
+sp[row.names(tmp),] = tmp
+
+# Lines that are not connected
+
+# Mica Creek power station and lines are not connected to the grid
+index <- grepl('Mica Creek',sp$NAME)
+sp <- sp[-index]
+
+# Power plant in condabri is closed
+index <- grepl('Condabri',sp$NAME)
+sp <- sp[-index]
+
+# Capital wind farms should be Capital wind farm
+sp$NAME[grepl('Capital Wind Farms',sp$NAME)][1:2] <- "Capital Wind Farm to Capital Wind Farm Substation"
+
+
+### Missing Lines
+
+sp[grepl('Torrens',sp$NAME),]
+
+# Missing line Dumaresq to Armidale 330kv
+
+# Split names by the separator ' to ' to obtain bus names
+
+name.ls <- strsplit(sp$NAME, ' to ')
+
+# Create edgelist of lines
+
+el <- matrix(unlist(name.ls), ncol = 2, byrow = TRUE)
 
 # Create network from edglist
 
@@ -181,7 +225,7 @@ for (bus in coord$Name){
 
 lo <- layout.norm(as.matrix(cbind(V(net)$Long,V(net)$Lat)),-1, 1, -1, 1)
 
-plot.igraph(net,layout = lo,vertex.size = 0.5, label.cex = 0.)
+plot.igraph(net,layout = lo,vertex.size = 0.5, vertex.label = NA)
 
 # Plot the initial network
 
@@ -195,19 +239,16 @@ ggsave('spatial_net.png', plot = net.graph,
        path = '~/Documents/GitHub/Transmission-Systems/figures', 
        width = 8, height = 8 )
 
-# extract main component
+# Remove WA and NT from the network
 
-main.net <- decompose(net)[[1]]
+g <- subgraph.edges(net, E(net)[State!="Northern Territory"])
+g <- subgraph.edges(g, E(g)[State!="Western Australia"])
 
-main.net.graph <- ggraph(main.net,layout = 'kk') + 
-  geom_edge_link(aes(color = E(main.net)$State)) + 
+g.graph <- ggraph(g,layout = 'kk') + 
+  geom_edge_link(aes(color = E(g)$State)) + 
   theme_graph()
 
-plot(main.net.graph)
-
-ggsave('spatial_net_main.png', plot = main.net.graph, 
-       path = '~/Documents/GitHub/Transmission-Systems/figures', 
-       width = 8, height = 8 )
+plot(g.graph)
 
 #### Connect the network: Region algorithm #### (Not working properly)
 
