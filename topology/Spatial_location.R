@@ -12,8 +12,11 @@ library(ggraph)
 library(intergraph)
 library(network)
 library(plyr)
+library(geosphere)
 
 components <- igraph::components
+
+#### Read Data ####
 
 # Read in kml.txt which contains information from Google Earth kml file.
 
@@ -22,6 +25,10 @@ tmp <- matrix(test[12:length(test)],ncol = 15, byrow = TRUE)
 sp <- data.frame(tmp)
 colnames(sp) <- c('OBJECTID','FEATURETYPE','CLASS','FID','NAME','OPERATIONALSTATUS','CAPACITYKV','STATE','SPATIALCONFIDENCE','REVISED','SHAPE_Length','x1','y1','x2','y2')
 sp$NAME <- as.character(sp$NAME)
+
+#### Line Editing ####
+
+### Initially check for lines that do no have correct name specification ###
 
 # Construct temporary variable of line names
 
@@ -82,9 +89,16 @@ sp <- sp[-index,]
 
 el <- matrix(unlist(name.ls), ncol = 2, byrow = TRUE)
 
-#### Edit line connections ####
+### Overall name editing ###
 
-# This highlights Bus names that are in different states that are being treated as one
+## Remove capacity values from bus names
+
+index <- which(grepl(' \\d{3}',sp$NAME))
+tmp <- sp[index,]
+tmp$NAME <- gsub(" \\d{3}","", tmp$NAME)
+sp[index,] <- tmp
+
+## Find bus names that belong to different states
 
 pairs <- combn(levels(sp$STATE),2,simplify = FALSE)
 for (i in pairs){
@@ -97,21 +111,31 @@ for (i in pairs){
   }
 }
 
-### Do stuff with Tee ###
-library(geosphere)
+# Separate Tee connections from geographical data
 
 index <- which(el == 'Tee') %% nrow(el)
 tmp <- sp[index,]
-tmp[tmp$SPATIALCONFIDENCE=="5",]
+t.coord <- as.matrix(sp[index,c(12:15)])
+t.coord <- rbind(t.coord[1:6,1:2],t.coord[7:nrow(tmp),3:4]) %>% as.numeric() %>% matrix(ncol=2)
 
-# set epsilon such that the coordinates are within 110 m of each other
-eps <- 0.001
+dist.thresh <- 500
 
-# Need to remove Tee as this is a connection type and not a bus
+count = 1
+for (i in 1:nrow(t.coord)){
+  
+  if (grepl("Tee \\d", tmp$NAME[i])){
+    
+  } else{
+  p <- do.call(rbind, replicate(nrow(t.coord), t.coord[i,], simplify=FALSE))
+  d <- distHaversine(p,t.coord)
+  dis <- which(d<dist.thresh)
+  tmp$NAME[dis] <- sub('Tee', paste('Tee',count),tmp$NAME[dis])
+  count = count+1
+  }
+  
+}
 
-index <- which(el == 'Tee') %% nrow(el)
-el <- el[-index,] 
-sp <- sp[-index,]
+sp[row.names(tmp),] <- tmp
 
 # Some bus names occur in different states we fix by adding a unique state indicator
 # T - Tasmania, Q - Queensland, etc.
@@ -124,7 +148,9 @@ for (name in names){
   sp[row.names(tmp),] <- tmp
 }
 
-## Other line connection issues ##
+### Other line connection issues ###
+
+# Torrens island changes into Torrens island A and Torrens island B without connection. Also Torrens B power station to Torrens island B.
 
 # The Basslink connection between Tasmania and Victoria was not connected
 sp[grepl('Basslink',sp$NAME),]
@@ -136,42 +162,39 @@ tmp <- sp[grepl('LeFevre',sp$NAME),]
 tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('LeFevre','Le Fevre',tmp$NAME[x]))
 sp[row.names(tmp),] <- tmp
 
-# loops in the network
-index <- which(el[,1]==el[,2])
-el <- el[-index,]
-sp <- sp[-index,]
+# The terminal stations in Melbourne (connected to Rowville) vary between terminal and terminal station
+index <- which(grepl('Rowville',sp$NAME))
+sp$NAME[index] <- gsub(' Station', '',sp$NAME[index])
 
-# Torrens island changes into Torrens island A and Torrens island B. We need to include this in the graph
 
-#### Line editing for connectedness ####
+### Lines that aren't connected ###
 
 # The use of the capacity in the name is not consistent
 
-# Update names of middle ridge to have capacity
-name = 'Middle Ridge'
-tmp <- sp[grepl(name,sp$NAME),]
-index <- which(grepl('\\d',tmp$NAME))
-tmp = tmp[-index,]
-tmp$NAME <- sapply(1:nrow(tmp), function(x) sub(name, paste(name,tmp$CAPACITYKV[x]), tmp$NAME[x]))
-sp[row.names(tmp),] = tmp
+# # Update names of middle ridge to have capacity
+# name = 'Middle Ridge'
+# tmp <- sp[grepl(name,sp$NAME),]
+# index <- which(grepl('\\d',tmp$NAME))
+# tmp = tmp[-index,]
+# tmp$NAME <- sapply(1:nrow(tmp), function(x) sub(name, paste(name,tmp$CAPACITYKV[x]), tmp$NAME[x]))
+# sp[row.names(tmp),] = tmp
+# 
+# # Update names of bannaby to have capacity
+# name = 'Bannaby'
+# tmp <- sp[grepl(name,sp$NAME),]
+# index <- which(grepl(paste(name,'\\d'),tmp$NAME))
+# tmp = tmp[-index,]
+# tmp$NAME <- sapply(1:nrow(tmp), function(x) sub(name, paste(name,tmp$CAPACITYKV[x]), tmp$NAME[x]))
+# sp[row.names(tmp),] = tmp
 
-# Update names of bannaby to have capacity
-name = 'Bannaby'
-tmp <- sp[grepl(name,sp$NAME),]
-index <- which(grepl('\\d',tmp$NAME))
-tmp = tmp[-index,]
-tmp$NAME <- sapply(1:nrow(tmp), function(x) sub(name, paste(name,tmp$CAPACITYKV[x]), tmp$NAME[x]))
-sp[row.names(tmp),] = tmp
-
-# Lines that are not connected
 
 # Mica Creek power station and lines are not connected to the grid
-index <- grepl('Mica Creek',sp$NAME)
-sp <- sp[-index]
+index <- which(grepl('Mica Creek',sp$NAME))
+sp <- sp[-index,]
 
 # Power plant in condabri is closed
-index <- grepl('Condabri',sp$NAME)
-sp <- sp[-index]
+index <- which(grepl('Condabri',sp$NAME))
+sp <- sp[-index,]
 
 # Capital wind farms should be Capital wind farm
 sp$NAME[grepl('Capital Wind Farms',sp$NAME)][1:2] <- "Capital Wind Farm to Capital Wind Farm Substation"
@@ -190,6 +213,11 @@ name.ls <- strsplit(sp$NAME, ' to ')
 # Create edgelist of lines
 
 el <- matrix(unlist(name.ls), ncol = 2, byrow = TRUE)
+
+# loops in the network
+index <- which(el[,1]==el[,2])
+el <- el[-index,]
+sp <- sp[-index,]
 
 # Create network from edglist
 
@@ -225,19 +253,7 @@ for (bus in coord$Name){
 
 lo <- layout.norm(as.matrix(cbind(V(net)$Long,V(net)$Lat)),-1, 1, -1, 1)
 
-plot.igraph(net,layout = lo,vertex.size = 0.5, vertex.label = NA)
-
-# Plot the initial network
-
-net.graph <- ggraph(net,layout = 'kk') + 
-  geom_edge_link(aes(color = E(net)$State)) + 
-  theme_graph()
-
-plot(net.graph)
-
-ggsave('spatial_net.png', plot = net.graph, 
-       path = '~/Documents/GitHub/Transmission-Systems/figures', 
-       width = 8, height = 8 )
+NEM <- plot.igraph(net,layout = lo,vertex.size = 0.5, vertex.label = NA)
 
 # Remove WA and NT from the network
 
@@ -249,6 +265,10 @@ g.graph <- ggraph(g,layout = 'kk') +
   theme_graph()
 
 plot(g.graph)
+
+ggsave('spatial_net.png', plot = g.graph, 
+       path = '~/Documents/GitHub/Transmission-Systems/figures', 
+       width = 8, height = 8 )
 
 #### Connect the network: Region algorithm #### (Not working properly)
 
