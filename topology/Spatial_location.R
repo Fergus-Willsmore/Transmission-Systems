@@ -199,10 +199,13 @@ sp <- sp[-index,]
 # Capital wind farms should be Capital wind farm
 sp$NAME[grepl('Capital Wind Farms',sp$NAME)][1:2] <- "Capital Wind Farm to Capital Wind Farm Substation"
 
+# There is a spelling mistake of Tangkam cause the Oakey power station to be disconnected
+sp$NAME[grepl('Tankham',sp$NAME)][1:2] <- 'Middle Ridge to Tangkam'
+
 
 ### Missing Lines
 
-sp[grepl('Torrens',sp$NAME),]
+sp[grepl('Tankham',sp$NAME),]
 
 # Missing line Dumaresq to Armidale 330kv
 
@@ -251,6 +254,18 @@ for (bus in coord$Name){
   i <- i+1
 }
 
+## Identify Mistakes based on same coordinates
+
+for (i in 1:nrow(coord)){
+    p <- do.call(rbind, replicate(nrow(coord), coord[i,2:3], simplify=FALSE))
+    d <- distHaversine(p,coord[,2:3])
+    dis <- which(d<10)
+    print(coord[dis,])
+}
+
+
+## Plot
+
 lo <- layout.norm(as.matrix(cbind(V(net)$Long,V(net)$Lat)),-1, 1, -1, 1)
 
 NEM <- plot.igraph(net,layout = lo,vertex.size = 0.5, vertex.label = NA)
@@ -269,6 +284,11 @@ plot(g.graph)
 ggsave('spatial_net.png', plot = g.graph, 
        path = '~/Documents/GitHub/Transmission-Systems/figures', 
        width = 8, height = 8 )
+
+# Buses that aren't connected
+
+list <- sapply(2:length(comp), function(x) V(comp[[x]]))
+attributes(unlist(list))
 
 #### Connect the network: Region algorithm #### (Not working properly)
 
