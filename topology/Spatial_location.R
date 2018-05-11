@@ -162,6 +162,94 @@ tmp <- sp[grepl('LeFevre',sp$NAME),]
 tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('LeFevre','Le Fevre',tmp$NAME[x]))
 sp[row.names(tmp),] <- tmp
 
+# It should be consistently Murarrie
+tmp <- sp[grepl('Murarie',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Murarie','Murarrie',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Murray Bridge-Hahndorf pump
+tmp <- sp[grepl('Murray Bridge Pump',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Murray Bridge Pump','Murray Bridge-Hahndorf Pump',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Tennyson-T142
+tmp <- sp[grepl('Tennyson-T142',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('-T142','',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Yarwun-H058
+tmp <- sp[grepl('Yarwun-H058',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('-H058','',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Queensland Alumina Limited South
+tmp <- sp[grepl('Queensland Alumina Limited South to Tee',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('South','South Tee',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Wattle point wind farm substation
+tmp <- sp[grepl('Wattle Point',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Point Substation','Point Wind Farm Substation',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Mortlake Power Station to Mortlake Power Station substation
+tmp <- sp[grepl('Mortlake',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub(' Power Station substation','',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Clover Hydro Power Station to Clover Substation
+tmp <- sp[grepl('Clover Hydro',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Hydro ','',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Symex Port Melbourne Power Station to Fishermans Bend
+tmp <- sp[grepl('Symex Port',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Bend','Bend Terminal',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Meadowbank T Power Station to Meadowbank
+tmp <- sp[grepl('Meadowbank T Power Station to Meadowbank',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('to Meadowbank','to Meadowbank T',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Hallett Power Station to Canowie
+tmp <- sp[grepl('Hallett',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Hallett','Hallet',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Studland Wind Farm to Studland 
+tmp <- sp[grepl('Studland Wind Farm to Studland',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('to Studland','to Studland Bay',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# West Castle Hill
+tmp <- sp[grepl('West Castle Hiill',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Hiill','Hill',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Ballarat North to Ballarat
+tmp <- sp[grepl('Ballarat North to Ballarat',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('to Ballarat','to Ballarat Terminal',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Mussleroe Wind Farm to Derby Tee
+tmp <- sp[grepl('Mussle',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub(' Tee','',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Ashgrove West to Kelvin Grove
+tmp <- sp[grepl('Ashgrove West to Kelvin Grove',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('West','West-T30',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+strp_substation<-c("Cape Nelson South Substation", "Playford B Substation", "Cape Nelson North Substation", "Cape Bridgewater Substation", "Pelican Point Substation", "Tumut 1 Substation", "Tumut 2 Substation", "Warragamba Substation", "Cethana Substation","Studland Bay Substation", "Lemonthyme Substation", "Paloona Substation", "Swanbank E Substation", "Invicta Mill Substation", "McArthur Zone Substation", "Challicum Hills Substation", "Snowtown Wind Farm Stage 2 Substation", "Snuggery Substation", "Belalie Substation", "Jindabyne Substation")
+# strip Substation from disconnected lines
+for (i in strp_substation){
+  tmp <- sp[grepl(paste(i),sp$NAME),]
+  tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub(' Substation','',tmp$NAME[x]))
+  sp[row.names(tmp),] <- tmp
+}
+
 # The terminal stations in Melbourne (connected to Rowville) vary between terminal and terminal station
 index <- which(grepl('Rowville',sp$NAME))
 sp$NAME[index] <- gsub(' Station', '',sp$NAME[index])
@@ -196,6 +284,10 @@ sp <- sp[-index,]
 index <- which(grepl('Condabri',sp$NAME))
 sp <- sp[-index,]
 
+# King creek, Blue Valley not connected
+index <- which(grepl('King Creek',sp$NAME))
+sp <- sp[-index,]
+
 # Capital wind farms should be Capital wind farm
 sp$NAME[grepl('Capital Wind Farms',sp$NAME)][1:2] <- "Capital Wind Farm to Capital Wind Farm Substation"
 
@@ -205,7 +297,7 @@ sp$NAME[grepl('Tankham',sp$NAME)][1:2] <- 'Middle Ridge to Tangkam'
 
 ### Missing Lines
 
-sp[grepl('Tankham',sp$NAME),]
+sp[grepl('Murray Bridge Pump',sp$NAME),]
 
 # Missing line Dumaresq to Armidale 330kv
 
@@ -256,12 +348,12 @@ for (bus in coord$Name){
 
 ## Identify Mistakes based on same coordinates
 
-for (i in 1:nrow(coord)){
-    p <- do.call(rbind, replicate(nrow(coord), coord[i,2:3], simplify=FALSE))
-    d <- distHaversine(p,coord[,2:3])
-    dis <- which(d<10)
-    print(coord[dis,])
-}
+# for (i in 1:nrow(coord)){
+#     p <- do.call(rbind, replicate(nrow(coord), coord[i,2:3], simplify=FALSE))
+#     d <- distHaversine(p,coord[,2:3])
+#     dis <- which(d<10)
+#     print(coord[dis,])
+# }
 
 
 ## Plot
@@ -287,21 +379,9 @@ ggsave('spatial_net.png', plot = g.graph,
 
 # Buses that aren't connected
 
+comp = decompose(g)
 list <- sapply(2:length(comp), function(x) V(comp[[x]]))
 attributes(unlist(list))
 
-#### Connect the network: Region algorithm #### (Not working properly)
+sp[grepl('Ashgrove',sp$NAME),]
 
-source('~/Documents/GitHub/Transmission-Systems/topology/reg.net.top.R')
-
-reg.net <- reg.net.top.E(net,1:8)
-
-reg.net.graph <- ggraph(reg.net, layout = 'kk') + 
-  geom_edge_link(aes(color = factor(E(reg.net)$State))) + 
-  theme_graph()
-
-plot(reg.net.graph)
-
-ggsave('spatial_net.png', plot = reg.net.graph, 
-       path = '~/Documents/GitHub/Transmission-Systems/figures', 
-       width = 8, height = 8 )
