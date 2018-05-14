@@ -165,10 +165,10 @@ rest.set <- 1:2
 tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 8','Cape Sir William Grant Wind Farm Tee',tmp$NAME[x]))
 sp[row.names(tmp),] <- tmp
 
-# Tee 28
-tmp <- sp[grepl('Tee 43',sp$NAME),]
+# Tee 31
+tmp <- sp[grepl('Tee 31',sp$NAME),]
 rest.set <- 1:nrow(tmp)
-tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 8','Cape Sir William Grant Wind Farm Tee',tmp$NAME[x]))
+tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 31','Moree',tmp$NAME[x]))
 sp[row.names(tmp),] <- tmp
 
 # Tee 39
@@ -183,7 +183,7 @@ rest.set <- 1:nrow(tmp)
 tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 43','CSA Mine',tmp$NAME[x]))
 sp[row.names(tmp),] <- tmp
 
-sp[grepl('Torrens',sp$NAME),]
+sp[grepl('SOTO',sp$NAME),]
 
 # Some bus names occur in different states we fix by adding a unique state indicator
 # T - Tasmania, Q - Queensland, etc.
@@ -290,6 +290,16 @@ tmp <- sp[grepl('Ashgrove West to Kelvin Grove',sp$NAME),]
 tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('West','West-T30',tmp$NAME[x]))
 sp[row.names(tmp),] <- tmp
 
+# Torrens B Power Station
+tmp <- sp[grepl('Torrens B to',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('B','B Power Station',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Evans Lane
+tmp <- sp[grepl('Evans Tee',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Tee','Lane',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
 strp_substation<-c("Cape Nelson South Substation", "Playford B Substation", "Cape Nelson North Substation", "Cape Bridgewater Substation", "Pelican Point Substation", "Tumut 1 Substation", "Tumut 2 Substation", "Warragamba Substation", "Cethana Substation","Studland Bay Substation", "Lemonthyme Substation", "Paloona Substation", "Swanbank E Substation", "Invicta Mill Substation", "McArthur Zone Substation", "Challicum Hills Substation", "Snowtown Wind Farm Stage 2 Substation", "Snuggery Substation", "Belalie Substation", "Jindabyne Substation")
 # strip Substation from disconnected lines
 for (i in strp_substation){
@@ -326,6 +336,10 @@ sp$NAME[index] <- gsub(' Station', '',sp$NAME[index])
 
 # Mica Creek power station and lines are not connected to the grid
 index <- which(grepl('Mica Creek',sp$NAME))
+sp <- sp[-index,]
+
+# Gunpowder and century mine are not connected
+index <- which(grepl('Gunpowder',sp$NAME))
 sp <- sp[-index,]
 
 # Power plant in condabri is closed
@@ -397,13 +411,13 @@ for (bus in coord$Name){
 ## Identify Tee's Based on coordinates
 
 for (i in index){
-    p <- do.call(rbind, replicate(nrow(coord), coord[1117,2:3], simplify=FALSE))
+    p <- do.call(rbind, replicate(nrow(coord), coord[4606,2:3], simplify=FALSE))
     d <- distHaversine(p,coord[,2:3])
-    dis <- which(d<100)
+    dis <- which(d<5000)
     print(coord[dis,])
 }
 
-coord[grepl('Butlers ',coord$Name),]
+coord[grepl('Arcadia',coord$Name),]
 
 ## Plot
 
@@ -432,5 +446,5 @@ comp = decompose(g)
 list <- sapply(2:length(comp), function(x) V(comp[[x]]))
 attributes(unlist(list))
 
-sp$NAME[grepl('Torrens',sp$NAME)]
+sp[grepl('Arcadia Vale',sp$NAME),]
 
