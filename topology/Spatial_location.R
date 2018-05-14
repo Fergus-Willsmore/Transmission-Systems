@@ -111,7 +111,7 @@ for (i in pairs){
   }
 }
 
-# Separate Tee connections from geographical data
+## Separate Tee connections from geographical data
 
 index <- which(el == 'Tee') %% nrow(el)
 tmp <- sp[index,]
@@ -136,6 +136,54 @@ for (i in 1:nrow(t.coord)){
 }
 
 sp[row.names(tmp),] <- tmp
+
+# Update Tee connections
+
+# index <- which(grepl('Tee ',coord$Name))
+# for (i in index){
+#   p <- do.call(rbind, replicate(nrow(coord), coord[i,2:3], simplify=FALSE))
+#   d <- distHaversine(p,coord[,2:3])
+#   dis <- which(d<10)
+#   print(coord$Name[dis])
+# }
+
+# Tee 1
+tmp <- sp[grepl('Tee 1',sp$NAME),]
+rest.set <- 1:4
+tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 1','Murarrie',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Tee 6
+tmp <- sp[grepl('Tee 6',sp$NAME),]
+rest.set <- 1:2
+tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 6','Newstead',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Tee 8
+tmp <- sp[grepl('Tee 8',sp$NAME),]
+rest.set <- 1:2
+tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 8','Cape Sir William Grant Wind Farm Tee',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Tee 28
+tmp <- sp[grepl('Tee 43',sp$NAME),]
+rest.set <- 1:nrow(tmp)
+tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 8','Cape Sir William Grant Wind Farm Tee',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Tee 39
+tmp <- sp[grepl('Tee 39',sp$NAME),]
+rest.set <- 1:nrow(tmp)
+tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 39','Razorback',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Tee 43
+tmp <- sp[grepl('Tee 43',sp$NAME),]
+rest.set <- 1:nrow(tmp)
+tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 43','CSA Mine',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+sp[grepl('Torrens',sp$NAME),]
 
 # Some bus names occur in different states we fix by adding a unique state indicator
 # T - Tasmania, Q - Queensland, etc.
@@ -346,15 +394,16 @@ for (bus in coord$Name){
   i <- i+1
 }
 
-## Identify Mistakes based on same coordinates
+## Identify Tee's Based on coordinates
 
-# for (i in 1:nrow(coord)){
-#     p <- do.call(rbind, replicate(nrow(coord), coord[i,2:3], simplify=FALSE))
-#     d <- distHaversine(p,coord[,2:3])
-#     dis <- which(d<10)
-#     print(coord[dis,])
-# }
+for (i in index){
+    p <- do.call(rbind, replicate(nrow(coord), coord[1117,2:3], simplify=FALSE))
+    d <- distHaversine(p,coord[,2:3])
+    dis <- which(d<100)
+    print(coord[dis,])
+}
 
+coord[grepl('Butlers ',coord$Name),]
 
 ## Plot
 
@@ -383,5 +432,5 @@ comp = decompose(g)
 list <- sapply(2:length(comp), function(x) V(comp[[x]]))
 attributes(unlist(list))
 
-sp[grepl('Ashgrove',sp$NAME),]
+sp$NAME[grepl('Torrens',sp$NAME)]
 
