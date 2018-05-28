@@ -30,7 +30,10 @@
 \newcommand{\iid}{i.i.d. }
 \newcommand{\e}{\varepsilon}
 \renewcommand{\l}{\ell}
+\newcommand{\mc}{\mathcal}
+\renewcommand{\t}{\text}
 \setlength\parindent{24pt}
+
 
 % struts for table environments
 \newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
@@ -94,7 +97,6 @@
 
 \end{itemize}
 
-
 \section{Electric Current}
 
 Electrical flow can be thought of as the movement of electrons through a surface, referred to as the {\it current} ($I$). The movement of charge is provoked by the {\it voltage} ($V$) of an electrical circuit. The voltage creates a potential electrical difference such that the negatively charged electrons flow within the circuit. This is best thought of as electrical potential energy, such that as voltage is increased more force is required to hold the electrons in a fixed position. Once released the electron will accelerate toward the positive pole resulting in the conversion of electrical potential energy into heat and kinetic energy. The idea of {\it electric power}, combines the elements {\it current} and {\it voltage} such that 
@@ -102,7 +104,6 @@ Electrical flow can be thought of as the movement of electrons through a surface
 P=V\times I
 \end{equation}
 expressed in watts. There are two distinct types of power flows, namely {\it direct current} (DC) and {\it alternating current} (AC). The simpler of the two is DC power, where the electrons always flow in the same direction (such as battery operated circuits). In a battery operated circuit the electrons always move from the negative pole to the positive pole. However in an AC circuit, the direction of current periodically changes, which gives rise to complex behaviour.  
-
 
 \section{AC vs DC}
 
@@ -154,7 +155,86 @@ Two conditions arise from Kirchoff's laws, namely the sum of power injections ov
 p = Y\tilde N^T(\tilde N Y \tilde N^T)^{-1}\tilde P.
 \end{equation}
 
-\section{Loading-dependent system}
+\section{Principle of Large Deviations}
+
+\subsection{Chernoff Bound}
+Consider $X_1,\dots,X_n$ \iid sequence of random variables with common p.d.f $P(X\le x)$. For $a>\mu$ and $\theta >0$, the Chernoff bound is given by
+\begin{eqnarray*}
+P\left(\frac{\sum_{i=1}^{n} X_i }{n}>a\right) &=& P\left(\sum_{i=1}^{n}  X_i > na \right)\\
+&=& P\left(e^{\theta \sum_{i=1}^{n}  X_i} > e^{\theta na} \right)\\
+&\le & \frac{E[e^{\theta \sum_{i=1}^{n}  X_i}]}{e^{\theta na}} \\
+&=& \left(\frac{E[e^{\theta X}]}{e^{\theta a}} \right)^n\\
+&=& e^{-n(\theta a - \log M_X(\theta))}\\
+&=& e^{-n I(a)}
+\end{eqnarray*}
+
+where $I(a)$ is known as the {\it decay rate}. A Fenchel-Legendre transform of a r.v. X is the function 
+\[\l(a) = \sup_\theta (\theta a - \log M_X(\theta)).\]
+The Fenchel-Legendre transform coincides with the decay rate $I(a)$ since the supremum corresponds to the tightest bound. Under the limit as $n\to \infty$ the RHS goes to zero and therefore this upper bound becomes tight. 
+
+\subsection{Simple Gaussian Case}
+Consider $X_1,\dots,X_n$ \iid sequence of $N(\mu ,\sigma^2)$ random variables. The Fenchel-Legendre transform is given by
+\[\l(a) = \sup_\theta (\theta a - (\theta\mu+\frac{\sigma^2}{2}\theta^2)).\]
+Since this is quadratic in theta, it can easily be shown that the maximum, and hence decay rate is given by 
+\[I(a) = \frac{(a-\mu)^2}{2\sigma^2}.\]
+Therefore the Large Deviations Principle states that 
+\[\lim_{n\to\infty} \frac{1}{n} \log P\left(\frac{\sum_{i=1}^{n} X_i }{n}>a\right) = -\frac{(a-\mu)^2}{2\sigma^2}.\]
+This approach utilises the average of \iid random variables, where the average distribution $\bar X$ has mean $\mu$ and variance $\frac{\sigma^2}{n}$. Alternatively, let $\e=\frac{1}{n}$ and observe the limit as $\e\to 0$, \ie the random variable $Y\sim N(\mu, \e \sigma^2)$ follows the large deviation principle
+\[\lim_{\e\to 0} \e \log P(Y>a) =-\frac{(a-\mu)^2}{2\sigma^2}\,.\]
+
+\subsection{Line Power Flows}
+
+The line power flows for each line $\l$ follow $(f_\e)_\l\sim N(\nu_\l, \e \sigma_\l^2)$ where $\sigma_\l^2 = \left(V\Sigma_p V^T\right)_{\l\l}$. The direction of flow across a line corresponds to the sign of $\mu_\l$. A line fails when the magnitude of flow $|(f_\e)_\l|\ge 1$. Therefore the absolute line power flows for each line $\l$ follow $|(f_\e)_\l |\sim N(|\nu_\l |, \e \sigma_\l^2)$. The large deviations principle for the absolute line power flows $|(f_\e)_\l|$ says that
+\[\lim_{\e\to 0} \e \log P(|(f_\e)_\l|\ge 1) =-\frac{(1-|\nu_\l| )^2}{2\sigma_\l^2} = -I_\l \,,\]
+where $I_\l$ is called the decay rate of $\l$. The decay rates $I_\l$ ultimately depend on the values of $\mu$ and $\Sigma_p$. Therefore we can relate the most likely power injections $\bm p^{(\l)}$ that caused the failure of line $\l$. Recall that $\bm p$ is multivariate Gaussian with probability density 
+\[\varphi(\bm p) = \frac{\exp(-\frac{1}{2}(\bm p - \bm \mu)^T(\e\Sigma_p)^{-1}(\bm p-\bm \mu))}{(2\pi)^{\frac{n}{2}}\det(\e\Sigma_p)^{\frac{1}{2}}} \,.\]
+Hence maximising the conditional probability $P(\bm p\mid |f_\l|\ge 1)$ is equivalent to minimising the variational problem
+\[\inf_{\bm p\ :\ e_\l^TVp\ge 1} \frac{1}{2}(\bm p - \bm \mu)^T\Sigma_p^{-1}(\bm p-\bm \mu).\]
+If we neglect the condition $e_\l^TVp\ge 1$, then the unique minimum is given by $\bm p = \bm \mu$. Including the condition $e_\l^TVp\ge 1$ requires the deviation from $\mu$ to be equivalent to the deviation required such that $|f_\l|\ge 1$. 
+\[\bm p^{(\l)} = \bm \mu + \frac{(1-\nu_\l)}{2\sigma_\l^2}\Sigma_p V^T e_\l\]
+
+
+\section{Bienstock 2016}
+
+\subsection{Cascade model}
+
+The general construction of the cascade model is given by
+\begin{enumerate}
+\item A set of lines become randomly outaged.
+\item Reset loads, generation and power flows to adjust to line outage.
+\item Test for new line outages.
+\item If no new lines outage the cascade stops.
+\end{enumerate}
+
+Cascade model 1, aims to capture the idea of upgrading equipment after failure. In the case of lines, this would be increasing their rating (capacity). This models this long term cascade behaviour, but the short term cascade model is based on non-decreasing probability function. In the first instance that a line becomes overloaded
+\begin{equation}
+P(\text{line } j \ \text{becomes outaged}) = h^0(|f_{j,t}|/U_{j,t}^{\text{max}})=c
+\end{equation}
+for all lines $j$. Then after redistribution overloaded lines outage with probability $h^1>c$. Another quantity pointed out is average relative line load on a given day $t$,
+\begin{equation}
+\bar{M}_t \dot{=}\frac{\sum_j M_{jt}}{m}
+\end{equation}
+where $m$ indicates the number of lines. It was found that for a given $\mu$ the systems seems to tend toward a long term ``dynamic equilibrium". This suggests that for a constant rate of demand growth line upgrades is not sufficient to avert blackouts.\\
+
+\subsection{Economic dispatch}
+
+After a $(i,j)$ line outages, the power flow $f_{ij}$ along that line becomes zero. Instead of removing the line from the formulation, we scale the reactance $x_{ij}$ up by a large constant and the limit $u_ij$ down by a small number $\e>0$. This approximates the flow $f_{ij}$ to be nearly zero. This approach ensures the network remains connected (an essential feature to perform economic dispatch). 
+
+A linear program is solved to obtain the new power flows, loads and generation. Each bus is either a generator $g\in \mc G$ or a load $j\in \mc L$ and define $P_g$ and $D_j$ to represent its generation output or demand, respectively. The corresponding constraints are then
+\[P_g \le P_g^{\t{max}} \ \forall g\in \mc G, \quad D_j \ge 0 \ \forall j\in \mc L\,,\]
+ where $P_g^{\t{max}}$ is the maximum generation output of $g\in \mc G$. As a shorthand, define 
+ \[p_i = \begin{cases}P_i & i\in \mc G\\ D_i & i\in \mc L\\ 0 & \t{otherwise} \end{cases}.\]
+ The following constraints arise from the DC model. Generation and loads must be balanced, \ie $\sum_i p_i =0$. The conservation of power flow requires $Nf-p=0$, where $N$ is the node arc incidence matrix. Ohm's law, $x_{ij}f_{ij} = \theta_i-\theta_j$ must be satisfied. 
+
+\subsection{Thermal line tripping}
+
+A lines temperature is a function of current, such that higher currents increase the temperature. Grid operators avoid higher temperatures as this leads
+
+\subsection{Accumulated overload}
+
+\subsection{Moving average flow}
+
+\subsection{Loading-dependent system}
 
 Consider a system where each line $j$ has an initial load $L_j$ chosen uniformly from $[L^{min}, L^{max}]$. Additionally there exists a threshold $L^{fail}$ such that if at any stage during the cascade $L_j\ge L^{fail}$ the line $j$ is outaged. The cascade is initiated by some initial disturbance which adds the load $D$ onto every line. The initial disturbance is chosen such that there is at least one initial outage that satisfies
 \[ L_j + D \ge L^{fail},\]
@@ -252,67 +332,7 @@ P(S=r) =& P\left( \sum_{k=1}^{N}  X_k=r \right)\\
 
 Finner, H., Kern, P. and Scheer, M., 2015. On some compound distributions with Borel summands. Insurance: Mathematics and Economics, 62, pp.234-244.
 
-\section{Principle of Large Deviations}
-
-\subsection{Chernoff Bound}
-Consider $X_1,\dots,X_n$ \iid sequence of random variables with common p.d.f $P(X\le x)$. For $a>\mu$ and $\theta >0$, the Chernoff bound is given by
-\begin{eqnarray*}
-P\left(\frac{\sum_{i=1}^{n} X_i }{n}>a\right) &=& P\left(\sum_{i=1}^{n}  X_i > na \right)\\
-&=& P\left(e^{\theta \sum_{i=1}^{n}  X_i} > e^{\theta na} \right)\\
-&\le & \frac{E[e^{\theta \sum_{i=1}^{n}  X_i}]}{e^{\theta na}} \\
-&=& \left(\frac{E[e^{\theta X}]}{e^{\theta a}} \right)^n\\
-&=& e^{-n(\theta a - \log M_X(\theta))}\\
-&=& e^{-n I(a)}
-\end{eqnarray*}
-
-where $I(a)$ is known as the {\it decay rate}. A Fenchel-Legendre transform of a r.v. X is the function 
-\[\l(a) = \sup_\theta (\theta a - \log M_X(\theta)).\]
-The Fenchel-Legendre transform coincides with the decay rate $I(a)$ since the supremum corresponds to the tightest bound. Under the limit as $n\to \infty$ the RHS goes to zero and therefore this upper bound becomes tight. 
-
-\subsection{Simple Gaussian Case}
-Consider $X_1,\dots,X_n$ \iid sequence of $N(\mu ,\sigma^2)$ random variables. The Fenchel-Legendre transform is given by
-\[\l(a) = \sup_\theta (\theta a - (\theta\mu+\frac{\sigma^2}{2}\theta^2)).\]
-Since this is quadratic in theta, it can easily be shown that the maximum, and hence decay rate is given by 
-\[I(a) = \frac{(a-\mu)^2}{2\sigma^2}.\]
-Therefore the Large Deviations Principle states that 
-\[\lim_{n\to\infty} \frac{1}{n} \log P\left(\frac{\sum_{i=1}^{n} X_i }{n}>a\right) = -\frac{(a-\mu)^2}{2\sigma^2}.\]
-This approach utilises the average of \iid random variables, where the average distribution $\bar X$ has mean $\mu$ and variance $\frac{\sigma^2}{n}$. Alternatively, let $\e=\frac{1}{n}$ and observe the limit as $\e\to 0$, \ie the random variable $Y\sim N(\mu, \e \sigma^2)$ follows the large deviation principle
-\[\lim_{\e\to 0} \e \log P(Y>a) =-\frac{(a-\mu)^2}{2\sigma^2}\,.\]
-
-
-
-\subsection{Line Power Flows}
-
-The line power flows for each line $\l$ follow $(f_\e)_\l\sim N(\nu_\l, \e \sigma_\l^2)$ where $\sigma_\l^2 = \left(V\Sigma_p V^T\right)_{\l\l}$. The direction of flow across a line corresponds to the sign of $\mu_\l$. A line fails when the magnitude of flow $|(f_\e)_\l|\ge 1$. Therefore the absolute line power flows for each line $\l$ follow $|(f_\e)_\l |\sim N(|\nu_\l |, \e \sigma_\l^2)$. The large deviations principle for the absolute line power flows $|(f_\e)_\l|$ says that
-\[\lim_{\e\to 0} \e \log P(|(f_\e)_\l|\ge 1) =-\frac{(1-|\nu_\l| )^2}{2\sigma_\l^2} = -I_\l \,,\]
-where $I_\l$ is called the decay rate of $\l$. The decay rates $I_\l$ ultimately depend on the values of $\mu$ and $\Sigma_p$. Therefore we can relate the most likely power injections $\bm p^{(\l)}$ that caused the failure of line $\l$. Recall that $\bm p$ is multivariate Gaussian with probability density 
-\[\varphi(\bm p) = \frac{\exp(-\frac{1}{2}(\bm p - \bm \mu)^T(\e\Sigma_p)^{-1}(\bm p-\bm \mu))}{(2\pi)^{\frac{n}{2}}\det(\e\Sigma_p)^{\frac{1}{2}}} \,.\]
-Hence maximising the conditional probability $P(\bm p\mid |f_\l|\ge 1)$ is equivalent to minimising the variational problem
-\[\inf_{\bm p\ :\ e_\l^TVp\ge 1} \frac{1}{2}(\bm p - \bm \mu)^T\Sigma_p^{-1}(\bm p-\bm \mu).\]
-If we neglect the condition $e_\l^TVp\ge 1$, then the unique minimum is given by $\bm p = \bm \mu$. Including the condition $e_\l^TVp\ge 1$ requires the deviation from $\mu$ to be equivalent to the deviation required such that $|f_\l|\ge 1$. 
-\[\bm p^{(\l)} = \bm \mu + \frac{(1-\nu_\l)}{2\sigma_\l^2}\Sigma_p V^T e_\l\]
-
-
-\section{Bienstock 2016}
-\subsection{Chapter 4}
-
-There is some disagreement in the initial point of cascade. The initial line failure should not trigger a cascade as the system should be N-1 safe, therefore still in a controlled position. However if co susceptible lines also fail then the cumulative outages begin to grow slowly. At some point, the cumulative loss of power lines is so rapid that no control is possible. The initial point of cascade for our purposes is from the initial line failure as this leads to the uncontrollable state.\\
-
-A common theme in the survey of large-scale blackouts, seemed to be that the initial line failure had a large capacity (such as 345kV). The redistribution of power flows seemed to put stress on other high capacity lines causing sag and heat leading to them also tripping. The Italian blackout was a bit different, in that Italy is a big importer of power. This means that the generation of power within Italy is very limited (similar to SA situation). A loss of an importing line caused a cascade which quickly lead to ``syncronism loss" (frequency instability) causing the island to blackout.\\
-
-Prior modelling techniques have outlined a few features of cascade failure such as line tripping due to overloads is primarily used, focus on slow cascade processes (ideally start slow then fast), DC approximation to power flows and ignore short-term dynamics (such as islanding). \\
-
-Cascade model 1, aims to capture the idea of upgrading equipment after failure. In the case of lines, this would be increasing their rating (capacity). This models this long term cascade behaviour, but the short term cascade model is based on non-decreasing probability function. In the first instance that a line becomes overloaded
-\begin{equation}
-P(\text{line } j \ \text{becomes outaged}) = h^0(|f_{j,t}|/U_{j,t}^{\text{max}})=c
-\end{equation}
-for all lines $j$. Then after redistribution overloaded lines outage with probability $h^1>c$. Another quantity pointed out is average relative line load on a given day $t$,
-\begin{equation}
-\bar{M}_t \dot{=}\frac{\sum_j M_{jt}}{m}
-\end{equation}
-where $m$ indicates the number of lines. It was found that for a given $\mu$ the systems seems to tend toward a long term ``dynamic equilibrium". This suggests that for a constant rate of demand growth line upgrades is not sufficient to avert blackouts.\\
-
-Island dynamics appear to require complex modelling techniques in terms of the physical dynamics of electricity flow and operating decisions. The main factor deciding the fate of the island is the deficit between the demand and generation. Small deficits can be managed by increasing generation up until capacity, whereas larger deficits will result in island wide blackout due to severe overload (protective mechanism). The initial model presented is a linear program to model economical redispatch of the generators with high penalty on load shedding. Alternatively, Pfitzner (2011) recognises that redispatch optimisation problems in islanding is not efficient enough for operating decisions. New outputs for generators in the island are set due to the ratio of demand to generation. In the event that demand is too high causing overload in generators,load is shed by intentionally tripping lines. The aim of which is to reduce the overall size of the cascade. The tripping rule (A1) trips the overloaded line with minimum flow achieved the best results.  
+  
 
 
 \section{Network Diagram}
