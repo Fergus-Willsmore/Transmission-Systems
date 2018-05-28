@@ -4,6 +4,10 @@
 \contentsline {section}{\numberline {4}DC power flows}{4}{section.4}
 \contentsline {section}{\numberline {5}Loading-dependent system}{5}{section.5}
 \contentsline {subsection}{\numberline {5.1}Branching Process}{6}{subsection.5.1}
-\contentsline {section}{\numberline {6}Bienstock 2016}{9}{section.6}
-\contentsline {subsection}{\numberline {6.1}Chapter 4}{9}{subsection.6.1}
-\contentsline {section}{\numberline {7}Network Diagram}{10}{section.7}
+\contentsline {section}{\numberline {6}Principle of Large Deviations}{9}{section.6}
+\contentsline {subsection}{\numberline {6.1}Chernoff Bound}{9}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Simple Gaussian Case}{10}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Line Power Flows}{10}{subsection.6.3}
+\contentsline {section}{\numberline {7}Bienstock 2016}{11}{section.7}
+\contentsline {subsection}{\numberline {7.1}Chapter 4}{11}{subsection.7.1}
+\contentsline {section}{\numberline {8}Network Diagram}{12}{section.8}

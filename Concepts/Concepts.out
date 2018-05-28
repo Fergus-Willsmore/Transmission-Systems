@@ -4,6 +4,10 @@
 \BOOKMARK [1][-]{section.4}{DC power flows}{}% 4
 \BOOKMARK [1][-]{section.5}{Loading-dependent system}{}% 5
 \BOOKMARK [2][-]{subsection.5.1}{Branching Process}{section.5}% 6
-\BOOKMARK [1][-]{section.6}{Bienstock 2016}{}% 7
-\BOOKMARK [2][-]{subsection.6.1}{Chapter 4}{section.6}% 8
-\BOOKMARK [1][-]{section.7}{Network Diagram}{}% 9
+\BOOKMARK [1][-]{section.6}{Principle of Large Deviations}{}% 7
+\BOOKMARK [2][-]{subsection.6.1}{Chernoff Bound}{section.6}% 8
+\BOOKMARK [2][-]{subsection.6.2}{Simple Gaussian Case}{section.6}% 9
+\BOOKMARK [2][-]{subsection.6.3}{Line Power Flows}{section.6}% 10
+\BOOKMARK [1][-]{section.7}{Bienstock 2016}{}% 11
+\BOOKMARK [2][-]{subsection.7.1}{Chapter 4}{section.7}% 12
+\BOOKMARK [1][-]{section.8}{Network Diagram}{}% 13

@@ -183,6 +183,12 @@ rest.set <- 1:nrow(tmp)
 tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 43','CSA Mine',tmp$NAME[x]))
 sp[row.names(tmp),] <- tmp
 
+# Tee 44
+tmp <- sp[grepl('Tee 44',sp$NAME),]
+rest.set <- 1:nrow(tmp)
+tmp$NAME[rest.set] <- sapply(rest.set, function(x) gsub('Tee 44','Mintaro',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
 sp[grepl('SOTO',sp$NAME),]
 
 # Some bus names occur in different states we fix by adding a unique state indicator
@@ -300,7 +306,27 @@ tmp <- sp[grepl('Evans Tee',sp$NAME),]
 tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Tee','Lane',tmp$NAME[x]))
 sp[row.names(tmp),] <- tmp
 
-strp_substation<-c("Cape Nelson South Substation", "Playford B Substation", "Cape Nelson North Substation", "Cape Bridgewater Substation", "Pelican Point Substation", "Tumut 1 Substation", "Tumut 2 Substation", "Warragamba Substation", "Cethana Substation","Studland Bay Substation", "Lemonthyme Substation", "Paloona Substation", "Swanbank E Substation", "Invicta Mill Substation", "McArthur Zone Substation", "Challicum Hills Substation", "Snowtown Wind Farm Stage 2 Substation", "Snuggery Substation", "Belalie Substation", "Jindabyne Substation")
+# Geehi Dam
+tmp <- sp[grepl('Geehi',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Murray Guthega Tee','Guthega',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Butlers Gorge
+tmp <- sp[grepl('Butlers',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Butlers Gorge Tee','Tungatinah',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Challicum Hills
+tmp <- sp[grepl('Challicum Hills',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Challicum Hills Wind Farm to Challicum Hills Substation','Challicum Hills Wind Farm to Ballarat North',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+# Millingandi
+tmp <- sp[grepl('Millingandi  to Eden',sp$NAME),]
+tmp$NAME <- sapply(1:nrow(tmp), function(x) gsub('Millingandi ','Millingandi',tmp$NAME[x]))
+sp[row.names(tmp),] <- tmp
+
+strp_substation<-c("Cape Nelson South Substation", "Playford B Substation", "Cape Nelson North Substation", "Cape Bridgewater Substation", "Pelican Point Substation", "Tumut 1 Substation", "Tumut 2 Substation", "Warragamba Substation", "Cethana Substation","Studland Bay Substation", "Lemonthyme Substation", "Paloona Substation", "Swanbank E Substation", "Invicta Mill Substation", "McArthur Zone Substation", "Snowtown Wind Farm Stage 2 Substation", "Snuggery Substation", "Belalie Substation", "Jindabyne Substation")
 # strip Substation from disconnected lines
 for (i in strp_substation){
   tmp <- sp[grepl(paste(i),sp$NAME),]
@@ -411,13 +437,13 @@ for (bus in coord$Name){
 ## Identify Tee's Based on coordinates
 
 for (i in index){
-    p <- do.call(rbind, replicate(nrow(coord), coord[4606,2:3], simplify=FALSE))
+    p <- do.call(rbind, replicate(nrow(coord), coord[2177,2:3], simplify=FALSE))
     d <- distHaversine(p,coord[,2:3])
     dis <- which(d<5000)
     print(coord[dis,])
 }
 
-coord[grepl('Arcadia',coord$Name),]
+coord[grepl('SOTO',coord$Name),]
 
 ## Plot
 
@@ -446,5 +472,5 @@ comp = decompose(g)
 list <- sapply(2:length(comp), function(x) V(comp[[x]]))
 attributes(unlist(list))
 
-sp[grepl('Arcadia Vale',sp$NAME),]
+sp[grepl('SOTO',sp$NAME),]
 
