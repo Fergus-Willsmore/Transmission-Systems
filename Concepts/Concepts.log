@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.14)  28 MAY 2018 19:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.2.27)  29 MAY 2018 17:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -811,38 +811,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 216--218
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 252.
+(amsmath)                 on input line 254.
 
 [8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 301--302
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 303--304
 
  []
 
-[10] [11]
+
+Underfull \hbox (badness 10000) in paragraph at lines 305--306
+
+ []
+
+[10] [11] [12]
 No file Concepts.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 371.
-[12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 371.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 392.
+[13]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 392.
  (./Concepts.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 371.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 371.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 392.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 392.
 Package rerunfilecheck Info: File `Concepts.out' has not changed.
-(rerunfilecheck)             Checksum: D0D2796574B0E15FD6A87D3C88F92DEB;1028.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 371.
+(rerunfilecheck)             Checksum: 53D89ECEFAF84B1575B01D3EF7C6F65E;1110.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 392.
  ) 
 Here is how much of TeX's memory you used:
- 9005 strings out of 492995
- 129511 string characters out of 6132703
+ 9008 strings out of 492995
+ 129548 string characters out of 6132704
  337781 words of memory out of 5000000
- 12350 multiletter control sequences out of 15000+600000
+ 12351 multiletter control sequences out of 15000+600000
  16760 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,13n,43p,884b,378s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,13n,43p,884b,398s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -862,10 +862,10 @@ texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/te
 xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texli
 ve/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on Concepts.pdf (12 pages, 248841 bytes).
+Output written on Concepts.pdf (13 pages, 254250 bytes).
 PDF statistics:
- 274 PDF objects out of 1000 (max. 8388607)
- 238 compressed objects within 3 object streams
- 67 named destinations out of 1000 (max. 500000)
- 137 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 284 PDF objects out of 1000 (max. 8388607)
+ 247 compressed objects within 3 object streams
+ 69 named destinations out of 1000 (max. 500000)
+ 145 words of extra memory for PDF output out of 10000 (max. 10000000)
 
