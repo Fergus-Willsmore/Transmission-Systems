@@ -188,15 +188,24 @@ The line power flows for each line $\l$ follow $(f_\e)_\l\sim N(\nu_\l, \e \sigm
 \[\lim_{\e\to 0} \e \log P(|(f_\e)_\l|\ge 1) =-\frac{(1-|\nu_\l| )^2}{2\sigma_\l^2} = -I_\l \,,\]
 where $I_\l$ is called the decay rate of $\l$. The decay rates $I_\l$ ultimately depend on the values of $\mu$ and $\Sigma_p$. Therefore we can relate the most likely power injections $\bm p^{(\l)}$ that caused the failure of line $\l$. Recall that $\bm p$ is multivariate Gaussian with probability density 
 \[\varphi(\bm p) = \frac{\exp(-\frac{1}{2}(\bm p - \bm \mu)^T(\e\Sigma_p)^{-1}(\bm p-\bm \mu))}{(2\pi)^{\frac{n}{2}}\det(\e\Sigma_p)^{\frac{1}{2}}} \,.\]
-Hence maximising the conditional probability $P(\bm p\mid |f_\l|\ge 1)$ is equivalent to minimising the variational problem
+We are interested in the conditional distribution of power injections $p$ given the failure event $|f_\ell| \ge1$. Under the limit as $\epsilon\to 0$ the tails of the distribution decay exponentially and therefore the probability $|f_\ell| \ge1$ can be approximated by $|f_\ell| =1$. The random variables $p\sim N_n(\mu,\epsilon\Sigma_p)$ and $|f_\ell|\sim N(|\nu_\ell|,\epsilon\sigma_\ell^2)$ are jointly normal, however the conditional distribution $p\mid |f_\ell| \ge1$ is degenerate since $|f_\ell| =1$ imposes a linear relation on the $p$'s. Alternatively, we construct the conditional $p_1,\dots,p_{n-1}\mid |f_\ell| \ge1$ with full rank covariance matrix which has a Gaussian distribution. An important property of the Gaussian distribution is that the mean corresponds to the value with largest probability. Hence maximising the conditional probability $P(\bm p\mid |f_\l|\ge 1)$ is equivalent to minimising the variational problem
 \[\inf_{\bm p\ :\ \mid e_\l^TVp \mid \ge 1} \frac{1}{2}(\bm p - \bm \mu)^T\Sigma_p^{-1}(\bm p-\bm \mu) = -I_\l.\]
-The Lagrangian of the constrained quadratic program is used to find the optimiser $\bm p^{(\l)}$ corresponding to the most likely power injection.
-\[L(\bm p,\lambda) = \frac{1}{2}(\bm p - \bm \mu)^T\Sigma_p^{-1}(\bm p-\bm \mu) +\lambda(\mid e_\l^TVp \mid \ge 1)\]
-
-
-
-
-\[\bm p^{(\l)} = \bm \mu + \frac{(1-\nu_\l)}{2\sigma_\l^2}\Sigma_p V^T e_\l\]
+The infimum corresponding to the constraint $e_\ell^TVp\ge 1$ will be tight, so we can use Lagrange multipliers to solve the constrained quadratic program. The Lagrange equation is given by
+\[L( p,\lambda) = \frac{1}{2}( p -  \mu)^T\Sigma_p^{-1}( p- \mu) -\lambda(e_\ell^TVp -1)\,,\]
+and we solve with respect to $\frac{\partial L}{\partial \lambda} = \frac{\partial L}{\partial p} = 0$. Trivially, $\frac{\partial L}{\partial \lambda}=0$ implies $e_\ell^TVp =1$. 
+\[\begin{aligned}\frac{\partial L}{\partial p} = ( p -  \mu)^T\Sigma_p^{-1}-\lambda e_\ell^TV =& 0\\
+( p -  \mu)^T =& \lambda e_\ell^TV \Sigma_p\\
+p =& \mu + \lambda\Sigma_pV^Te_\ell\\
+\text{Also }\quad e_\ell V(p-\mu) =& \lambda e_\ell^T V \Sigma_pV^Te_\ell\\
+\implies \lambda =& \frac{1-\nu_\ell}{\sigma_{\ell}^2}
+\end{aligned}\]
+This can be done similarly for the constraint $e_\ell^TVp =-1$, to get the two optimisers
+\begin{eqnarray*}
+p^{(\ell,+)} &=& \mu + \frac{1-\nu_\ell}{\sigma_{\ell}^2}\Sigma_pV^Te_\ell \\
+p^{(\ell,-)} &=& \mu + \frac{-1-\nu_\ell}{\sigma_{\ell}^2}\Sigma_pV^Te_\ell\,.
+\end{eqnarray*} 
+The infimum will correspond to the minimum of $\{\,p^{(\ell,+)}, p^{(\ell,-)\,}\}$, which is dictated by $\text{sign}(\nu_\ell)$. By simple substitution the line power flows corresponding to power injections $p^{(\ell)}$ are given by 
+\[f^{(\ell)} = \nu+\frac{\text{sign}(\nu_\ell)-\nu_\ell}{\sigma_{\ell}^2}V\Sigma_pV^Te_\ell\,.\]
 
 
 \section{Bienstock 2016}
@@ -340,37 +349,47 @@ P(S=r) =& P\left( \sum_{k=1}^{N}  X_k=r \right)\\
 Finner, H., Kern, P. and Scheer, M., 2015. On some compound distributions with Borel summands. Insurance: Mathematics and Economics, 62, pp.234-244.
 
 \subsection{Line outage distribution factors}
-
-Consider power flow across the line $k=(a,b)$ given the failure of line $\l=(i,j)$ and denote by $f_k^{(\l)}$. Such an event is known as an isolated failure and the flow redistribution can be calculated using line outage distribution factors (LODF). The power that flowed across line $\l$ redistributes throughout the altered network $\tilde G^{(\l)}$. This redistribution is governed by power flow physics. Namely, we are interested in finding the coefficient vector $\phi_k^{(\l)}$ that represents the change in power flow across line $k$ given the failure of line $\l$. The original power flows can be used to find the new power flows across the altered network 
-\[f_k^{(\l)} = f_k + \phi_k^{(\l)}f_\l^{(\l)}\,,\]
-for every $k\ne \l$ and where $f_\l^{(\l)} = \pm 1$ depending on how $\l$ fails. 
+Consider power flow across the line $k=(a,b)$ given the failure of line $\ell=(i,j)$ and denote by $f_k^{(\ell)}$. Such an event is known as an isolated failure and the flow redistribution can be calculated using line outage distribution factors (LODF). The power that flowed across line $\ell$ redistributes throughout the altered network $\tilde G^{(\ell)}$. This redistribution is governed by power flow physics. Namely, we are interested in finding the coefficient vector $\phi_k^{(\ell)}$ that represents the change in power flow across line $k$ given the failure of line $\ell$. The original power flows can be used to find the new power flows across the altered network 
+\[\tilde f_k^{(\ell)} = f_k + \phi_k^{(\ell)}f_\ell^{(\ell)}\,,\]
+for every $k\ne \ell$ and where $f_\ell^{(\ell)} = \pm 1$ depending on how $\ell$ fails. 
 
 Recall, under the DC power model we have that 
-\[\theta = L^+P\quad \t{and} \quad f = WBC\theta\,,\]
-where $L^+$ is the pseudo-inverse of the weighted Laplacian matrix. The altered Laplacian caused by the outage of line $\l$ is given by
-\[\tilde L = L - \beta_{\l}C_{\l}C_{\l}^T\,,\]
-\ie, the original Laplacian minus the contribution of line $\l$.  The psuedo-inverse is calculated using Meyer's relation and is given by
-\[\tilde L^+ = L^+ + \frac{L^+C_{\l}\beta_{\l}C_{\l}^TL^+}{1-\beta_{\l}C_{\l}^TL^+C_{\l}}\,.\]
-The change in phase angles caused by the failure of line $\l$ is given by
-\[\Delta \theta^{(\l)} = (\tilde L^+ - L^+)P\,.\]
+\[\theta = L^+P\quad \text{and} \quad f = WBC\theta\,\]
+where $L^+$ is the pseudo-inverse of the weighted Laplacian matrix. The construction of the Laplacian matrix is $L=C^TBC$ where $C$ is the edge-vertex incidence matrix. In summation notation this is $L = \sum_{i=1}^{m} \beta_i\gamma_i^T\gamma_i$ where $\gamma_i$ is the row vector of the $i$th row of $C$. The altered Laplacian caused by the outage of line $\ell$ is given by
+\[\tilde L = L - \beta_{\ell}\gamma_{\ell}^T\gamma_{\ell}\,,\]
+i.e, the original Laplacian minus the contribution of line $\ell$.  The psuedo-inverse is calculated using Meyer's relation and is given by
+\[\tilde L^+ = L^+ + \frac{L^+\gamma_{\ell}^T\beta_{\ell}\gamma_{\ell}L^+}{1-\beta_{\ell}\gamma_{\ell}L^+\gamma_{\ell}^T}\,.\]
+The change in phase angles caused by the failure of line $\ell$ is given by
+\[\Delta \theta^{(\ell)} = (\tilde L^+ - L^+)P\,.\]
 Substituting in for the altered Laplacian $\tilde L^+$ we have that 
-\[\Delta \theta^{(\l)} = \left(\frac{L^+C_{\l}\beta_{\l}C_{\l}^TL^+}{1-\beta_{\l}C_{\l}^TL^+C_{\l}}\right)P \,. \]
-The power flow across line $\l$ before failure is given by
-\[f_\l^{(\l)} = W_\l \beta_\l C_{\l}^TL^+P\,.\]
+\[\Delta \theta^{(\ell)} = \left(\frac{L^+\gamma_{\ell}^T\beta_{\ell}\gamma_{\ell}L^+}{1-\beta_{\ell}\gamma_{\ell}L^+\gamma_{\ell}^T}\right)P \,. \]
+The power flow across line $\ell$ before failure is given by
+\[f_{\ell}^{(\ell)} = \frac{1}{C_\ell}\beta_{\ell}\gamma_{\ell}L^+P\,.\]
 The change in power flow of line $k$ is given by 
-\[\Delta f_k^{(\l)} = W_k \beta_k C_k^T \Delta \theta^{(\l)} = \beta_k \frac{W_k}{W_{\l}} \frac{C_k^TL^+C_{\l}}{1-\beta_\l C_{\l}^TL^+C_\l} f_\l ^{(\l)}\,,\]
+\[\Delta f_k^{(\ell)} = W_k \beta_k \gamma_k^T \Delta \theta^{(\ell)} = \beta_k \frac{C_\ell}{C_k} \frac{\gamma_kL^+\gamma_{\ell}^T}{1-\beta_{\ell}\gamma_{\ell}L^+\gamma_{\ell}^T} f_{\ell}^{(\ell)}\,,\]
 and therefore the LODF coefficients are given by
-\[\phi_k^{\l} = \beta_k \frac{W_k}{W_{\l}} \frac{C_k^TL^+C_{\l}}{1-\beta_\l C_{\l}^TL^+C_\l}\,.\]
-Under this setting we define effective resistance. The effective resistance between two nodes $i$ and $j$ is the total  resistance offered by the network for one unit of current injected at $i$ and leaves at $j$. Recall that under the DC model $\theta = L^+P$. For one unit current injected at $i$ and leaves at $j$, our power injections vector $P = e_i-e_j$. From Ohm's law we have that
+\[\phi_k^{\ell} = \beta_k \frac{C_\ell}{C_k} \frac{\gamma_kL^+\gamma_{\ell}^T}{1-\beta_{\ell}\gamma_{\ell}L^+\gamma_\ell^T}\,.\]
+
+Recall that under the DC model $\theta = L^+P$. For one unit current injected at $i$ and leaves at $j$, our power injections vector $P = e_i-e_j$. The result for effective resistance under the DC model is
 \[\begin{aligned} R_{ij} =& \theta_i-\theta_j\\
 =& (e_i-e_j)^T\theta\\
 =& (e_i-e_j)^TL^+(e_i-e_j)\\
 =& (L^+)_{ii} + (L^+)_{jj} -2(L^+)_{ij}\,.
 \end{aligned}\]
-If there exists a line $\l = (i,j)$ in the network then $e_i-e_j$ corresponds to the $\l$th column of the edge vertex incidence matrix $C$, \ie, 
-\[R_{ij} =C_\l^TL^+C_\l\,.\] 
-Using the definition of effective resistance, the LODF can be redefined to be
-\[\phi_k^{\l} = \beta_k \frac{W_k}{W_{\l}} \frac{R_{aj}-R_{ai}+R_{bi}-R_{bj}}{2(1-\beta_\l R_{ij})}\,.\]
+If there exists a line $\ell = (i,j)$ in the network then $e_i-e_j$ corresponds to $\gamma_\ell$ which is the row vector of the $\ell$th row of the edge-vertex incidence matrix $C$, i.e., 
+\[R_{ij} =\gamma_\ell L^+\gamma_\ell^T\,.\] 
+
+Now the numerator can also be defined in terms of effective resistance. First observe that all the diagonal elements, say $(L^+)_{kk}$, cancel in the quantity $\frac{1}{2}(R_{aj}-R_{ai}+R_{bi}-R_{bj})$.  
+\[\begin{aligned}
+\frac{1}{2}(R_{aj}-R_{ai}+R_{bi}-R_{bj}) =& (L^+)_{ai}-(L^+)_{aj}+(L^+)_{bj}-(L^+)_{bi}\\
+=& (e_a-e_b)^TL^+(e_i-e_j)\\
+=& \gamma_kL^+\gamma_\ell^T\,.
+\end{aligned}\]
+
+Therefore the LODF is defined as
+\[\phi_k^{\ell} = \beta_k \frac{C_\ell}{C_k} \frac{R_{aj}-R_{ai}+R_{bi}-R_{bj}}{2(1-\beta_\ell R_{ij})}\,.\]
+
+
 
 \subsection{Effective resistance}
 Effective resistance is a term used to define the resistance between two nodes in an electric network. In the graph theory this is commonly known as resistance distance between two vertices of a weighted, simple, connected graph. The effective resistance is established by connecting a voltage source across two vertices $a$ and $b$. Let $I_{ab}$ be the net current that flows from $a$ to $b$. Then from Ohm's law we define the effective resistance between vertices $a$ and $b$ to be

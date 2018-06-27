@@ -75,7 +75,8 @@ from pyutilib.services import register_executable, registered_executable
 os.environ['PATH'] = os.pathsep.join((os.environ['PATH'], '/usr/local/bin'))
 register_executable( name='cbc')
 
-csv_folder_name = "/Users/Fergus/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
+#csv_folder_name = "/Users/Fergus/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
+csv_folder_name = "/Users/ferguswillsmore/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
 
 network = pypsa.Network(import_name=csv_folder_name)
 
@@ -169,8 +170,7 @@ for i in range(int(24/group_size)):
     if i>0:
         network.storage_units.state_of_charge_initial = network.storage_units_t.state_of_charge.loc[network.snapshots[group_size*i-1]]
     network.lopf(network.snapshots[group_size*i:group_size*i+group_size],
-                 solver_name=solver_name,
-                 keep_files=True)
+                 solver_name=solver_name)
     network.lines.s_nom = network.lines.s_nom_opt
 
 #if lines are extended, look at which ones are bigger
