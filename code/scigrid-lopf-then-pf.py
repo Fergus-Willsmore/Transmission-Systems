@@ -71,20 +71,13 @@ import os
 import matplotlib.pyplot as plt
 
 from pyutilib.services import register_executable, registered_executable
+
+os.environ['PATH'] = os.pathsep.join((os.environ['PATH'], '/usr/local/bin'))
 register_executable( name='cbc')
-#os.environ['PATH'] = os.pathsep.join((os.environ['PATH'], '/usr/local/bin'))
 
-#register_executable( name='/usr/local/bin/cbc')
+csv_folder_name = "/Users/Fergus/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
 
-#%matplotlib inline
-
-#You may have to adjust this path to where 
-#you downloaded the github repository
-#https://github.com/PyPSA/PyPSA
-
-csv_folder_name = "scigrid-with-load-gen-trafos"
-
-network = pypsa.Network(csv_folder_name=csv_folder_name)
+network = pypsa.Network(import_name=csv_folder_name)
 
 ### Plot the distribution of the load and of generating tech
 
@@ -269,114 +262,5 @@ cb.set_label('Locational Marginal Price (EUR/MWh)')
 fig.tight_layout()
 #fig.savefig('lmp.png')
 
-### Look at variable curtailment
 
-carrier = "Wind Onshore"
-
-capacity = network.generators.groupby("carrier").sum().at[carrier,"p_nom"]
-
-p_available = network.generators_t.p_max_pu.multiply(network.generators["p_nom"])
-
-p_available_by_carrier =p_available.groupby(network.generators.carrier, axis=1).sum()
-
-p_curtailed_by_carrier = p_available_by_carrier - p_by_carrier
-
-p_df = pd.DataFrame({carrier + " available" : p_available_by_carrier[carrier],
-                     carrier + " dispatched" : p_by_carrier[carrier],
-                     carrier + " curtailed" : p_curtailed_by_carrier[carrier]})
-
-p_df[carrier + " capacity"] = capacity
-
-p_df["Wind Onshore curtailed"][p_df["Wind Onshore curtailed"] < 0.] = 0.
-
-fig,ax = plt.subplots(1,1)
-fig.set_size_inches(12,6)
-p_df[[carrier + " dispatched",carrier + " curtailed"]].plot(kind="area",ax=ax,linewidth=3)
-p_df[[carrier + " available",carrier + " capacity"]].plot(ax=ax,linewidth=3)
-
-ax.set_xlabel("")
-ax.set_ylabel("Power [MW]")
-ax.set_ylim([0,40000])
-ax.legend()
-
-fig.tight_layout()
-#fig.savefig("scigrid-curtailment.png")
-
-## Check power flow
-
-now = network.snapshots[0]
-
-for bus in network.buses.index:
-    bus_sum = network.buses_t.p.loc[now,bus]
-    branches_sum = 0
-    for comp in ["lines","transformers"]:
-        comps = getattr(network,comp)
-        comps_t = getattr(network,comp+"_t")
-        branches_sum += comps_t.p0.loc[now,comps.bus0==bus].sum() - comps_t.p0.loc[now,comps.bus1==bus].sum()
-
-    if abs(bus_sum-branches_sum) > 1e-4:
-        print(bus,bus_sum,branches_sum)
-
-### Now perform a full Newton-Raphson power flow on the first hour
-
-#For the PF, set the P to the optimised P
-network.generators_t.p_set = network.generators_t.p_set.reindex(columns=network.generators.index)
-network.generators_t.p_set = network.generators_t.p
-
-
-#set all buses to PV, since we don't know what Q set points are
-network.generators.control = "PV"
-
-#set slack
-#network.generators.loc["1 Coal","control"] = "Slack"
-
-
-#Need some PQ buses so that Jacobian doesn't break
-f = network.generators[network.generators.bus == "492"]
-network.generators.loc[f.index,"control"] = "PQ"
-
-
-print("Performing non-linear PF on results of LOPF:")
-
-info = network.pf()
-
-#any failed to converge?
-(~info.converged).any().any()
-
-print("With the non-linear load flow, there is the following per unit loading\nof the full thermal rating:")
-print((network.lines_t.p0.loc[now]/network.lines.s_nom*contingency_factor).describe())
-
-#Get voltage angle differences
-
-df = network.lines.copy()
-
-for b in ["bus0","bus1"]:
-    df = pd.merge(df,network.buses_t.v_ang.loc[[now]].T,how="left",
-         left_on=b,right_index=True)
-
-s = df[str(now)+"_x"]- df[str(now)+"_y"]
-
-print("The voltage angle differences across the lines have (in degrees):")
-print((s*180/np.pi).describe())
-
-#plot the reactive power
-
-fig,ax = plt.subplots(1,1)
-
-fig.set_size_inches(6,6)
-
-q = network.buses_t.q.loc[now]
-
-bus_colors = pd.Series("r",network.buses.index)
-bus_colors[q< 0.] = "b"
-
-
-network.plot(bus_sizes=abs(q),ax=ax,bus_colors=bus_colors,title="Reactive power feed-in (red=+ve, blue=-ve)")
-
-fig.tight_layout()
-#fig.savefig("reactive-power.png")
-
-network.generators_t.q.loc[now].sum()
-
-network.buses_t.q.loc[now].sum()
 
