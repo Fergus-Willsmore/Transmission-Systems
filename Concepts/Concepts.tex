@@ -189,8 +189,13 @@ The line power flows for each line $\l$ follow $(f_\e)_\l\sim N(\nu_\l, \e \sigm
 where $I_\l$ is called the decay rate of $\l$. The decay rates $I_\l$ ultimately depend on the values of $\mu$ and $\Sigma_p$. Therefore we can relate the most likely power injections $\bm p^{(\l)}$ that caused the failure of line $\l$. Recall that $\bm p$ is multivariate Gaussian with probability density 
 \[\varphi(\bm p) = \frac{\exp(-\frac{1}{2}(\bm p - \bm \mu)^T(\e\Sigma_p)^{-1}(\bm p-\bm \mu))}{(2\pi)^{\frac{n}{2}}\det(\e\Sigma_p)^{\frac{1}{2}}} \,.\]
 Hence maximising the conditional probability $P(\bm p\mid |f_\l|\ge 1)$ is equivalent to minimising the variational problem
-\[\inf_{\bm p\ :\ e_\l^TVp\ge 1} \frac{1}{2}(\bm p - \bm \mu)^T\Sigma_p^{-1}(\bm p-\bm \mu).\]
-If we neglect the condition $e_\l^TVp\ge 1$, then the unique minimum is given by $\bm p = \bm \mu$. Including the condition $e_\l^TVp\ge 1$ requires the deviation from $\mu$ to be equivalent to the deviation required such that $|f_\l|\ge 1$. 
+\[\inf_{\bm p\ :\ \mid e_\l^TVp \mid \ge 1} \frac{1}{2}(\bm p - \bm \mu)^T\Sigma_p^{-1}(\bm p-\bm \mu) = -I_\l.\]
+The Lagrangian of the constrained quadratic program is used to find the optimiser $\bm p^{(\l)}$ corresponding to the most likely power injection.
+\[L(\bm p,\lambda) = \frac{1}{2}(\bm p - \bm \mu)^T\Sigma_p^{-1}(\bm p-\bm \mu) +\lambda(\mid e_\l^TVp \mid \ge 1)\]
+
+
+
+
 \[\bm p^{(\l)} = \bm \mu + \frac{(1-\nu_\l)}{2\sigma_\l^2}\Sigma_p V^T e_\l\]
 
 
@@ -230,7 +235,7 @@ A linear program is solved to obtain the new power flows, loads and generation. 
 
 \subsection{Thermal line tripping}
 
-A lines temperature is a function of current, such that higher currents increase the temperature. Grid operators avoid higher temperatures as this leads
+A lines temperature is a function of current, such that higher currents lead to higher temperatures. Grid operators try to avoid high line temperatures as this leads sagging and deformation of the line. Such behaviour is known to cause a line to trip as sagging can result in the line coming into contact with an external object like a tree. 
 
 \subsection{Accumulated overload}
 
@@ -353,7 +358,27 @@ Substituting in for the altered Laplacian $\tilde L^+$ we have that
 The power flow across line $\l$ before failure is given by
 \[f_\l^{(\l)} = W_\l \beta_\l C_{\l}^TL^+P\,.\]
 The change in power flow of line $k$ is given by 
-\[\phi_k^{(\l)} f_\l^{(\l)} = W_k \beta_k C_k^T \Delta \theta^{(\l)} = \beta_k \frac{W_k}{W_{\l}} \frac{C_k^TL^C_{\l}}{1-\beta_\l C_{\l}^TL^+C_\l} f_\l ^{(\l)}\]
+\[\Delta f_k^{(\l)} = W_k \beta_k C_k^T \Delta \theta^{(\l)} = \beta_k \frac{W_k}{W_{\l}} \frac{C_k^TL^+C_{\l}}{1-\beta_\l C_{\l}^TL^+C_\l} f_\l ^{(\l)}\,,\]
+and therefore the LODF coefficients are given by
+\[\phi_k^{\l} = \beta_k \frac{W_k}{W_{\l}} \frac{C_k^TL^+C_{\l}}{1-\beta_\l C_{\l}^TL^+C_\l}\,.\]
+Under this setting we define effective resistance. The effective resistance between two nodes $i$ and $j$ is the total  resistance offered by the network for one unit of current injected at $i$ and leaves at $j$. Recall that under the DC model $\theta = L^+P$. For one unit current injected at $i$ and leaves at $j$, our power injections vector $P = e_i-e_j$. From Ohm's law we have that
+\[\begin{aligned} R_{ij} =& \theta_i-\theta_j\\
+=& (e_i-e_j)^T\theta\\
+=& (e_i-e_j)^TL^+(e_i-e_j)\\
+=& (L^+)_{ii} + (L^+)_{jj} -2(L^+)_{ij}\,.
+\end{aligned}\]
+If there exists a line $\l = (i,j)$ in the network then $e_i-e_j$ corresponds to the $\l$th column of the edge vertex incidence matrix $C$, \ie, 
+\[R_{ij} =C_\l^TL^+C_\l\,.\] 
+Using the definition of effective resistance, the LODF can be redefined to be
+\[\phi_k^{\l} = \beta_k \frac{W_k}{W_{\l}} \frac{R_{aj}-R_{ai}+R_{bi}-R_{bj}}{2(1-\beta_\l R_{ij})}\,.\]
+
+\subsection{Effective resistance}
+Effective resistance is a term used to define the resistance between two nodes in an electric network. In the graph theory this is commonly known as resistance distance between two vertices of a weighted, simple, connected graph. The effective resistance is established by connecting a voltage source across two vertices $a$ and $b$. Let $I_{ab}$ be the net current that flows from $a$ to $b$. Then from Ohm's law we define the effective resistance between vertices $a$ and $b$ to be
+\[R_{ab} = \frac{v_a-v_b}{I_{ab}}.\] 
+Fix the current flow between $a$ and $b$ to be $I_{ab}=1$, then the effective resistance reduces to 
+\[R_{ab} =v_a-v_b\]
+ 
+
 
 
 \section{Network Diagram}
