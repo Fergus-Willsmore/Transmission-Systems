@@ -176,57 +176,6 @@ for i in range(int(24/group_size)):
 #if lines are extended, look at which ones are bigger
 #network.lines[["s_nom_original","s_nom"]][abs(network.lines.s_nom - contingency_factor*network.lines.s_nom_original) > 1]
 
-p_by_carrier = network.generators_t.p.groupby(network.generators.carrier, axis=1).sum()
-
-p_by_carrier.drop((p_by_carrier.max()[p_by_carrier.max() < 1700.]).index,axis=1,inplace=True)
-
-p_by_carrier.columns
-
-colors = {"Brown Coal" : "brown",
-          "Hard Coal" : "k",
-          "Nuclear" : "r",
-          "Run of River" : "green",
-          "Wind Onshore" : "blue",
-          "Solar" : "yellow",
-          "Wind Offshore" : "cyan",
-          "Waste" : "orange",
-          "Gas" : "orange"}
-#reorder
-cols = ["Nuclear","Run of River","Brown Coal","Hard Coal","Gas","Wind Offshore","Wind Onshore","Solar"]
-p_by_carrier = p_by_carrier[cols]
-
-fig,ax = plt.subplots(1,1)
-
-fig.set_size_inches(12,6)
-
-(p_by_carrier/1e3).plot(kind="area",ax=ax,linewidth=4,colors=[colors[col] for col in p_by_carrier.columns])
-
-
-ax.legend(ncol=4,loc="upper left")
-
-ax.set_ylabel("GW")
-
-ax.set_xlabel("")
-
-fig.tight_layout()
-#fig.savefig("stacked-gen.png")
-
-fig,ax = plt.subplots(1,1)
-fig.set_size_inches(12,6)
-
-p_storage = network.storage_units_t.p.sum(axis=1)
-state_of_charge = network.storage_units_t.state_of_charge.sum(axis=1)
-p_storage.plot(label="Pumped hydro dispatch",ax=ax,linewidth=3)
-state_of_charge.plot(label="State of charge",ax=ax,linewidth=3)
-
-ax.legend()
-ax.grid()
-ax.set_ylabel("MWh")
-ax.set_xlabel("")
-
-fig.tight_layout()
-#fig.savefig("storage-scigrid.png")
-
 now = network.snapshots[4]
 
 print("With the linear load flow, there is the following per unit loading:")
@@ -241,26 +190,6 @@ network.plot(ax=ax,line_colors=abs(loading),line_cmap=plt.cm.jet,title="Line loa
 fig.tight_layout()
 #fig.savefig("line-loading.png")
 
-network.buses_t.marginal_price.loc[now].describe()
-
-fig,ax = plt.subplots(1,1)
-fig.set_size_inches(6,4)
-
-
-network.plot(ax=ax,line_widths=pd.Series(0.5,network.lines.index))
-plt.hexbin(network.buses.x, network.buses.y, 
-           gridsize=20,
-           C=network.buses_t.marginal_price.loc[now],
-           cmap=plt.cm.jet)
-
-#for some reason the colorbar only works with graphs plt.plot
-#and must be attached plt.colorbar
-
-cb = plt.colorbar()
-cb.set_label('Locational Marginal Price (EUR/MWh)') 
-
-fig.tight_layout()
-#fig.savefig('lmp.png')
 
 
 

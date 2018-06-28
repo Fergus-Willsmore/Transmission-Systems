@@ -391,12 +391,24 @@ Therefore the LODF is defined as
 
 
 
-\subsection{Effective resistance}
+\section{Effective resistance}
 Effective resistance is a term used to define the resistance between two nodes in an electric network. In the graph theory this is commonly known as resistance distance between two vertices of a weighted, simple, connected graph. The effective resistance is established by connecting a voltage source across two vertices $a$ and $b$. Let $I_{ab}$ be the net current that flows from $a$ to $b$. Then from Ohm's law we define the effective resistance between vertices $a$ and $b$ to be
 \[R_{ab} = \frac{v_a-v_b}{I_{ab}}.\] 
 Fix the current flow between $a$ and $b$ to be $I_{ab}=1$, then the effective resistance reduces to 
 \[R_{ab} =v_a-v_b\]
- 
+
+\section{Empirical Time Series Analysis}
+A univariate time series consists of observations, $y_t$, that are made repeatedly over time. The standard time series model is to write 
+\[Y(t) = \mu(t) + U(t)\]
+where $\mu(t)$ is the deterministic signal and $U(t)$ is the noise process assumed to be stationary with $E[U(t)]=0$. 
+
+Differencing a time series is a method traditionally use to eliminate the trend represented by the signal $\mu(t)$. The first order differencing operator $D$ is defined by
+\[Dy_t = y_t-y_{t-1}\,. \]
+Higher order differences are successive applications of the differencing operator. 
+
+Consider a second order stationary process $Y(t)$. The auto-covariance function is defined by 
+\[\gamma(s) = \t{cov}(Y(t), Y(t+s))\]
+
 
 
 
