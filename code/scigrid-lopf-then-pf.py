@@ -66,15 +66,18 @@ import numpy as np
 
 import pandas as pd
 
+import scipy
+
 import os
 
 import matplotlib.pyplot as plt
 
 from pyutilib.services import register_executable, registered_executable
 
+### Preamble for wdir
+
 os.environ['PATH'] = os.pathsep.join((os.environ['PATH'], '/usr/local/bin'))
 register_executable( name='cbc')
-
 #csv_folder_name = "/Users/Fergus/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
 csv_folder_name = "/Users/ferguswillsmore/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
 
@@ -88,7 +91,7 @@ fig.set_size_inches(6,6)
 
 load_distribution = network.loads_t.p_set.loc[network.snapshots[0]].groupby(network.loads.bus).sum()
 
-network.plot(bus_sizes=0.5*load_distribution,ax=ax,title="Load distribution")
+network.plot(bus_sizes=0.2*load_distribution,ax=ax,title="Load distribution")
 
 fig.tight_layout()
 #fig.savefig('load-distribution.png')
@@ -190,6 +193,9 @@ network.plot(ax=ax,line_colors=abs(loading),line_cmap=plt.cm.jet,title="Line loa
 fig.tight_layout()
 #fig.savefig("line-loading.png")
 
+## DC Model
 
-
+B = scipy.sparse.diags(network.lines.b_pu)
+W = network.lines.s_nom
+C = network.incidence_matrix()
 
