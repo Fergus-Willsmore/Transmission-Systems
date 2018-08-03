@@ -1,4 +1,4 @@
-# Script: creates the network topology from planned network outage data
+# Script: creates the network topology of NEM from planned network outage data
 # Data: PUBLIC_NOSDAILY_2018030515000037.csv available at https://www.aemo.com.au/Electricity/National-Electricity-Market-NEM/Data/Network-Data/Network-Outage-Schedule
 # Created by F.R. Willsmore 6/2/2018
 
@@ -15,8 +15,6 @@ outage.df <- read.csv('~/Documents/GitHub/Transmission-Systems/topology/PUBLIC_N
 # Get Distribution Companies
 
 levels(outage.df$TNSP.Submitted.the.Outage)
-
-
 
 # We are only interested in the line outages, but might use the bus information for validation.
 # In Equipment.Type there is a tline, which seems to extend between 3 buses. (???)

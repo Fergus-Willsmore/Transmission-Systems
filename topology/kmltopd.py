@@ -12,7 +12,7 @@ import re
 Variables = ['OBJECTID','FEATURETYPE','CLASS','FID','NAME','OPERATIONALSTATUS','CAPACITYKV','STATE','SPATIALCONFIDENCE','REVISED','SHAPE_Length']
 
 lines = []                  
-with open ('kml/doc.kml', 'rt') as in_file:  
+with open ('kml/NEM-geoscience.kml', 'rt') as in_file:  
     for line in in_file:  
         lines.append(line.rstrip('\n'))  
 

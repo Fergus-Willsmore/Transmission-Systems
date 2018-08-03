@@ -66,6 +66,10 @@ import numpy as np
 
 import pandas as pd
 
+import networkx as nx
+
+import re
+
 import scipy
 
 import os
@@ -134,7 +138,7 @@ for i,tech in enumerate(techs):
     
     
 
-### Run Linear Optimal Power Flow on the first day of 2011
+###### Run Linear Optimal Power Flow on the first day of 2011 ######
 
 #to approximate n-1 security and allow room for reactive power flows,
 #don't allow any line to be loaded above 70% of their thermal rating
@@ -153,12 +157,12 @@ for line_name in ["316","527","602"]:
 #uncommenting the lines below to allow the network to be extended
 
 #network.lines["s_nom_original"] = network.lines.s_nom
-
+#
 #network.lines.s_nom_extendable = True
 #network.lines.s_nom_min = network.lines.s_nom
 
 #Assume 450 EUR/MVA/km
-#network.lines.capital_cost = 450*network.lines.length
+network.lines.capital_cost = 450*network.lines.length
 
 group_size = 4
 
@@ -179,23 +183,56 @@ for i in range(int(24/group_size)):
 #if lines are extended, look at which ones are bigger
 #network.lines[["s_nom_original","s_nom"]][abs(network.lines.s_nom - contingency_factor*network.lines.s_nom_original) > 1]
 
-now = network.snapshots[4]
+# Set the snapshot time
 
-print("With the linear load flow, there is the following per unit loading:")
-loading = network.lines_t.p0.loc[now]/network.lines.s_nom
-print(loading.describe())
+now = network.snapshots[12]
 
-fig,ax = plt.subplots(1,1)
-fig.set_size_inches(6,6)
-
-network.plot(ax=ax,line_colors=abs(loading),line_cmap=plt.cm.jet,title="Line loading")
-
-fig.tight_layout()
-#fig.savefig("line-loading.png")
+###### Nesti and Zwart method ######
 
 ## DC Model
-
+# Susceptance matrix
 B = scipy.sparse.diags(network.lines.b_pu)
-W = network.lines.s_nom
-C = network.incidence_matrix()
+# Weights matrix (Line ratings)
+W = scipy.sparse.diags(network.lines.s_nom)
+# Edge-vertex incidence matrix
+el = network.lines[['bus0','bus1']].as_matrix().tolist()
+G = nx.MultiGraph(el)
+C = nx.incidence_matrix(G).transpose()
+# Weighted Laplacian Matrix
+L = C.transpose()*B*C
+
+## Power injections
+# Load
+load_distribution
+# generation output at each time
+opt_gen = network.generators_t.p
+
+opt_gen_now = opt_gen.loc[now]
+
+
+###### Stochastic and Deterministic injections
+
+# Partition of nodes
+bus = []
+for name in opt_gen.loc[now].index:
+    bus.append(name.split(' ',1)[0])
+opt_gen_now['bus'] = bus
+
+
+bus_s = []
+bus_s.extend(network.generators.index[network.generators['carrier']=='Solar'].tolist())
+bus_s.extend(network.generators.index[network.generators['carrier']=='Wind Onshore'].tolist())
+bus_s.extend(network.generators.index[network.generators['carrier']=='Wind Offshore'].tolist())
+
+n_s = []
+for b in bus_s:
+    b = b.replace(' Solar','')
+    b = b.replace(' Wind Onshore','')
+    b = b.replace(' Wind Offshore','')
+    n_s.append(b)
+
+n_s = sorted(list(set(n_s)))
+n_d = sorted(list(set(network.buses.index).difference(n_s)))
+
+# nominal power injections
 

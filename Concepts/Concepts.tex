@@ -412,10 +412,18 @@ Consider a second order stationary process $Y(t)$. The auto-covariance function 
 
 
 
-\section{Network Diagram}
+\section{Geoscience Data}
+
+The National Electricity Transmission Lines dataset presents the spatial location, in line format, of all known high voltage electricity transmission lines that make up the electricity transmission network within Australia. The data is maintained by Geoscience Australia and is available at: \url{https://data.gov.au/dataset/electricity-transmission-lines}. The dataset is a Google Earth (kmz) file with all the necessary information outlined here \url{https://d28rz98at9flks.cloudfront.net/83105/ElectricityTransmissionLinesMetadata_v2.pdf}. Most importantly the dataset was last updated March 2017. 
+
+Initially I run the pre-processing python script {\tt kmltopd.py} to write all the necessary information as a list in the output file {\tt kml.txt}. The list is in the correct format to read into a dataframe in {\tt R}. I use the script {\tt Spatial\_location.R} to construct the network with {\tt igraph}. The data cleaning process is cumbersome and contains fixing spelling mistakes and either connecting or disconnecting lines to ensure a connected network. 
 
 Record of the changes to the network based on connecting and disconnecting relevant lines.
 \begin{enumerate}
+\item Canning Vale Canning Vale Tee | Canning Vale to Canning Vale Tee
+\item Woden To Civic | Woden to Civic
+\item Bulli Creek - Waggamba | Bulli Creek to Waggamba
+\item Mica Creek B - Duchess Road 1 | Mica Creek B to Duchess Road 1
 \item King Creek and Blue Valley are not present in Network diagram pdf.
 \item Murarrie was misspelled as Murarie.
 \item Murray Bridge Pump 2 to Murray Bridge Pump 3 | Murray Bridge-Hahndorf Pump 2 to Murray Bridge-Hahndorf Pump 3.

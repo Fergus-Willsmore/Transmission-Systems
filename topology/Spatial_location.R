@@ -451,6 +451,10 @@ lo <- layout.norm(as.matrix(cbind(V(net)$Long,V(net)$Lat)),-1, 1, -1, 1)
 
 NEM <- plot.igraph(net,layout = lo,vertex.size = 0.5, vertex.label = NA)
 
+ggsave('spatial_data.pdf', plot = NEM, 
+       path = '~/Documents/GitHub/Transmission-Systems/figures', 
+       width = 8, height = 8 )
+
 # Remove WA and NT from the network
 
 g <- subgraph.edges(net, E(net)[State!="Northern Territory"])
@@ -462,7 +466,7 @@ g.graph <- ggraph(g,layout = 'kk') +
 
 plot(g.graph)
 
-ggsave('spatial_net.png', plot = g.graph, 
+ggsave('spatial_nem.pdf', plot = g.graph, 
        path = '~/Documents/GitHub/Transmission-Systems/figures', 
        width = 8, height = 8 )
 
@@ -472,5 +476,5 @@ comp = decompose(g)
 list <- sapply(2:length(comp), function(x) V(comp[[x]]))
 attributes(unlist(list))
 
-sp[grepl('SOTO',sp$NAME),]
+sp[grepl('Jindera',sp$NAME),]
 

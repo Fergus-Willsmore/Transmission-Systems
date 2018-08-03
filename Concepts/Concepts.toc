@@ -17,4 +17,4 @@
 \contentsline {subsection}{\numberline {6.8}Line outage distribution factors}{12}{subsection.6.8}
 \contentsline {section}{\numberline {7}Effective resistance}{13}{section.7}
 \contentsline {section}{\numberline {8}Empirical Time Series Analysis}{14}{section.8}
-\contentsline {section}{\numberline {9}Network Diagram}{14}{section.9}
+\contentsline {section}{\numberline {9}Geoscience Data}{14}{section.9}
