@@ -1,63 +1,4 @@
-## LOPF then non-linear power flow with SciGRID
-#
-#This Jupyter Notebook is also available to download at: <http://www.pypsa.org/examples/scigrid-lopf-then-pf.ipynb> and can be viewed as an HTML page at: <http://pypsa.org/examples/scigrid-lopf-then-pf.html>.
-#
-#In this example, the dispatch of generators is optimised using the linear OPF, then a non-linear power flow is run on the resulting dispatch.
-#
-#The data files for this example are in the examples folder of the github repository: <https://github.com/PyPSA/PyPSA>.
-#
-### Data sources
-#
-#The data is generated in a separate notebook at <http://www.pypsa.org/examples/add_load_gen_trafos_to_scigrid.ipynb>.
-#
-#
-#Grid: based on [SciGRID](http://scigrid.de/) Version 0.2 which is based on [OpenStreetMap](http://www.openstreetmap.org/).
-#
-#Load size and location: based on Landkreise (NUTS 3) GDP and population.
-#
-#Load time series: from ENTSO-E hourly data, scaled up uniformly by factor 1.12 (a simplification of the methodology in Schumacher, Hirth (2015)).
-#
-#Conventional power plant capacities and locations: BNetzA list.
-#
-#Wind and solar capacities and locations: EEG Stammdaten, based on  http://www.energymap.info/download.html, which represents capacities at the end of 2014. Units without PLZ are removed.
-#
-#Wind and solar time series: REatlas, Andresen et al, "Validation of Danish wind time series from a new global renewable energy atlas for energy system analysis," Energy 93 (2015) 1074 - 1088.
-#
-#NB:
-#
-#All times in the dataset are UTC.
-#
-#Where SciGRID nodes have been split into 220kV and 380kV substations, all load and generation is attached to the 220kV substation.
-#
-### Warning
-#
-#This dataset is ONLY intended to demonstrate the capabilities of PyPSA and is NOT (yet) accurate enough to be used for research purposes.
-#
-#Known problems include:
-#
-#i) Rough approximations have been made for missing grid data, e.g. 220kV-380kV transformers and connections between close sub-stations missing from OSM.
-#
-#ii) There appears to be some unexpected congestion in parts of the network, which may mean for example that the load attachment method (by Voronoi cell overlap with Landkreise) isn't working, particularly in regions with a high density of substations.
-#
-#iii) Attaching power plants to the nearest high voltage substation may not reflect reality.
-#
-#iv) There is no proper n-1 security in the calculations - this can either be simulated with a blanket e.g. 70% reduction in thermal limits (as done here) or a proper security constrained OPF (see e.g.  <http://www.pypsa.org/examples/scigrid-sclopf.ipynb>).
-#
-#v) The borders and neighbouring countries are not represented.
-#
-#vi) Hydroelectric power stations are not modelled accurately.
-#
-#viii) The marginal costs are illustrative, not accurate.
-#
-#ix) Only the first day of 2011 is in the github dataset, which is not representative. The full year of 2011 can be downloaded at <http://www.pypsa.org/examples/scigrid-with-load-gen-trafos-2011.zip>.
-#
-#x) The ENTSO-E total load for Germany may not be scaled correctly; it is scaled up uniformly by factor 1.12 (a simplification of the methodology in Schumacher, Hirth (2015), which suggests monthly factors).
-#
-#xi) Biomass from the EEG Stammdaten are not read in at the moment.
-#
-#xii) Power plant start up costs, ramping limits/costs, minimum loading rates are not considered.
 
-#make the code as Python 3 compatible as possible
 from __future__ import print_function, division, absolute_import
 
 import pypsa
@@ -99,44 +40,6 @@ network.plot(bus_sizes=0.2*load_distribution,ax=ax,title="Load distribution")
 
 fig.tight_layout()
 #fig.savefig('load-distribution.png')
-
-network.generators.groupby("carrier")["p_nom"].sum()
-
-network.storage_units.groupby("carrier")["p_nom"].sum()
-
-techs = ["Gas","Brown Coal","Hard Coal","Wind Offshore","Wind Onshore","Solar"]
-
-n_graphs = len(techs)
-
-n_cols = 3
-
-if n_graphs % n_cols == 0:
-    n_rows = n_graphs // n_cols
-else:
-    n_rows = n_graphs // n_cols + 1
-
-    
-fig, axes = plt.subplots(nrows=n_rows, ncols=n_cols)
-
-size = 4
-
-fig.set_size_inches(size*n_cols,size*n_rows)
-
-for i,tech in enumerate(techs):
-    i_row = i // n_cols
-    i_col = i % n_cols
-    
-    ax = axes[i_row,i_col]
-    
-    gens = network.generators[network.generators.carrier == tech]
-    
-    gen_distribution = gens.groupby("bus").sum()["p_nom"].reindex(network.buses.index,fill_value=0.)
-    
-    network.plot(ax=ax,bus_sizes=0.2*gen_distribution)
-    
-    ax.set_title(tech)
-    
-    
 
 ###### Run Linear Optimal Power Flow on the first day of 2011 ######
 
@@ -185,7 +88,8 @@ for i in range(int(24/group_size)):
 
 # Set the snapshot time
 
-now = network.snapshots[12]
+time = 12
+now = network.snapshots[time]
 
 ###### Nesti and Zwart method ######
 
@@ -202,23 +106,27 @@ C = nx.incidence_matrix(G).transpose()
 L = C.transpose()*B*C
 
 ## Power injections
-# Load
-load_distribution
-# generation output at each time
+# Load distribution for the hour
+load_distribution = network.loads_t.p_set.loc[network.snapshots[time]].groupby(network.loads.bus).sum()
+# generation output at each hour of the day
 opt_gen = network.generators_t.p
-
+# Generation for the hour
 opt_gen_now = opt_gen.loc[now]
+# Sum values
+opt_gen.loc[now].sum()
+sum(load_distribution)
 
 
 ###### Stochastic and Deterministic injections
 
 # Partition of nodes
 bus = []
-for name in opt_gen.loc[now].index:
+for name in opt_gen_now.index:
     bus.append(name.split(' ',1)[0])
-opt_gen_now['bus'] = bus
 
-
+opt_gen_now.index=bus
+test =pd.DataFrame(opt_gen_now)
+    
 bus_s = []
 bus_s.extend(network.generators.index[network.generators['carrier']=='Solar'].tolist())
 bus_s.extend(network.generators.index[network.generators['carrier']=='Wind Onshore'].tolist())
@@ -234,5 +142,26 @@ for b in bus_s:
 n_s = sorted(list(set(n_s)))
 n_d = sorted(list(set(network.buses.index).difference(n_s)))
 
-# nominal power injections
+# Create a dataframe mu with stochastic nodes first then deterministic nodes
+d = np.concatenate((n_s, n_d), axis=0)
+mu = pd.DataFrame(data=d)
+mu.columns = ['bus']
+mu['load']=np.zeros(len(mu))
+mu['gen']=np.zeros(len(mu))
 
+# Update the Load distribution in the dataframe mu
+for l in range(0,len(load_distribution)):
+    bus_l = load_distribution.index[l]
+    mu.load.loc[mu['bus'] == bus_l] = load_distribution[l]
+    
+
+for r in range(0,len(opt_gen_now)):
+    bus_r = opt_gen_now.index[r]
+    index = (mu['bus'] == bus_r)
+    current_value = mu.gen.loc[index]
+    mu.gen.loc[index] = current_value+opt_gen_now[r]
+
+power_injections = mu.gen-mu.load
+
+mu_s = power_injections[0:len(n_s)]
+mu_d = power_injections[(len(n_s)+1):len(mu)]
