@@ -1,62 +1,3 @@
-## LOPF then non-linear power flow with SciGRID
-#
-#This Jupyter Notebook is also available to download at: <http://www.pypsa.org/examples/scigrid-lopf-then-pf.ipynb> and can be viewed as an HTML page at: <http://pypsa.org/examples/scigrid-lopf-then-pf.html>.
-#
-#In this example, the dispatch of generators is optimised using the linear OPF, then a non-linear power flow is run on the resulting dispatch.
-#
-#The data files for this example are in the examples folder of the github repository: <https://github.com/PyPSA/PyPSA>.
-#
-### Data sources
-#
-#The data is generated in a separate notebook at <http://www.pypsa.org/examples/add_load_gen_trafos_to_scigrid.ipynb>.
-#
-#
-#Grid: based on [SciGRID](http://scigrid.de/) Version 0.2 which is based on [OpenStreetMap](http://www.openstreetmap.org/).
-#
-#Load size and location: based on Landkreise (NUTS 3) GDP and population.
-#
-#Load time series: from ENTSO-E hourly data, scaled up uniformly by factor 1.12 (a simplification of the methodology in Schumacher, Hirth (2015)).
-#
-#Conventional power plant capacities and locations: BNetzA list.
-#
-#Wind and solar capacities and locations: EEG Stammdaten, based on  http://www.energymap.info/download.html, which represents capacities at the end of 2014. Units without PLZ are removed.
-#
-#Wind and solar time series: REatlas, Andresen et al, "Validation of Danish wind time series from a new global renewable energy atlas for energy system analysis," Energy 93 (2015) 1074 - 1088.
-#
-#NB:
-#
-#All times in the dataset are UTC.
-#
-#Where SciGRID nodes have been split into 220kV and 380kV substations, all load and generation is attached to the 220kV substation.
-#
-### Warning
-#
-#This dataset is ONLY intended to demonstrate the capabilities of PyPSA and is NOT (yet) accurate enough to be used for research purposes.
-#
-#Known problems include:
-#
-#i) Rough approximations have been made for missing grid data, e.g. 220kV-380kV transformers and connections between close sub-stations missing from OSM.
-#
-#ii) There appears to be some unexpected congestion in parts of the network, which may mean for example that the load attachment method (by Voronoi cell overlap with Landkreise) isn't working, particularly in regions with a high density of substations.
-#
-#iii) Attaching power plants to the nearest high voltage substation may not reflect reality.
-#
-#iv) There is no proper n-1 security in the calculations - this can either be simulated with a blanket e.g. 70% reduction in thermal limits (as done here) or a proper security constrained OPF (see e.g.  <http://www.pypsa.org/examples/scigrid-sclopf.ipynb>).
-#
-#v) The borders and neighbouring countries are not represented.
-#
-#vi) Hydroelectric power stations are not modelled accurately.
-#
-#viii) The marginal costs are illustrative, not accurate.
-#
-#ix) Only the first day of 2011 is in the github dataset, which is not representative. The full year of 2011 can be downloaded at <http://www.pypsa.org/examples/scigrid-with-load-gen-trafos-2011.zip>.
-#
-#x) The ENTSO-E total load for Germany may not be scaled correctly; it is scaled up uniformly by factor 1.12 (a simplification of the methodology in Schumacher, Hirth (2015), which suggests monthly factors).
-#
-#xi) Biomass from the EEG Stammdaten are not read in at the moment.
-#
-#xii) Power plant start up costs, ramping limits/costs, minimum loading rates are not considered.
-
 #make the code as Python 3 compatible as possible
 from __future__ import print_function, division, absolute_import
 
@@ -82,8 +23,11 @@ from pyutilib.services import register_executable, registered_executable
 
 os.environ['PATH'] = os.pathsep.join((os.environ['PATH'], '/usr/local/bin'))
 register_executable( name='cbc')
-#csv_folder_name = "/Users/Fergus/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
-csv_folder_name = "/Users/ferguswillsmore/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
+
+# Laptop
+csv_folder_name = "/Users/Fergus/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
+# Desktop
+#csv_folder_name = "/Users/ferguswillsmore/Downloads/pypsa-master/examples/scigrid-de/scigrid-with-load-gen-trafos"
 
 network = pypsa.Network(import_name=csv_folder_name)
 
