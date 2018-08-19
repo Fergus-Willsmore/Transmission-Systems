@@ -476,5 +476,5 @@ comp = decompose(g)
 list <- sapply(2:length(comp), function(x) V(comp[[x]]))
 attributes(unlist(list))
 
-sp[grepl('Jindera',sp$NAME),]
+sp[grepl('Armidale',sp$NAME),]
 

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #make the code as Python 3 compatible as possible
+=======
+
+>>>>>>> 3f98980b79b4804b81857e3928aba7a340eb7ffb
 from __future__ import print_function, division, absolute_import
 
 import pypsa
@@ -43,44 +47,6 @@ network.plot(bus_sizes=0.2*load_distribution,ax=ax,title="Load distribution")
 
 fig.tight_layout()
 #fig.savefig('load-distribution.png')
-
-network.generators.groupby("carrier")["p_nom"].sum()
-
-network.storage_units.groupby("carrier")["p_nom"].sum()
-
-techs = ["Gas","Brown Coal","Hard Coal","Wind Offshore","Wind Onshore","Solar"]
-
-n_graphs = len(techs)
-
-n_cols = 3
-
-if n_graphs % n_cols == 0:
-    n_rows = n_graphs // n_cols
-else:
-    n_rows = n_graphs // n_cols + 1
-
-    
-fig, axes = plt.subplots(nrows=n_rows, ncols=n_cols)
-
-size = 4
-
-fig.set_size_inches(size*n_cols,size*n_rows)
-
-for i,tech in enumerate(techs):
-    i_row = i // n_cols
-    i_col = i % n_cols
-    
-    ax = axes[i_row,i_col]
-    
-    gens = network.generators[network.generators.carrier == tech]
-    
-    gen_distribution = gens.groupby("bus").sum()["p_nom"].reindex(network.buses.index,fill_value=0.)
-    
-    network.plot(ax=ax,bus_sizes=0.2*gen_distribution)
-    
-    ax.set_title(tech)
-    
-    
 
 ###### Run Linear Optimal Power Flow on the first day of 2011 ######
 
@@ -129,7 +95,8 @@ for i in range(int(24/group_size)):
 
 # Set the snapshot time
 
-now = network.snapshots[12]
+time = 12
+now = network.snapshots[time]
 
 ###### Nesti and Zwart method ######
 
@@ -146,23 +113,27 @@ C = nx.incidence_matrix(G).transpose()
 L = C.transpose()*B*C
 
 ## Power injections
-# Load
-load_distribution
-# generation output at each time
+# Load distribution for the hour
+load_distribution = network.loads_t.p_set.loc[network.snapshots[time]].groupby(network.loads.bus).sum()
+# generation output at each hour of the day
 opt_gen = network.generators_t.p
-
+# Generation for the hour
 opt_gen_now = opt_gen.loc[now]
+# Sum values
+opt_gen.loc[now].sum()
+sum(load_distribution)
 
 
 ###### Stochastic and Deterministic injections
 
 # Partition of nodes
 bus = []
-for name in opt_gen.loc[now].index:
+for name in opt_gen_now.index:
     bus.append(name.split(' ',1)[0])
-opt_gen_now['bus'] = bus
 
-
+opt_gen_now.index=bus
+test =pd.DataFrame(opt_gen_now)
+    
 bus_s = []
 bus_s.extend(network.generators.index[network.generators['carrier']=='Solar'].tolist())
 bus_s.extend(network.generators.index[network.generators['carrier']=='Wind Onshore'].tolist())
@@ -178,5 +149,26 @@ for b in bus_s:
 n_s = sorted(list(set(n_s)))
 n_d = sorted(list(set(network.buses.index).difference(n_s)))
 
-# nominal power injections
+# Create a dataframe mu with stochastic nodes first then deterministic nodes
+d = np.concatenate((n_s, n_d), axis=0)
+mu = pd.DataFrame(data=d)
+mu.columns = ['bus']
+mu['load']=np.zeros(len(mu))
+mu['gen']=np.zeros(len(mu))
 
+# Update the Load distribution in the dataframe mu
+for l in range(0,len(load_distribution)):
+    bus_l = load_distribution.index[l]
+    mu.load.loc[mu['bus'] == bus_l] = load_distribution[l]
+    
+
+for r in range(0,len(opt_gen_now)):
+    bus_r = opt_gen_now.index[r]
+    index = (mu['bus'] == bus_r)
+    current_value = mu.gen.loc[index]
+    mu.gen.loc[index] = current_value+opt_gen_now[r]
+
+power_injections = mu.gen-mu.load
+
+mu_s = power_injections[0:len(n_s)]
+mu_d = power_injections[(len(n_s)+1):len(mu)]
